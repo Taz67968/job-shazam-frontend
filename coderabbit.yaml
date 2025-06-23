@@ -34,16 +34,19 @@ code_generation:
   docstrings:
     language: en-US
     path_instructions:
-      - path: "src/**/*.ts"
-        instructions: "Document NestJS components: controllers, services, modules. Explain API endpoints, business logic, security considerations. Reference NestJS documentation patterns."
-
-      - path: "test/**/*.ts"
-        instructions: "Document test strategies: unit, integration, e2e. Explain test scenarios, mocking approaches, and coverage expectations."
+      - path: "src/components/**/*.{ts,tsx}"
+        instructions: "Document React components: purpose, props, state management, accessibility features. Explain component design decisions."
+      - path: "src/app/**/*.{ts,tsx}"
+        instructions: "Document Next.js app router: routing, data fetching, SEO considerations. Explain pages architecture and rendering strategies."
+      - path: "src/hooks/**/*.{ts,tsx}"
+        instructions: "Document custom hooks: purpose, dependencies, side effects, reusability. Explain hook composition patterns."
 
   unit_tests:
     path_instructions:
-      - path: "src/**/*.spec.ts"
-        instructions: "Guide testing strategies: unit, integration, e2e. Explain mocking dependencies, test coverage importance. Reference NestJS testing docs."
+      - path: "**/*.test.{ts,tsx,js,jsx}"
+        instructions: "Guide component testing: user interactions, accessibility, state changes. Emphasize React Testing Library best practices."
+      - path: "**/*.spec.{ts,tsx,js,jsx}"
+        instructions: "Guide unit testing: utility functions, hooks, integration scenarios. Explain frontend testing strategies."
 
 # Chat settings for student interaction
 chat:
