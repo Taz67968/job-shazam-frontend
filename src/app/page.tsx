@@ -6,16 +6,18 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main>
-      <Navbar />
-      <div className="flex flex-col items-center justify-center min-h-screen bg-white-100 bg-white rounded-b-xl">
-        <section className="text-center mb-8">
+    
+    <main className="m-0 p-0">
+      <header className="bg-white rounded-b-xl" >
+        <Navbar />
+       <div className="flex flex-col items-center justify-center min-h-screen bg-white-100 bg-white rounded-b-xl">
+       <section className="text-center mb-8">
           <h1 className="text-9xl font-bold text-green-900">
             Empowering Job Seekers Through Creative Solutions
           </h1>
         </section>
 
-        <section className="text-center mb-8 flex justify-between w-full">
+        <section className="text-center mb-8 flex justify-between w-[80%]">
           <p className="text-lg w-[325px]">
             "Find your next career opportunity" "Where talent meets opportunity" "Your dream job
             awaits" "Connect. Apply. Get hired."
@@ -30,17 +32,17 @@ export default function Home() {
         </section>
 
         <div className="flex gap-2">
-          <Link href="/" className="flex justify-center items-center">
-            <button className="bg-blue-600 text-green-900 px-4 py-2 rounded ">Find My Job</button>
+          <Link href="/Jobspage" className="flex justify-center items-center">
+            <button className="bg-green-400 text-black px-4 py-2 rounded ">Find My Job</button>
           </Link>
-          <Link href="/homepage"></Link>
           <Link href="/about" className="flex justify-center items-center">
             <button className="">About Us</button>
           </Link>
         </div>
-      </div>
+       </div>
+      </header>
 
-      <div className="flex justify-around items-center  bg-gray-400 bg-opacity: 0.75 text-white m-6 mx-auto rounded-4xl">
+      <div className="flex justify-around items-center bg-gray-300 text-white m-6 mx-auto rounded-4xl w-[95%]">
         <div className=" block w-[100%] text-center p-1.5">
           <h1 className="text-2xl">
             2000<span className="text-4xl text-green-600">+</span>
@@ -71,21 +73,29 @@ export default function Home() {
       </div>
 
       <div>
-        <div className="flex items-center justify-center text-center m-6">
-          <h1 className="text-white">
+        <div className="flex items-center justify-between text-center m-7 w-[96%] gap-3.5">
+          <h1 className="text-white text-lg w-[80%] ">
             Thousands of jobs, one perfect match" "Get hired faster with smart job matching" "Your
             career breakthrough starts here" "Find jobs that love you back
           </h1>
-          <p className="text-white">
+          <p className="text-white text-md w-[80%]">
             "Discover your next career adventure" "Where talent meets opportunity" "Your dream job
             awaits" "Connect. Apply. Get hired." "Empowering job seekers through creative solutions"
             "Find your next career opportunity" "Where talent meets opportunity" "Your dream job
           </p>
         </div>
       </div>
-      <section className="flex justify-between items-center m-6">s
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFDG8sehLLYiAsbxplLE1jx15agE-sxvqsug&s" alt="" className="w-[506px] rounded"/>
-        <img src="https://m.universalclass.com/i/course/computerliteracy1/studycomputerliteracy18985.jpg" alt="" className="rounded"/>
+      <section className="flex justify-between items-center m-6 ">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFDG8sehLLYiAsbxplLE1jx15agE-sxvqsug&s" alt="" className="w-[47%] rounded h-[300px]"/>
+        <img src="https://m.universalclass.com/i/course/computerliteracy1/studycomputerliteracy18985.jpg" alt="" className="rounded w-[45%] h-[300px]"/>
+      </section>
+
+      <section className="flex text-center justify-around items-center m-6 pb-4 text-white border-b-2 border-white">
+        <h1 className="text-7xl font-semibold">Inspire</h1>
+        <p className="text-6xl text-green-400" >✦</p>
+        <h1 className="text-7xl font-semibold">Build</h1>
+        <p className="text-6xl text-green-400">✦</p>
+        <h1 className="text-7xl font-semibold">Create</h1>
       </section>
       <Footer/>
     </main>
