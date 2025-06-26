@@ -10,9 +10,9 @@ export default function Footer() {
       </div>
       <div className="flex justify-between items-center text-white m-6 mx-auto gap-x-1.5">
         <div className="flex gap-1">
-          <a href="">About us</a>
+          <a href="/ContactUsPage">About us</a>
           <a href="">Services</a>
-          <a href="">Jobs</a>
+          <a href="/Jobspage">Jobs</a>
           <a href="">reviews</a>
         </div>
         <div>
