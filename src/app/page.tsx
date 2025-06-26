@@ -32,10 +32,10 @@ export default function Home() {
         </section>
 
         <div className="flex gap-2">
-          <Link href="/Jobspage" className="flex justify-center items-center">
+          <Link href="Jobspage" className="flex justify-center items-center">
             <button className="bg-green-400 text-black px-4 py-2 rounded ">Find My Job</button>
           </Link>
-          <Link href="/about" className="flex justify-center items-center">
+          <Link href="/ContactUsPage" className="flex justify-center items-center">
             <button className="">About Us</button>
           </Link>
         </div>

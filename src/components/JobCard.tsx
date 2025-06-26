@@ -15,11 +15,11 @@ interface JobCardProps {
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
   return (
     <div className="job-card">
-      <h3>{job.title}</h3>
-      <p>{job.company}</p>
-      <p>{job.location}</p>
-      <p>{job.type}</p>
-      <a href={job.url} target="_blank" rel="noopener noreferrer">Apply Now</a>
+      <h3 className="job-title">{job.title}</h3>
+      <p className="job-company">{job.company}</p>
+      <p className="job-location">{job.location}</p>
+      <p className="job-type">{job.type}</p>
+      <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">Apply Now</a>
     </div>
   );
 };

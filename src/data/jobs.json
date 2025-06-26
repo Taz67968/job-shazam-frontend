@@ -1,0 +1,84 @@
+{
+    "jobs": [
+        {
+            "id": 1,
+            "title": "Software Engineer",
+            "company": "Tech Solutions Inc.",
+            "location": "New York, NY",
+            "type": "Full-time",
+            "url": "https://example.com/job1"
+          },
+          {
+            "id": 2,
+            "title": "Product Manager",
+            "company": "Innovatech",
+            "location": "San Francisco, CA",
+            "type": "Full-time",
+            "url": "https://example.com/job2"
+          },
+          {
+            "id": 3,
+            "title": "UX Designer",
+            "company": "Creative Agency",
+            "location": "Remote",
+            "type": "Part-time",
+            "url": "https://example.com/job3"
+          },
+          {
+            "id": 4,
+            "title": "Data Analyst",
+            "company": "Data Insights LLC",
+            "location": "Austin, TX",
+            "type": "Contract",
+            "url": "https://example.com/job4"
+          },
+          {
+            "id": 5,
+            "title": "DevOps Engineer",
+            "company": "Cloud Services Corp.",
+            "location": "Chicago, IL",
+            "type": "Full-time",
+            "url": "https://example.com/job5"
+          },
+          {
+            "id": 6,
+            "title": "Marketing Specialist",
+            "company": "Brand Boosters",
+            "location": "Boston, MA",
+            "type": "Internship",
+            "url": "https://example.com/job6"
+          },
+          {
+            "id": 7,
+            "title": "Frontend Developer",
+            "company": "Web Innovations",
+            "location": "Remote",
+            "type": "Full-time",
+            "url": "https://example.com/job7"
+          },
+          {
+            "id": 8,
+            "title": "Backend Developer",
+            "company": "Server Solutions",
+            "location": "Seattle, WA",
+            "type": "Part-time",
+            "url": "https://example.com/job8"
+          },
+          {
+            "id": 9,
+            "title": "Systems Administrator",
+            "company": "IT Services Group",
+            "location": "Denver, CO",
+            "type": "Full-time",
+            "url": "https://example.com/job9"
+          },
+          {
+            "id": 10,
+            "title": "Content Writer",
+            "company": "Content Creators",
+            "location": "Remote",
+            "type": "Freelance",
+            "url": "https://example.com/job10"
+          }
+    ]
+}
