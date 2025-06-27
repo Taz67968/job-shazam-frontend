@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import JobCard from './JobCard';
+import React, {useEffect, useState} from "react";
+import JobCard from "./JobCard";
 
 interface Job {
   id: number;
@@ -18,11 +18,11 @@ const JobList: React.FC = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('/api/jobs');
+        const response = await fetch("/api/jobs");
         const data = await response.json();
         setJobs(data);
       } catch (err) {
-        setError('Failed to load jobs');
+        setError("Failed to load jobs");
       } finally {
         setLoading(false);
       }
