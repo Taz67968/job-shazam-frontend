@@ -14,6 +14,7 @@ const JobList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -25,7 +26,6 @@ const JobList: React.FC = () => {
           return;
         }
         const data = await response.json();
-        console.log(data); 
         if (Array.isArray(data)) {
           setJobs(data);
         } else if (data && Array.isArray(data.jobs)) {
@@ -43,16 +43,36 @@ const JobList: React.FC = () => {
     fetchJobs();
   }, []);
 
+  const filteredJobs = jobs.filter((job) => {
+    const searchLower = search.toLowerCase();
+    return (
+      job.title.toLowerCase().includes(searchLower) ||
+      job.type.toLowerCase().includes(searchLower) ||
+      job.location.toLowerCase().includes(searchLower)
+    );
+  });
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="job-list">
-      {jobs.length > 0 ? (
-        jobs.map((job) => <JobCard key={job.id} job={job} />)
-      ) : (
-        <div>No jobs available</div>
-      )}
+    <div className="job-list-container max-w-5xl mx-auto p-4">
+
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search by title, type (e.g. remote/full-time), or location..."
+        className="w-[96%] p-2 border border-gray-300 rounded mb-6 m-[8px]"
+      />
+
+      <div className="job-list grid gap-4">
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
+        ) : (
+          <div>No jobs match your search.</div>
+        )}
+      </div>
     </div>
   );
 };
