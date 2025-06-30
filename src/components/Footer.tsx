@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import {useState} from "react";
 import toast from "react-hot-toast";
 
 export default function Footer() {
@@ -55,7 +55,6 @@ export default function Footer() {
             className="mb-4 border-2 border-white p-2 rounded-md text-white "
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            
           />
           <br />
           <button
