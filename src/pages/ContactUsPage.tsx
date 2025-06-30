@@ -1,5 +1,5 @@
 import "../app/contact.css";
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import Head from 'next/head';
 import { 
   HiOutlineMail, 
@@ -16,8 +16,18 @@ import {
   FaInstagram 
 } from 'react-icons/fa';
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  topic: string;
+  message: string;
+  helpOptions: string[];
+}
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -27,10 +37,11 @@ export default function ContactPage() {
     helpOptions: []
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    
-    if (type === 'checkbox') {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+
+    if (type === 'checkbox' && e.target instanceof HTMLInputElement) {
+      const checked = e.target.checked;
       let updatedOptions = [...formData.helpOptions];
       if (checked) {
         updatedOptions.push(value);
@@ -43,7 +54,7 @@ export default function ContactPage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert('Thank you for your message! We will get back to you soon.');
     setFormData({
@@ -80,18 +91,18 @@ export default function ContactPage() {
           <div className="info-card">
             <h2><HiOutlinePhone className="icon" /> Phone</h2>
             <p className="muted">Call us for assistance</p>
-            <a href="tel:+1410333123947">+1 (410) 333-1239</a>
+            <a href="tel:+237679345789">+237 679345789</a>
           </div>
           
           <div className="info-card">
             <h2><HiOutlineLocationMarker className="icon" /> Office</h2>
             <p className="muted">Visit our headquarters</p>
-            <address>04 Eurasipir Ave., New York, NY 10001 US</address>
+            <address>Cameroon Yaounde Jouvence</address>
           </div>
           
           <div className="info-card">
             <h2><HiOutlineClock className="icon" /> Customer Support</h2>
-            <p className="muted">Monday - Friday: 9 AM to 5 PM EST</p>
+            <p className="muted">Monday - Friday: 9 AM to 5 PM GMT</p>
           </div>
         </div>
         
@@ -210,7 +221,7 @@ export default function ContactPage() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows="5"
+                  rows={5}
                   placeholder="Write your message here..."
                   required
                 ></textarea>
@@ -238,7 +249,6 @@ export default function ContactPage() {
             </div>
           </div>
           
- 
           <div className="support-cards">
             <div className="support-card">
               <div className="support-icon">
@@ -257,10 +267,10 @@ export default function ContactPage() {
               <div>
                 <h4>Connect With Us</h4>
                 <div className="social-icons">
-                  <a href=""><FaFacebook /></a>
-                  <a href=""><FaTwitter /></a>
-                  <a href=""><FaLinkedin /></a>
-                  <a href=""><FaInstagram /></a>
+                  <a href="#"><FaFacebook /></a>
+                  <a href="#"><FaTwitter /></a>
+                  <a href="#"><FaLinkedin /></a>
+                  <a href="#"><FaInstagram /></a>
                 </div>
               </div>
             </div>
@@ -269,7 +279,6 @@ export default function ContactPage() {
       </div>
       
       <footer className="contact-footer">
-        
         <div className="footer-bottom">
           <p>© 2025 Solarced. All rights reserved.</p>
           <div className="footer-links">
