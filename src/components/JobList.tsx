@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import JobCard from './JobCard';
 import '../app/globals.css'
+import { Waveform } from '@uiball/loaders';
 
 interface Job {
   id: number;
@@ -85,7 +86,7 @@ const JobPage: React.FC = () => {
       />
 
       {loading ? (
-        <div>Loading...</div>
+        <div className='flex justify-center text-center mt-4 mb-4'> <Waveform color='#22C55E'/> </div>
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : filteredJobs.length === 0 ? (
