@@ -29,23 +29,3 @@ header {
     background-size: cover;
 }
 
-.job-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.job-card {
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 5px;
-}
-
-.job-card h3 {
-  margin: 0;
-}
-
-.job-card a {
-  text-decoration: none;
-  color: blue;
-}
