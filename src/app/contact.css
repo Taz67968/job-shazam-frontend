@@ -379,34 +379,121 @@
     color: var(--primary-green);
   }
   
-  @media (max-width: 768px) {
-    .contact-header h1 {
-      font-size: 2rem;
-    }
-    
-    .contact-content {
-      flex-direction: column;
-    }
-    
-    .form-row {
-      flex-direction: column;
-      gap: 0;
-    }
-    
-    .form-group {
-      min-width: 100%;
-    }
-    
-    .newsletter-content {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .newsletter-form {
-      width: 100%;
-    }
-    
-    .support-cards {
-      flex-direction: column;
-    }
+ 
+@media (max-width: 768px) {
+  .contact-header h1 {
+    font-size: 2rem;
   }
+  
+  .contact-content {
+    flex-direction: column;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-group {
+    min-width: 100%;
+  }
+  
+  .newsletter-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .newsletter-form {
+    width: 100%;
+  }
+  
+  .support-cards {
+    flex-direction: column;
+  }
+
+  .contact-container {
+    padding: 1.5rem;
+    width: fit-content;
+  }
+  
+  .info-card, 
+  .form-card, 
+  .newsletter-card, 
+  .support-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .contact-header p {
+    font-size: 1rem;
+  }
+  
+  .contact-container {
+    padding: 1rem;
+  }
+  
+  .info-card, 
+  .form-card, 
+  .newsletter-card, 
+  .support-card {
+    padding: 1.2rem;
+  }
+  
+  .form-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  .info-card h2 {
+    font-size: 1.2rem;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-form input {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+  }
+  
+  .newsletter-form button {
+    border-radius: 8px;
+    padding: 0.9rem;
+    width: 100%;
+  }
+  
+  .checkbox-row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .support-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .support-icon {
+    margin-bottom: 0.8rem;
+  }
+  
+  .social-icons {
+    justify-content: center;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .submit-btn {
+    padding: 0.9rem;
+    font-size: 1rem;
+  }
+}
