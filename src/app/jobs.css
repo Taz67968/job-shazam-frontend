@@ -95,6 +95,10 @@
     margin: 20px 0;
   }
 
+  .view-job-link {
+    margin-left: 10px;
+    }
+
 
 .job-card {
   background-color: #252836; 
@@ -103,6 +107,7 @@
   margin: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     transition: transform 0.2s; 
+    border-left: 4px solid #22C55E;
 }
 
 .job-card:hover {
@@ -142,7 +147,6 @@
   background-color: #1DA44D;
 }
 
-/* styles/Contact.module.css */
 .container {
     max-width: 1200px;
     margin: 0 auto;
