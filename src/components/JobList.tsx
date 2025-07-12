@@ -22,7 +22,8 @@ const JobList: React.FC = () => {
         const data = await response.json();
         setJobs(data);
       } catch (err) {
-        setError("Failed to load jobs");
+        setError("Failed to load jobs", );
+        console.error(err)
       } finally {
         setLoading(false);
       }

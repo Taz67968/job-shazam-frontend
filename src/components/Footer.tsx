@@ -2,6 +2,7 @@
 import Image from "next/image";
 import {useState} from "react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function Footer() {
   const [value, setValue] = useState("");
@@ -31,47 +32,17 @@ export default function Footer() {
   };
 
   return (
-    <footer className="flex flex-wrap justify-between p-7 text-white bg-black border-t border-gray-400">
-      <div className="text-2xl flex flex-col text-left mb-5">
-        <a className="ml-3 mr-3 mb-2" href="#">
-          Jobs Listing
-        </a>
-        <a className="ml-3 mr-3 mb-2" href="#">
-          About Us
-        </a>
-        <a className="ml-3 mr-3" href="#">
-          Contact Us
-        </a>
-      </div>
-
-      <div className="mb-5">
-        <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter Your Email"
-            className="mb-4 border-2 border-white p-2 rounded-md text-white "
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+    <footer className="flex flex-col md:flex-row justify-between p-7 text-white bg-transparent border-t border-gray-400">
+      <div className="mb-5 md:mb-0">
+        <Link href="/">
+          <Image
+            src="/IMG_0569.png"
+            alt="site logo"
+            width={100}
+            height={100}
           />
-          <br />
-          <button
-            type="submit"
-            className="text-white  bg-green-700 font-bold text-xl px-4 py-2 rounded-md"
-          >
-            Subscribe
-          </button>
-        </form>
-      </div>
-
-      <div className="flex flex-col">
-        <h5 className="mb-3 text-2xl font-bold">Contact</h5>
-        <p className="mb-4">
-          Hotel Jouvence, Yaounde <br />
-          Center Region, Cameroon
-        </p>
+        </Link>
+        <p className="text-gray-400">Empowering careers and connecting <br /> talents with opportunities worldwide.</p>
         <div className="flex space-x-3">
           <a
             href="https://www.facebook.com/profile.php?id=100088206647830"
@@ -110,6 +81,48 @@ export default function Footer() {
             <Image src="/x.webp" alt="Twitter" height={60} width={60} />
           </a>
         </div>
+        </div>
+      <div className="flex flex-col mb-5">
+        <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
+      <div className="text-2xl text-left">
+        <Link href="/">Home</Link>
+        <Link href="/">Find Jobs</Link>
+        <Link href="/">Contact Us</Link>
+      </div>
+        
+      </div>
+
+      <div className="flex flex-col">
+        <h5 className="mb-3 text-2xl font-bold">Contact</h5>
+        <p className="mb-4 text-gray-400">
+         <span className="text-white font-semibold"> Email </span> info@jobShazam.com<br />
+         <span className="text-white font-semibold">Phone</span> 681716672 <br/>
+         <span className="text-white font-semibold">Address</span> Hotel Jouvence<br />
+          Yaounde Cameroon
+        </p>
+      </div>
+
+      <div className="mb-5">
+        <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
+        <p className="text-gray-400 mb-2">subcribe to get update on new job <br /> opportunities </p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter Your Email"
+            className="mb-4 border-2 border-white p-2 rounded-md text-white "
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <br />
+          <button
+            type="submit"
+            className="text-white  bg-green-700 font-bold text-xl px-4 py-2 rounded-md"
+          >
+            Subscribe
+          </button>
+        </form>
       </div>
     </footer>
   );
