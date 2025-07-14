@@ -1,5 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
+// import Image from "next/image";
+// import Link from "next/link";
+import {Toaster} from "react-hot-toast";
 // import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
@@ -39,12 +40,11 @@ export default function Home() {
         </div>
        </div>
       </header>
-      <main>
-
-      </main>
-      <footer >
-        <Footer /> 
+      <main></main>
+      <footer>
+        <Footer />
       </footer>
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }
