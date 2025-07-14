@@ -32,7 +32,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="flex flex-col md:flex-row justify-between p-7 text-white bg-transparent border-t border-gray-400">
+    <footer className="flex flex-col md:flex-row justify-between p-7 text-white  bg-black border-t border-gray-400">
       <div className="mb-5 md:mb-0">
         <Link href="/">
           <Image
@@ -84,10 +84,10 @@ export default function Footer() {
         </div>
       <div className="flex flex-col mb-5">
         <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
-      <div className="text-2xl text-left">
+      <div className="text-2xl text-left flex flex-col">
         <Link href="/">Home</Link>
-        <Link href="/">Find Jobs</Link>
-        <Link href="/">Contact Us</Link>
+        <Link href="/Jobspage">Find Jobs</Link>
+        <Link href="/ContactUsPage">Contact Us</Link>
       </div>
         
       </div>

@@ -38,14 +38,14 @@ export default function Navbar() {
         `}
       >
         <Link href="/">Home</Link>
-        <Link href="/">Find Jobs</Link>
-        <Link href="/">Contact Us</Link>
+        <Link href="/Jobspage">Find Jobs</Link>
+        <Link href="/ContactUsPage">Contact Us</Link>
       </div>
       </div>
 
       <div className="">
         <button className="font-bold h-max px-4 rounded-md border-green-500 bg-green-500 text-white hover:bg-white hover:text-green-500 transition">
-          <Link href="/">Get Started</Link>
+          <Link href="/Jobspage">Get Started</Link>
         </button>
       </div>
     </nav>
