@@ -146,6 +146,47 @@ export const Footer = () => {
         <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Job Shazam. All rights reserved.</p>
         </div>
+      <div className="flex flex-col mb-5">
+        <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
+      <div className="text-2xl text-left">
+        <Link href="/">Home</Link>
+        <Link href="/">Find Jobs</Link>
+        <Link href="/">Contact Us</Link>
+      </div>
+        
+      </div>
+
+      <div className="flex flex-col">
+        <h5 className="mb-3 text-2xl font-bold">Contact</h5>
+        <p className="mb-4 text-gray-400">
+         <span className="text-white font-semibold"> Email </span> info@jobShazam.com<br />
+         <span className="text-white font-semibold">Phone</span> 681716672 <br/>
+         <span className="text-white font-semibold">Address</span> Hotel Jouvence<br />
+          Yaounde Cameroon
+        </p>
+      </div>
+
+      <div className="mb-5">
+        <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
+        <p className="text-gray-400 mb-2">subcribe to get update on new job <br /> opportunities </p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter Your Email"
+            className="mb-4 border-2 border-white p-2 rounded-md text-white "
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <br />
+          <button
+            type="submit"
+            className="text-white  bg-green-700 font-bold text-xl px-4 py-2 rounded-md"
+          >
+            Subscribe
+          </button>
+        </form>
       </div>
     </footer>
   );
