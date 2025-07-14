@@ -28,7 +28,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       <p className="job-location">{job.location}</p>
       <p className="job-type">{job.type}</p>
       <Link href={`/jobsDetailspage/${job.id}`} className="view-job-link">
-        View Job
+        View Details
       </Link>
     </div>
   );
