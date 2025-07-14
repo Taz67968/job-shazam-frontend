@@ -14,7 +14,7 @@ interface JobCardProps {
   job: Job;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard: React.FC<JobCardProps> = ({job}) => {
   return (
     <div className="job-card">
       <h3 className="job-title">{job.title}</h3>

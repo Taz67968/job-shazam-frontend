@@ -1,24 +1,128 @@
+"use client";
+import Image from "next/image";
+import {useState} from "react";
+import toast from "react-hot-toast";
+import Link from "next/link";
+
 export default function Footer() {
+  const [value, setValue] = useState("");
+
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    console.log("Raw value:", value);
+    console.log("Trimmed value:", value.trim());
+
+    if (!value.trim()) {
+      toast.error("Form can't be empty");
+      return;
+    }
+
+    if (!isValidEmail(value)) {
+      toast.error("Invalid email format");
+      return;
+    }
+
+    toast.success(`New job updates will be sent to ${value}`);
+    console.log("Submitted value:", value);
+
+    setValue("");
+  };
+
   return (
-    <footer className="bg-green-400 text-white py-8 px-1.5">
-      <div>
-        <img
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAaVBMVEX///8AAAACAgLv7+8pKSmDg4M3Nzf8/PxNTU319fXy8vJISEjc3Ny2trb4+PjT09OmpqY8PDyUlJS+vr5cXFyfn5/o6OjHx8d1dXXNzc1jY2NCQkJSUlJ7e3uMjIwZGRlra2sgICANDQ3RPErcAAAD9klEQVR4nO2a27aqIBSGI03zlAcUT6nV+z/kBgTEdq1deyyUi/ldFKnVPyYw5w96OAAAAAAAAAAAAAAAAAAAAAD2E+OsqpJ0TwldH0V5oT4G+HxHjCnKAnU0vEYz3ZCQDUR5TMFJfopLruh4ZK85loedWehMcdlAFFUgRSVckIC2KynKFTr523VTUVgFaRZHo7KIUocRSjYUFQsl52Y8nae5jRdRZ+fi1Gd2eeNvJ6rkYfAwGzOX9MpV5eEiKhDCURluJgqz/0OljII/8s/VWtSBiwre/NjvixpYy3WWUyxWyFuL4pEaDGtaRIVsFCGsnUofVMAjVaJISOqcRS/eTBRhjYfeMX6JxFTjoqbrtUdoi8m3iKpZo1vNq5McVFqeQp7z+oeMiMJ8sq/OFUikqkUUrT9lvZ2oljXKVaQGPVJUTVfyorRh8iSsb34aUzR5BqRiV+Wme1CJCngXZdqpmsuMD6s8dXueoyZwVZ468WGsOZOIncoPa1EZO1i8+qXfw+cldmRNlpaOqJeqgtsy/zVRo7rejB72kvAKN4/cG297GTvhtznXFGm1j9VEgp47+XepBlwXPDoiRVMrN9uorrlNwqXMrpiL8rIkGY/a9SZIlD+SBbbmfkW6OdYQIdHyFHsfzFmXVv11qw65mvXUEhIXdUTC6ZUG7VQqPJ0yvRTSKdNJba9a0TiTcuiTm5j06PH8L916MdUOc9aeGi1vh+OJMxaZ4aWXT2qMW8L7Ilx6xA/jFtepo/XRBiX4FelPAYjbH04axNHtwSV0HC10h9G4qXuDGlkhLm6960ZNJaWEvel1wjsKGapkWQmLI1Xz7kumiZGoef4RiSwlYhe45orKP7hMczx85oG5qE6ko+yx15BiLpOGKi6IyqnZIazotPNzbzdN1KKPcdnTLvOHucDRY07vpYme8Lcm9O7CS7WLO6Ge6o622JB6R6H2LTzNgRbmdzN+wlGbYXS5jq6ytGTmF1Qf0SPNFdsCNaDovl8eeAlfAKKdivA7eKLaYBfjKzKk781aQsFFRXvLWOE3c5nZW8eKcN6BRXuZqJcQsSTd9ebMM4tLsAgsVqjmNjH+g0KYvF0L8TOdEHXdabX3krsQ5VpU/YLpaeFgAymSokxvbH5BIveCTG9sfkOhRJV7S1HMle9oV/Vz+kWUNY6YoEWUJUsGsegToqwZ6Zn2CIA15nPURFlT/W6aqM70/etP6TRRxu/0f0qjR8r8Qy2foQ9043f6PyXVUoI1hpiWGVn7HrZMPt267LiD9xciU5l/oOUbSG/huo8/HWRRjRHcEEJnm9YyDOJt8ODP19RWzTxJbU+KAgAAAAAAAAAAAAAAAAAAAP7JH7vEJ0cSDQ8ZAAAAAElFTkSuQmCC"
-          alt="Job Shazam Logo"
-          className="w-16 mb-4 align-middle"
-        />
+    <footer className="flex flex-col md:flex-row justify-between p-7 text-white bg-transparent border-t border-gray-400">
+      <div className="mb-5 md:mb-0">
+        <Link href="/">
+          <Image
+            src="/IMG_0569.png"
+            alt="site logo"
+            width={100}
+            height={100}
+          />
+        </Link>
+        <p className="text-gray-400">Empowering careers and connecting <br /> talents with opportunities worldwide.</p>
+        <div className="flex space-x-3">
+          <a
+            href="https://www.facebook.com/profile.php?id=100088206647830"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            title="Facebook"
+          >
+            <Image src="/fb.png" alt="Facebook" height={60} width={60} />
+          </a>
+          <a
+            href="https://instagram.com/yourprofile"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            title="Instagram"
+          >
+            <Image src="/ig.png" alt="Instagram" height={60} width={60} />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/mudeh-mukum-024a52267/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+          >
+            <Image src="/li.png" alt="LinkedIn" height={60} width={60} />
+          </a>
+          <a
+            href="https://x.com/KellyHandy69750"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X (Twitter)"
+            title="Twitter/X"
+          >
+            <Image src="/x.webp" alt="Twitter" height={60} width={60} />
+          </a>
+        </div>
+        </div>
+      <div className="flex flex-col mb-5">
+        <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
+      <div className="text-2xl text-left">
+        <Link href="/">Home</Link>
+        <Link href="/">Find Jobs</Link>
+        <Link href="/">Contact Us</Link>
       </div>
-      <div className="flex justify-between items-center text-white m-6 mx-auto gap-x-1.5">
-        <div className="flex gap-1">
-          <a href="/ContactUsPage">About us</a>
-          <a href="">Services</a>
-          <a href="/Jobspage">Jobs</a>
-          <a href="">reviews</a>
-        </div>
-        <div>
-            <p>© 2025 Job Shazam. All rights reserved.</p>
-            <p>Privacy Policy | Terms of Service</p>
-        </div>
+        
+      </div>
+
+      <div className="flex flex-col">
+        <h5 className="mb-3 text-2xl font-bold">Contact</h5>
+        <p className="mb-4 text-gray-400">
+         <span className="text-white font-semibold"> Email </span> info@jobShazam.com<br />
+         <span className="text-white font-semibold">Phone</span> 681716672 <br/>
+         <span className="text-white font-semibold">Address</span> Hotel Jouvence<br />
+          Yaounde Cameroon
+        </p>
+      </div>
+
+      <div className="mb-5">
+        <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
+        <p className="text-gray-400 mb-2">subcribe to get update on new job <br /> opportunities </p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter Your Email"
+            className="mb-4 border-2 border-white p-2 rounded-md text-white "
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <br />
+          <button
+            type="submit"
+            className="text-white  bg-green-700 font-bold text-xl px-4 py-2 rounded-md"
+          >
+            Subscribe
+          </button>
+        </form>
       </div>
     </footer>
   );

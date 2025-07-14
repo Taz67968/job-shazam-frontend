@@ -41,7 +41,7 @@ const JobPage: React.FC = () => {
           setError('Fetched data does not contain job listings');
         }
       } catch (err) {
-        setError('Failed to load jobs');
+        setError("Failed to load jobs");
       } finally {
         setLoading(false);
       }
