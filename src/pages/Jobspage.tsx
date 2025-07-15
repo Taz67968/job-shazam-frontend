@@ -1,12 +1,19 @@
 import React from "react";
 import JobList from "../components/JobList";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/navbar";
+import '../app/jobs.css'
 
 const Jobs: React.FC = () => {
   return (
-    <div>
-      <h1>Job Listings</h1>
-      <JobList />
-    </div>
+    <main className="jobs-container">
+      <Navbar />
+      <div className="content">
+        
+        <JobList />
+        <Footer />
+      </div>
+    </main>
   );
 };
 
