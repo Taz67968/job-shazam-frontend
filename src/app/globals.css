@@ -16,10 +16,10 @@
 } */
 
 main {
-  background: var(--background);
+  background: #2A2D3E;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
+  background-color: #2A2D3E;
 
 }
 

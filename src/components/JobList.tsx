@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import JobCard from './JobCard';
 import '../app/globals.css'
 import { Waveform } from '@uiball/loaders';
+import { useRouter } from 'next/navigation';
 
 interface Job {
   id: number;
@@ -21,6 +22,7 @@ const JobPage: React.FC = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
+    const router = useRouter();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -49,6 +51,28 @@ const JobPage: React.FC = () => {
 
     fetchJobs();
   }, []);
+ const handleTrack = async (job: Job) => {
+  try {
+    const response = await fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...job,
+        appliedDate: new Date().toISOString(),
+        status: 'applied',
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to track job');
+    }
+
+    // Optionally notify or redirect
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 
   const filteredJobs = jobs.filter((job) => {
     const searchLower = search.toLowerCase();
@@ -95,7 +119,7 @@ const JobPage: React.FC = () => {
         <>
           <div className="job-grid">
             {currentJobs.map((job) => (
-              <JobCard key={job.id} job={job} />
+              <JobCard key={job.id} job={job} onTrack={handleTrack} />
             ))}
           </div>
 

@@ -12,9 +12,10 @@ interface Job {
 
 interface JobCardProps {
   job: Job;
+   onTrack?: (id: Job) => void;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard: React.FC<JobCardProps> = ({ job, onTrack }) => {
   return (
     <div className="job-card">
       <div className="flex justify-between items-center">
@@ -30,6 +31,15 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       <Link href={`/jobsDetailspage/${job.id}`} className="view-job-link">
         View Details
       </Link>
+        {onTrack && (
+          <button
+            onClick={() => onTrack(job)}
+            className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+          >
+            Track Job
+          </button>
+        )}
+      
     </div>
   );
 };
