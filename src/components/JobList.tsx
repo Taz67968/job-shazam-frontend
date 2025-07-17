@@ -1,9 +1,9 @@
-'use client';
+"use client";
 //import { IoSearch, IoLocationSharp} from "react-icons/io5";
-import React, { useEffect, useState } from 'react';
-import JobCard from './JobCard';
-import '../app/globals.css'
-import { Waveform } from '@uiball/loaders';
+import React, {useEffect, useState} from "react";
+import JobCard from "./JobCard";
+import "../app/globals.css";
+import {Waveform} from "@uiball/loaders";
 import HeroSearch from "./HeroSearch";
 import FilterBar from "./FilterBar";
 
@@ -20,24 +20,25 @@ const JobPage: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
-  const [titleSearch, setTitleSearch] = useState('');
-  const [locationSearch, setLocationSearch] = useState('');
-  const [salaryFilter, setSalaryFilter] = useState('');
-  const [timePostedFilter, setTimePostedFilter] = useState('');
+  const [search, setSearch] = useState("");
+  const [titleSearch, setTitleSearch] = useState("");
+  const [locationSearch, setLocationSearch] = useState("");
+  const [salaryFilter, setSalaryFilter] = useState("");
+  const [timePostedFilter, setTimePostedFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
 
   const clearFilters = () => {
-    setSalaryFilter('');
-    setTimePostedFilter('');
+    setSalaryFilter("");
+    setTimePostedFilter("");
   };
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('/api/jobs');
+        const response = await fetch("/api/jobs");
         if (!response.ok) {
           const errorDetail = await response.text();
+          setSearch("");
           setError(`Error: ${errorDetail}`);
           return;
         }
@@ -48,10 +49,19 @@ const JobPage: React.FC = () => {
         } else if (data && Array.isArray(data.jobs)) {
           setJobs(data.jobs);
         } else {
-          setError('Fetched data does not contain job listings');
+          setError("Fetched data does not contain job listings");
+        }
+
+        if (Array.isArray(data)) {
+          setJobs(data);
+        } else if (data && Array.isArray(data.jobs)) {
+          setJobs(data.jobs);
+        } else {
+          setError("Fetched data does not contain job listings");
         }
       } catch (err) {
-        setError('Failed to load jobs');
+        setError("Failed to load jobs");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -60,7 +70,9 @@ const JobPage: React.FC = () => {
     fetchJobs();
   }, []);
 
-  {/*Updated feltering way */}
+  {
+    /*Updated feltering way */
+  }
   const filteredJobs = jobs.filter((job) => {
     return (
       job.title.toLowerCase().includes(titleSearch.toLowerCase()) &&
@@ -68,7 +80,8 @@ const JobPage: React.FC = () => {
     );
   });
 
-  {/*
+  {
+    /*
   const filteredJobs = jobs.filter((job) => {
     const searchLower = search.toLowerCase();
     return (
@@ -77,7 +90,8 @@ const JobPage: React.FC = () => {
       job.location.toLowerCase().includes(searchLower)
     );
   });
-  */}
+  */
+  }
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
@@ -91,12 +105,10 @@ const JobPage: React.FC = () => {
 
   useEffect(() => {
     setCurrentPage(1);
-    setSearch
   }, [search]);
 
   return (
     <div className="job-list-container">
-
       {/*herro sedction*/}
       <HeroSearch
         titleSearch={titleSearch}
@@ -124,7 +136,10 @@ const JobPage: React.FC = () => {
       />*/}
       <h1 className="job-listing-title">Job Listings</h1>
       {loading ? (
-        <div className='flex justify-center text-center mt-4 mb-4'> <Waveform color='#22C55E'/> </div>
+        <div className="flex justify-center text-center mt-4 mb-4">
+          {" "}
+          <Waveform color="#22C55E" />{" "}
+        </div>
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : filteredJobs.length === 0 ? (
@@ -146,12 +161,12 @@ const JobPage: React.FC = () => {
               Prev
             </button>
 
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            {Array.from({length: totalPages}, (_, i) => i + 1).map((pageNum) => (
               <button
                 key={pageNum}
                 onClick={() => handlePageChange(pageNum)}
                 className={`px-3 py-1 rounded border ${
-                  currentPage === pageNum ? 'bg-green-400 text-black' : ''
+                  currentPage === pageNum ? "bg-green-400 text-black" : ""
                 }`}
               >
                 {pageNum}
@@ -171,5 +186,4 @@ const JobPage: React.FC = () => {
     </div>
   );
 };
-
 export default JobPage;

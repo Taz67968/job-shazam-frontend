@@ -14,15 +14,15 @@ interface JobCardProps {
   job: Job;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard: React.FC<JobCardProps> = ({job}) => {
   return (
     <div className="job-card">
       <div className="flex justify-between items-center">
-      <h3 className="job-title">{job.title}</h3>
+        <h3 className="job-title">{job.title}</h3>
 
-      <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
-        Apply Now
-      </a>
+        <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
+          Apply Now
+        </a>
       </div>
       <p className="job-company">{job.company}</p>
       <p className="job-location">{job.location}</p>
