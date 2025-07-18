@@ -1,129 +1,154 @@
 "use client";
-import Image from "next/image";
-import {useState} from "react";
-import toast from "react-hot-toast";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Briefcase, Facebook, Twitter, Linkedin, Instagram} from "lucide-react";
 import Link from "next/link";
 
-export default function Footer() {
-  const [value, setValue] = useState("");
-
-  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    console.log("Raw value:", value);
-    console.log("Trimmed value:", value.trim());
-
-    if (!value.trim()) {
-      toast.error("Form can't be empty");
-      return;
-    }
-
-    if (!isValidEmail(value)) {
-      toast.error("Invalid email format");
-      return;
-    }
-
-    toast.success(`New job updates will be sent to ${value}`);
-    console.log("Submitted value:", value);
-
-    setValue("");
-  };
-
+export const Footer = () => {
   return (
-    <footer className="flex flex-col md:flex-row justify-between p-7 text-white bg-transparent border-t border-gray-400">
-      <div className="mb-5 md:mb-0">
-        <Link href="/">
-          <Image src="/IMG_0569.png" alt="site logo" width={100} height={100} />
-        </Link>
-        <p className="text-gray-400">
-          Empowering careers and connecting <br /> talents with opportunities worldwide.
-        </p>
-        <div className="flex space-x-3">
-          <a
-            href="https://www.facebook.com/profile.php?id=100088206647830"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook"
-            title="Facebook"
-          >
-            <Image src="/fb.png" alt="Facebook" height={60} width={60} />
-          </a>
-          <a
-            href="https://instagram.com/yourprofile"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            title="Instagram"
-          >
-            <Image src="/ig.png" alt="Instagram" height={60} width={60} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/mudeh-mukum-024a52267/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            title="LinkedIn"
-          >
-            <Image src="/li.png" alt="LinkedIn" height={60} width={60} />
-          </a>
-          <a
-            href="https://x.com/KellyHandy69750"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X (Twitter)"
-            title="Twitter/X"
-          >
-            <Image src="/x.webp" alt="Twitter" height={60} width={60} />
-          </a>
-        </div>
-      </div>
-      <div className="flex flex-col mb-5">
-        <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
-        <div className="text-2xl text-left">
-          <Link href="/">Home</Link>
-          <Link href="/">Find Jobs</Link>
-          <Link href="/">Contact Us</Link>
-        </div>
-      </div>
+    <footer className="bg-background border-t border-border">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="bg-primary p-2 rounded-lg">
+                <Briefcase className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground font-poppins">Job Shazam</h3>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              Empowering careers and connecting talent with opportunities worldwide.
+            </p>
+            <div className="flex space-x-4">
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://facebook.com" aria-label="Facebook">
+                  <Facebook className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://twitter.com" aria-label="Twitter">
+                  <Twitter className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://linkedin.com" aria-label="LinkedIn">
+                  <Linkedin className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://instagram.com" aria-label="Instagram">
+                  <Instagram className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
 
-      <div className="flex flex-col">
-        <h5 className="mb-3 text-2xl font-bold">Contact</h5>
-        <p className="mb-4 text-gray-400">
-          <span className="text-white font-semibold"> Email </span> info@jobShazam.com
-          <br />
-          <span className="text-white font-semibold">Phone</span> 681716672 <br />
-          <span className="text-white font-semibold">Address</span> Hotel Jouvence
-          <br />
-          Yaounde Cameroon
-        </p>
-      </div>
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/jobs"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Job Listing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-      <div className="mb-5">
-        <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
-        <p className="text-gray-400 mb-2">
-          subcribe to get update on new job <br /> opportunities{" "}
-        </p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter Your Email"
-            className="mb-4 border-2 border-white p-2 rounded-md text-white "
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <br />
-          <button
-            type="submit"
-            className="text-white  bg-green-700 font-bold text-xl px-4 py-2 rounded-md"
-          >
-            Subscribe
-          </button>
-        </form>
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
+            <address className="space-y-2 text-muted-foreground not-italic">
+              <p>
+                Email:{" "}
+                <Link href="mailto:info@jobshazam" className="hover:text-primary">
+                  info@jobshazam
+                </Link>
+              </p>
+              <p>
+                Phone:{" "}
+                <Link href="tel:+237678239294" className="hover:text-primary">
+                  +237 678-239-294
+                </Link>
+              </p>
+              <p>Address: 237 Hotel Juvance </p>
+            </address>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Newsletter</h4>
+            <p className="text-muted-foreground mb-4">
+              Subscribe to get updates on new job opportunities.
+            </p>
+            <form className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="bg-card border-border"
+                required
+              />
+              <Button type="submit" className="bg-primary hover:bg-primary/90">
+                Subscribe
+              </Button>
+            </form>
+          </div>
+        </div>
+
+        <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} Job Shazam. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;
