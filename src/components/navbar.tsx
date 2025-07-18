@@ -33,8 +33,8 @@ export default function Navbar() {
         `}
         >
           <Link href="/">Home</Link>
-          <Link href="/">Find Jobs</Link>
-          <Link href="/">Contact Us</Link>
+          <Link href="/Jobspage">Find Jobs</Link>
+          <Link href="/ContactUsPage">Contact Us</Link>
         </div>
       </div>
 
