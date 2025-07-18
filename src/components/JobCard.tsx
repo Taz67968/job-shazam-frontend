@@ -34,7 +34,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onTrack }) => {
         {onTrack && (
           <button
             onClick={() => onTrack(job)}
-            className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+            className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
           >
             Track Job
           </button>

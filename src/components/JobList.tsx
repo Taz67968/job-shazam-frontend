@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import JobCard from './JobCard';
-import '../app/globals.css'
+import '../app/globals.css';
 import { Waveform } from '@uiball/loaders';
-import { useRouter } from 'next/navigation';
 
 interface Job {
   id: number;
@@ -20,9 +19,6 @@ const JobPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const jobsPerPage = 5;
-    const router = useRouter();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -51,28 +47,26 @@ const JobPage: React.FC = () => {
 
     fetchJobs();
   }, []);
- const handleTrack = async (job: Job) => {
-  try {
-    const response = await fetch('/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...job,
-        appliedDate: new Date().toISOString(),
-        status: 'applied',
-      }),
-    });
 
-    if (!response.ok) {
-      throw new Error('Failed to track job');
+  const handleTrack = async (job: Job) => {
+    try {
+      const response = await fetch('/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...job,
+          appliedDate: new Date().toISOString(),
+          status: 'applied',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to track job');
+      }
+    } catch (err) {
+      console.error(err);
     }
-
-    // Optionally notify or redirect
-  } catch (err) {
-    console.error(err);
-  }
-};
-
+  };
 
   const filteredJobs = jobs.filter((job) => {
     const searchLower = search.toLowerCase();
@@ -83,24 +77,8 @@ const JobPage: React.FC = () => {
     );
   });
 
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [search]);
-
   return (
     <div className="job-list-container">
-
       <input
         type="text"
         value={search}
@@ -110,49 +88,19 @@ const JobPage: React.FC = () => {
       />
 
       {loading ? (
-        <div className='flex justify-center text-center mt-4 mb-4'> <Waveform color='#22C55E'/> </div>
+        <div className='flex justify-center text-center mt-4 mb-4'>
+          <Waveform color='#22C55E' />
+        </div>
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : filteredJobs.length === 0 ? (
         <div>No jobs match your search.</div>
       ) : (
-        <>
-          <div className="job-grid">
-            {currentJobs.map((job) => (
-              <JobCard key={job.id} job={job} onTrack={handleTrack} />
-            ))}
-          </div>
-
-          <div className="flex justify-center items-center space-x-2 mt-8 mb-8">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-4 py-2 border rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={`px-3 py-1 rounded border ${
-                  currentPage === pageNum ? 'bg-green-400 text-black' : ''
-                }`}
-              >
-                {pageNum}
-              </button>
-            ))}
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 border rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
-        </>
+        <div className="job-grid">
+          {filteredJobs.map((job) => (
+            <JobCard key={job.id} job={job} onTrack={handleTrack} />
+          ))}
+        </div>
       )}
     </div>
   );
