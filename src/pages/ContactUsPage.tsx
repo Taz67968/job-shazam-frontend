@@ -1,5 +1,6 @@
 import "../app/contact.css";
 import { useState, ChangeEvent, FormEvent } from 'react';
+import Footer from '../components/Footer'
 import Head from 'next/head';
 import { 
   HiOutlineMail, 
@@ -277,17 +278,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      
-      <footer className="contact-footer">
-        <div className="footer-bottom">
-          <p>© 2025 Solarced. All rights reserved.</p>
-          <div className="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-          </div>
-        </div>
-      </footer>
+     <Footer/>
     </div>
   );
 }

@@ -43,6 +43,8 @@ const JobPage: React.FC = () => {
       } catch (err) {
         setError("Failed to load jobs", );
         console.error(err)
+        setError("Failed to load jobs", );
+        console.error(err)
       } finally {
         setLoading(false);
       }

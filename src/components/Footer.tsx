@@ -32,7 +32,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="flex flex-col md:flex-row justify-between p-7 text-white  bg-black border-t border-gray-400">
+    <footer className="flex flex-col md:flex-row justify-between p-7 text-white  bg-transparent border-t border-gray-400">
       <div className="mb-5 md:mb-0">
         <Link href="/">
           <Image
