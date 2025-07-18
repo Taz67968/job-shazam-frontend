@@ -11,7 +11,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="flex  md:flex-row md:items-center gap-5 justify-between p-7 md:text-2xl">
+    <nav className="flex  md:flex-row md:items-center gap-5 justify-between p-7 md:py-0 md:text-2xl">
       <Link href="/">
         <Image src="/IMG_0569.png" alt="site logo" width={100} height={100} />
       </Link>

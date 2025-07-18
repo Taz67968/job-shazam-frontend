@@ -1,27 +1,17 @@
 "use client";
 import React from "react";
 import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Search, MapPin, Play, TrendingUp, ArrowRight} from "lucide-react";
+/*import {Input} from "@/components/ui/input";*/
+import {TrendingUp} from "lucide-react";
 import Image from "next/image";
 
 interface ModernHeroSectionProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  locationFilter: string;
-  setLocationFilter: (location: string) => void;
   onGetStarted: () => void;
 }
 
-export const ModernHeroSection = ({
-  searchQuery,
-  setSearchQuery,
-  locationFilter,
-  setLocationFilter,
-  onGetStarted,
-}: ModernHeroSectionProps) => {
+export const ModernHeroSection = ({onGetStarted}: ModernHeroSectionProps) => {
   return (
-    <section className="relative bg-gradient-to-br from-background via-card to-background text-foreground py-20 lg:py-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-background via-card to-background text-foreground py-20 lg:py-15 overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"></div>
@@ -50,37 +40,6 @@ export const ModernHeroSection = ({
             </div>
 
             {/* Search Form */}
-            <div className="bg-card rounded-2xl shadow-2xl p-8 border border-border backdrop-blur-sm">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
-                  <Input
-                    placeholder="Job title, keywords, or company"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 h-14 bg-background border-border text-foreground text-lg"
-                  />
-                </div>
-
-                <div className="flex-1 relative">
-                  <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
-                  <Input
-                    placeholder="City, state, or remote"
-                    value={locationFilter}
-                    onChange={(e) => setLocationFilter(e.target.value)}
-                    className="pl-12 h-14 bg-background border-border text-foreground text-lg"
-                  />
-                </div>
-
-                <Button
-                  onClick={onGetStarted}
-                  className="bg-primary hover:bg-primary/90 h-14 px-10 text-primary-foreground font-semibold text-lg transition-all duration-300 hover:scale-105 group"
-                >
-                  Find Jobs
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-            </div>
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
