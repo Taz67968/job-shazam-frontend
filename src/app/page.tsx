@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-// import "./globals.css";
+import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 
