@@ -32,17 +32,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="flex flex-col md:flex-row justify-between p-7 text-white  bg-transparent border-t border-gray-400">
+    <footer className="flex flex-col md:flex-row justify-between p-7 text-white bg-transparent border-t border-gray-400">
       <div className="mb-5 md:mb-0">
         <Link href="/">
-          <Image
-            src="/IMG_0569.png"
-            alt="site logo"
-            width={100}
-            height={100}
-          />
+          <Image src="/IMG_0569.png" alt="site logo" width={100} height={100} />
         </Link>
-        <p className="text-gray-400">Empowering careers and connecting <br /> talents with opportunities worldwide.</p>
+        <p className="text-gray-400">
+          Empowering careers and connecting <br /> talents with opportunities worldwide.
+        </p>
         <div className="flex space-x-3">
           <a
             href="https://www.facebook.com/profile.php?id=100088206647830"
@@ -81,30 +78,33 @@ export default function Footer() {
             <Image src="/x.webp" alt="Twitter" height={60} width={60} />
           </a>
         </div>
-        </div>
+      </div>
       <div className="flex flex-col mb-5">
         <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
-      <div className="text-2xl text-left flex flex-col">
-        <Link href="/">Home</Link>
-        <Link href="/Jobspage">Find Jobs</Link>
-        <Link href="/ContactUsPage">Contact Us</Link>
-      </div>
-        
+        <div className="text-2xl text-left">
+          <Link href="/">Home</Link>
+          <Link href="/">Find Jobs</Link>
+          <Link href="/">Contact Us</Link>
+        </div>
       </div>
 
       <div className="flex flex-col">
         <h5 className="mb-3 text-2xl font-bold">Contact</h5>
         <p className="mb-4 text-gray-400">
-         <span className="text-white font-semibold"> Email </span> info@jobShazam.com<br />
-         <span className="text-white font-semibold">Phone</span> 681716672 <br/>
-         <span className="text-white font-semibold">Address</span> Hotel Jouvence<br />
+          <span className="text-white font-semibold"> Email </span> info@jobShazam.com
+          <br />
+          <span className="text-white font-semibold">Phone</span> 681716672 <br />
+          <span className="text-white font-semibold">Address</span> Hotel Jouvence
+          <br />
           Yaounde Cameroon
         </p>
       </div>
 
       <div className="mb-5">
         <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
-        <p className="text-gray-400 mb-2">subcribe to get update on new job <br /> opportunities </p>
+        <p className="text-gray-400 mb-2">
+          subcribe to get update on new job <br /> opportunities{" "}
+        </p>
         <form onSubmit={handleSubmit}>
           <input
             type="email"

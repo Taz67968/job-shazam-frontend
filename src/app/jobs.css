@@ -1,3 +1,4 @@
+
 .jobs-container {
     background-color: #2A2D3E;
     color: #F8F9FA;
@@ -96,7 +97,10 @@
   }
 
   .view-job-link {
-    margin-left: 10px;
+    /* margin-left: 10px; */
+    display: flex;
+    justify-content: end;
+    color: #22C55E;
     }
 
 

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -25,7 +26,7 @@ const { id } = router.query;
 useEffect(() => {
   if (!id) return;
 
-  const fetchJob = async () => {
+ const fetchJob = async () => {
     try {
       console.log(`Fetching job /api/jobs/${id}`);
       const res = await fetch(`/api/jobs/${id}`);
@@ -34,9 +35,14 @@ useEffect(() => {
       }
       const data = await res.json();
       setJob(data);
-    } catch (err: any) {
-      console.error('Fetch error:', err.message);
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('Fetch error:', err.message);
+        setError(err.message);
+      } else {
+        console.error('Unknown error:', err);
+        setError('An unexpected error occurred');
+      }
     } finally {
       setLoading(false);
     }
