@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import '../app/globals.css';
+import { useRouter } from 'next/navigation';
+import { useSession, signIn } from 'next-auth/react';
 import {
   DragDropContext,
   Droppable,
@@ -34,31 +35,41 @@ const columns = [
 ];
 
 export const ApplicationBoard = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [jobs, setJobs] = useState<TrackedJob[]>([]);
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const fetchTrackedJobs = async () => {
-    try {
-      const res = await fetch('/api/tracked');
-      const data = await res.json();
-
-      const withStatus = (data as any[]).map((job: any) => ({
-        ...job,
-        id: job.id.toString(),
-        status: (job.status || 'applied'),
-      }));
-
-      setJobs(withStatus);
-    } catch (err) {
-      console.error('Error fetching tracked jobs:', err);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    // Redirect unauthenticated users to login
+    if (status === 'unauthenticated') {
+      router.push('/login');
     }
-  };
 
-  fetchTrackedJobs();
-}, []);
+    if (status === 'authenticated') {
+      const fetchTrackedJobs = async () => {
+        try {
+          const res = await fetch('/api/tracked');
+          const data = await res.json();
+
+          const withStatus = (data as any[]).map((job: any) => ({
+            ...job,
+            id: job.id.toString(),
+            status: job.status || 'applied',
+          }));
+
+          setJobs(withStatus);
+        } catch (err) {
+          console.error('Error fetching tracked jobs:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchTrackedJobs();
+    }
+  }, [status, router]);
 
   const handleDragEnd = async (result: DropResult) => {
     if (!result.destination) return;
@@ -72,22 +83,24 @@ useEffect(() => {
       )
     );
 
+    // You can add backend update logic here
   };
 
- const removeJob = async (id: string) => {
-  try {
-    const res = await fetch(`/api/tracked?id=${id}`, { method: 'DELETE' });
+  const removeJob = async (id: string) => {
+    try {
+      const res = await fetch(`/api/tracked?id=${id}`, { method: 'DELETE' });
 
-    if (!res.ok) {
-      throw new Error('Failed to delete job');
+      if (!res.ok) {
+        throw new Error('Failed to delete job');
+      }
+
+      setJobs((prev) => prev.filter((job) => job.id !== id));
+    } catch (error) {
+      console.error('Delete failed:', error);
+      alert('Failed to delete job. Please try again.');
     }
+  };
 
-    setJobs((prev) => prev.filter((job) => job.id !== id));
-  } catch (error) {
-    console.error('Delete failed:', error);
-    alert('Failed to delete job. Please try again.');
-  }
-};
   const getJobsByStatus = (status: TrackedJob['status']) =>
     jobs.filter((job) => job.status === status);
 
@@ -106,7 +119,11 @@ useEffect(() => {
     }
   };
 
-  if (loading) return <div className="text-center py-10">Loading...</div>;
+  if (status === 'loading') {
+    return <div className="text-center py-10">Loading session...</div>;
+  }
+
+  if (!session) return null; // Prevent rendering if no session
 
   return (
     <div className="space-y-6 px-4">
