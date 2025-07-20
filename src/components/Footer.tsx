@@ -2,9 +2,52 @@
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Briefcase, Facebook, Twitter, Linkedin, Instagram} from "lucide-react";
+import {useState} from "react";
+import toast from "react-hot-toast";
 import Link from "next/link";
 
 export const Footer = () => {
+  const [value, setValue] = useState("");
+
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const trimmedEmail = value.trim();
+
+    if (!trimmedEmail) {
+      toast.error("Please provide an email");
+      return;
+    }
+
+    if (!isValidEmail(trimmedEmail)) {
+      toast.error("Invalid email format");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:8080/mail/sendMail?to=${trimmedEmail}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || `HTTP error ${res.status}`);
+      }
+
+      const result = await res.json();
+      toast.success(result.message);
+      setValue("");
+    } catch (err) {
+      console.error("Error in fetch:", err);
+      toast.error("Something went wrong while subscribing.");
+    }
+  };
+
   return (
     <footer className="bg-background border-t border-border">
       <div className="container mx-auto px-4 py-16">
@@ -129,11 +172,13 @@ export const Footer = () => {
             <p className="text-muted-foreground mb-4">
               Subscribe to get updates on new job opportunities.
             </p>
-            <form className="flex gap-2">
+            <form className="flex gap-2" onSubmit={handleSubmit}>
               <Input
                 type="email"
                 placeholder="Enter your email"
                 className="bg-card border-border"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
                 required
               />
               <Button type="submit" className="bg-primary hover:bg-primary/90">

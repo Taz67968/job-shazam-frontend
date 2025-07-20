@@ -1,7 +1,7 @@
 import "../app/contact.css";
-import { useState, ChangeEvent, FormEvent } from 'react';
-import Footer from '../components/Footer'
-import Head from 'next/head';
+import {useState, ChangeEvent, FormEvent} from "react";
+import Footer from "../components/Footer";
+import Head from "next/head";
 import {
   HiOutlineMail,
   HiOutlinePhone,
@@ -11,14 +11,17 @@ import {
   HiOutlineShare,
 } from "react-icons/hi";
 import {FaFacebook, FaTwitter, FaLinkedin, FaInstagram} from "react-icons/fa";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+
 
 interface FormData {
   firstName: string;
   lastName: string;
-  email: string;
+  from: string;
   phone: string;
   topic: string;
-  message: string;
+  text: string;
   helpOptions: string[];
 }
 
@@ -26,10 +29,10 @@ export default function ContactPage() {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
-    email: "",
+    from: "",
     phone: "",
     topic: "",
-    message: "",
+    text: "",
     helpOptions: [],
   });
 
@@ -52,18 +55,36 @@ export default function ContactPage() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("Thank you for your message! We will get back to you soon.");
+   try {
+
+    const {from,text} = formData
+
+    const res = await fetch(`http://localhost:8080/mail/getMail`,{
+      method:"Post",
+      headers: {
+        'Content-Type': "application/json",
+      },
+      body: JSON.stringify({from,text})
+    });
+
+    if(res.ok){
+      toast.success("Thank you for your message! We will get back to you soon.")
+    }  
     setFormData({
       firstName: "",
       lastName: "",
-      email: "",
+      from: "",
       phone: "",
       topic: "",
-      message: "",
+      text: "",
       helpOptions: [],
     });
+   } catch (error) {
+    console.log(error)
+    toast.error("message not send. An error occurred")
+   }
   };
 
   return (
@@ -146,12 +167,12 @@ export default function ContactPage() {
 
               <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="from">Email</label>
                   <input
                     type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    id="from"
+                    name="from"
+                    value={formData.from}
                     onChange={handleChange}
                     required
                   />
@@ -223,11 +244,11 @@ export default function ContactPage() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="message">Message</label>
+                <label htmlFor="text">Message</label>
                 <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
+                  id="text"
+                  name="text"
+                  value={formData.text}
                   onChange={handleChange}
                   rows={5}
                   placeholder="Write your message here..."
@@ -292,7 +313,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-     <Footer/>
+      <Footer />
 
       <footer className="contact-footer">
         <div className="footer-bottom">
@@ -304,6 +325,7 @@ export default function ContactPage() {
           </div>
         </div>
       </footer>
+      <Toaster/>
     </div>
   );
 }

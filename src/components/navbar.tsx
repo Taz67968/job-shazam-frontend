@@ -4,7 +4,6 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {Search, Briefcase, Phone, BarChart3, Menu, X} from "lucide-react";
 
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

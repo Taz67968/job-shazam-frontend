@@ -1,10 +1,9 @@
+"use client";
 
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import '../../app/jobs.css';
-import '../../app/globals.css';
+import React, {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import "../../app/jobs.css";
+import "../../app/globals.css";
 
 interface Job {
   id: number;
@@ -12,47 +11,47 @@ interface Job {
   company: string;
   location: string;
   type: string;
-  url: string;
+  applyUrl: string;
   description?: string;
 }
 
 const JobDetailPage: React.FC = () => {
- const router = useRouter();
-const { id } = router.query;
+  const router = useRouter();
+  const {id} = router.query;
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-useEffect(() => {
-  if (!id) return;
+  useEffect(() => {
+    if (!id) return;
 
- const fetchJob = async () => {
-    try {
-      console.log(`Fetching job /api/jobs/${id}`);
-      const res = await fetch(`/api/jobs/${id}`);
-      if (!res.ok) {
-        throw new Error(`Failed to fetch job`);
+    const fetchJob = async () => {
+      try {
+        console.log(`Fetching job /api/jobs/${id}`);
+        const res = await fetch(`http://localhost:8080/jobs/${id}`);
+        if (!res.ok) {
+          throw new Error(`Failed to fetch job`);
+        }
+        const data = await res.json();
+        setJob(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error("Fetch error:", err.message);
+          setError(err.message);
+        } else {
+          console.error("Unknown error:", err);
+          setError("An unexpected error occurred");
+        }
+      } finally {
+        setLoading(false);
       }
-      const data = await res.json();
-      setJob(data);
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error('Fetch error:', err.message);
-        setError(err.message);
-      } else {
-        console.error('Unknown error:', err);
-        setError('An unexpected error occurred');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchJob();
-}, [id]);
+    fetchJob();
+  }, [id]);
 
   if (loading) return <div>Loading...</div>;
-  if (error || !job) return <div>{error || 'Job not found'}</div>;
+  if (error || !job) return <div>{error || "Job not found"}</div>;
 
   return (
     <div className="job-card">
@@ -61,7 +60,7 @@ useEffect(() => {
       <p className="job-location">{job.location}</p>
       <p className="job-type">{job.type}</p>
       <p className="job-type">{job.description}</p>
-      <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
+      <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
         Apply Now
       </a>
     </div>

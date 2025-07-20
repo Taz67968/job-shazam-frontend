@@ -35,7 +35,7 @@ const JobPage: React.FC = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("/api/jobs");
+        const response = await fetch("http://localhost:8080/jobs");
         if (!response.ok) {
           const errorDetail = await response.text();
           setSearch("");
