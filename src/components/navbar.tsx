@@ -18,7 +18,7 @@ export default function Navbar() {
 
   // Prefetch routes
   useEffect(() => {
-    const prefetchRoutes = ["/Jobspage", "/track-applications", "/ContactUsPage", "/find-jobs"];
+    const prefetchRoutes = ["/Jobspage", "/track-applications", "/ContactUsPage", "/find-jobs", "lohinPage"];
     prefetchRoutes.forEach((route) => {
       const link = document.createElement("link");
       link.rel = "prefetch";
@@ -55,9 +55,9 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-4">
             <Button variant="outline" asChild>
-              <Link href="/find-jobs" prefetch={false}>
+              <Link href="/loginPage" prefetch={false}>
                 <Briefcase className="h-4 w-4 mr-2" />
-                Get Started
+                SignUP
               </Link>
             </Button>
           </div>
@@ -152,7 +152,7 @@ function MobileNavLink({
   return (
     <Link
       href={href}
-      className="block px-4 py-2 text-foreground hover:text-primary hover:bg-accent rounded-md transition-colors flex items-center gap-2"
+      className=" px-4 py-2 text-foreground hover:text-primary hover:bg-accent rounded-md transition-colors flex items-center gap-2"
       onClick={onClick}
       prefetch={false}
     >
