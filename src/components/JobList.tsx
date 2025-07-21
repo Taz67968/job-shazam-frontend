@@ -92,6 +92,7 @@ const JobPage: React.FC = () => {
   }, [search]);
 
   return (
+    
     <div className="job-list-container">
       {/*herro sedction*/}
       <HeroSearch

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-
+import '../app/globals.css'
 export default function RegisterPage() {
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">

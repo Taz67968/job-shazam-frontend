@@ -20,7 +20,7 @@ const HeroSearch: React.FC<HeroSearchProps> = ({
 }) => {
   return (
     <div
-      className="bg-cover bg-center py-20 px-4 text-center mb-10 rounded-xl"
+      className="bg-cover bg-center py-20 px-4 text-center mb-10 "
       style={{ backgroundImage: "url('/hero-bg.jpg')" }} // make sure this path is correct
     >
       {/* Foreground content directly over image */}
@@ -50,7 +50,7 @@ const HeroSearch: React.FC<HeroSearchProps> = ({
               value={locationSearch}
               onChange={(e) => setLocationSearch(e.target.value)}
               placeholder="Location"
-              className="w-full p-3 pl-10  rounded text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 pl-10  rounded text-black focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
 
