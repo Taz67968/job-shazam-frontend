@@ -5,7 +5,6 @@ import JobCard from "./JobCard";
 import "../app/globals.css";
 import {Waveform} from "@uiball/loaders";
 import HeroSearch from "./HeroSearch";
-import FilterBar from "./FilterBar";
 
 interface Job {
   id: number;
@@ -23,15 +22,11 @@ const JobPage: React.FC = () => {
   const [search, setSearch] = useState("");
   const [titleSearch, setTitleSearch] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
-  const [salaryFilter, setSalaryFilter] = useState("");
-  const [timePostedFilter, setTimePostedFilter] = useState("");
+  
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 5;
 
-  const clearFilters = () => {
-    setSalaryFilter("");
-    setTimePostedFilter("");
-  };
+ 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -80,18 +75,7 @@ const JobPage: React.FC = () => {
     );
   });
 
-  {
-    /*
-  const filteredJobs = jobs.filter((job) => {
-    const searchLower = search.toLowerCase();
-    return (
-      job.title.toLowerCase().includes(searchLower) ||
-      job.type.toLowerCase().includes(searchLower) ||
-      job.location.toLowerCase().includes(searchLower)
-    );
-  });
-  */
-  }
+ 
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
@@ -119,13 +103,13 @@ const JobPage: React.FC = () => {
       />
       {/*end of herro section */}
 
-      <FilterBar
+      {/*<FilterBar
         salaryFilter={salaryFilter}
         timePostedFilter={timePostedFilter}
         setSalaryFilter={setSalaryFilter}
         setTimePostedFilter={setTimePostedFilter}
         clearFilters={clearFilters}
-      />
+      />*/}
 
       {/*<input
         type="text"

@@ -2,11 +2,12 @@
 .jobs-container {
     background-color: #2A2D3E;
     color: #F8F9FA;
-    padding: 20px;
+    padding: 0px;
   }
   
   .content {
     max-width: 1200px;
+    
     margin: auto;
   }
   
