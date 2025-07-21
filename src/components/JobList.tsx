@@ -119,7 +119,7 @@ const JobPage: React.FC = () => {
         placeholder="Search by title, type (e.g. remote/full-time), or location..."
         className="w-full p-3 border border-gray-300 rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />*/}
-      <h1 className="job-listing-title">Job Listings</h1>
+      <h1 className="job-listing-title " >Job Listings</h1>
       {loading ? (
         <div className="flex justify-center text-center mt-4 mb-4">
           {" "}
