@@ -1,25 +1,154 @@
-export default function Footer() {
+"use client";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Briefcase, Facebook, Twitter, Linkedin, Instagram} from "lucide-react";
+import Link from "next/link";
+
+export const Footer = () => {
   return (
-    <footer className="bg-green-400 text-white py-8 px-1.5">
-      <div>
-        <img
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAaVBMVEX///8AAAACAgLv7+8pKSmDg4M3Nzf8/PxNTU319fXy8vJISEjc3Ny2trb4+PjT09OmpqY8PDyUlJS+vr5cXFyfn5/o6OjHx8d1dXXNzc1jY2NCQkJSUlJ7e3uMjIwZGRlra2sgICANDQ3RPErcAAAD9klEQVR4nO2a27aqIBSGI03zlAcUT6nV+z/kBgTEdq1deyyUi/ldFKnVPyYw5w96OAAAAAAAAAAAAAAAAAAAAAD2E+OsqpJ0TwldH0V5oT4G+HxHjCnKAnU0vEYz3ZCQDUR5TMFJfopLruh4ZK85loedWehMcdlAFFUgRSVckIC2KynKFTr523VTUVgFaRZHo7KIUocRSjYUFQsl52Y8nae5jRdRZ+fi1Gd2eeNvJ6rkYfAwGzOX9MpV5eEiKhDCURluJgqz/0OljII/8s/VWtSBiwre/NjvixpYy3WWUyxWyFuL4pEaDGtaRIVsFCGsnUofVMAjVaJISOqcRS/eTBRhjYfeMX6JxFTjoqbrtUdoi8m3iKpZo1vNq5McVFqeQp7z+oeMiMJ8sq/OFUikqkUUrT9lvZ2oljXKVaQGPVJUTVfyorRh8iSsb34aUzR5BqRiV+Wme1CJCngXZdqpmsuMD6s8dXueoyZwVZ468WGsOZOIncoPa1EZO1i8+qXfw+cldmRNlpaOqJeqgtsy/zVRo7rejB72kvAKN4/cG297GTvhtznXFGm1j9VEgp47+XepBlwXPDoiRVMrN9uorrlNwqXMrpiL8rIkGY/a9SZIlD+SBbbmfkW6OdYQIdHyFHsfzFmXVv11qw65mvXUEhIXdUTC6ZUG7VQqPJ0yvRTSKdNJba9a0TiTcuiTm5j06PH8L916MdUOc9aeGi1vh+OJMxaZ4aWXT2qMW8L7Ilx6xA/jFtepo/XRBiX4FelPAYjbH04axNHtwSV0HC10h9G4qXuDGlkhLm6960ZNJaWEvel1wjsKGapkWQmLI1Xz7kumiZGoef4RiSwlYhe45orKP7hMczx85oG5qE6ko+yx15BiLpOGKi6IyqnZIazotPNzbzdN1KKPcdnTLvOHucDRY07vpYme8Lcm9O7CS7WLO6Ge6o622JB6R6H2LTzNgRbmdzN+wlGbYXS5jq6ytGTmF1Qf0SPNFdsCNaDovl8eeAlfAKKdivA7eKLaYBfjKzKk781aQsFFRXvLWOE3c5nZW8eKcN6BRXuZqJcQsSTd9ebMM4tLsAgsVqjmNjH+g0KYvF0L8TOdEHXdabX3krsQ5VpU/YLpaeFgAymSokxvbH5BIveCTG9sfkOhRJV7S1HMle9oV/Vz+kWUNY6YoEWUJUsGsegToqwZ6Zn2CIA15nPURFlT/W6aqM70/etP6TRRxu/0f0qjR8r8Qy2foQ9043f6PyXVUoI1hpiWGVn7HrZMPt267LiD9xciU5l/oOUbSG/huo8/HWRRjRHcEEJnm9YyDOJt8ODP19RWzTxJbU+KAgAAAAAAAAAAAAAAAAAAAP7JH7vEJ0cSDQ8ZAAAAAElFTkSuQmCC"
-          alt="Job Shazam Logo"
-          className="w-16 mb-4 align-middle"
-        />
-      </div>
-      <div className="flex justify-between items-center text-white m-6 mx-auto gap-x-1.5">
-        <div className="flex gap-1">
-          <a href="/ContactUsPage">About us</a>
-          <a href="">Services</a>
-          <a href="/Jobspage">Jobs</a>
-          <a href="">reviews</a>
+    <footer className="bg-background border-t border-border">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="bg-primary p-2 rounded-lg">
+                <Briefcase className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground font-poppins">Job Shazam</h3>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              Empowering careers and connecting talent with opportunities worldwide.
+            </p>
+            <div className="flex space-x-4">
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://facebook.com" aria-label="Facebook">
+                  <Facebook className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://twitter.com" aria-label="Twitter">
+                  <Twitter className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://linkedin.com" aria-label="LinkedIn">
+                  <Linkedin className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                <Link href="https://instagram.com" aria-label="Instagram">
+                  <Instagram className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/jobs"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Job Listing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
+            <address className="space-y-2 text-muted-foreground not-italic">
+              <p>
+                Email:{" "}
+                <Link href="mailto:info@jobshazam" className="hover:text-primary">
+                  info@jobshazam
+                </Link>
+              </p>
+              <p>
+                Phone:{" "}
+                <Link href="tel:+237678239294" className="hover:text-primary">
+                  +237 678-239-294
+                </Link>
+              </p>
+              <p>Address: 237 Hotel Juvance </p>
+            </address>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Newsletter</h4>
+            <p className="text-muted-foreground mb-4">
+              Subscribe to get updates on new job opportunities.
+            </p>
+            <form className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="bg-card border-border"
+                required
+              />
+              <Button type="submit" className="bg-primary hover:bg-primary/90">
+                Subscribe
+              </Button>
+            </form>
+          </div>
         </div>
-        <div>
-            <p>© 2025 Job Shazam. All rights reserved.</p>
-            <p>Privacy Policy | Terms of Service</p>
+
+        <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} Job Shazam. All rights reserved.</p>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

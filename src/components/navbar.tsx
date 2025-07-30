@@ -1,24 +1,163 @@
+"use client";
+import {useState, useEffect} from "react";
 import Link from "next/link";
+import {Button} from "@/components/ui/button";
+import {Search, Briefcase, Phone, BarChart3, Menu, X} from "lucide-react";
+
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Prefetch routes
+  useEffect(() => {
+    const prefetchRoutes = ["/Jobspage", "/Dashboard", "/ContactUsPage", "/find-jobs", "lohinPage"];
+    prefetchRoutes.forEach((route) => {
+      const link = document.createElement("link");
+      link.rel = "prefetch";
+      link.href = route;
+      document.head.appendChild(link);
+    });
+  }, []);
+
   return (
-    <nav  >
-      <div className="flex justify-around items-center bg-black text-white m-6 mx-auto  py-2.5 rounded-4xl w-[80%]" >
-          <a href="/ContactUsPage">About us</a>
-          <a href="">Services</a>
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAaVBMVEX///8AAAACAgLv7+8pKSmDg4M3Nzf8/PxNTU319fXy8vJISEjc3Ny2trb4+PjT09OmpqY8PDyUlJS+vr5cXFyfn5/o6OjHx8d1dXXNzc1jY2NCQkJSUlJ7e3uMjIwZGRlra2sgICANDQ3RPErcAAAD9klEQVR4nO2a27aqIBSGI03zlAcUT6nV+z/kBgTEdq1deyyUi/ldFKnVPyYw5w96OAAAAAAAAAAAAAAAAAAAAAD2E+OsqpJ0TwldH0V5oT4G+HxHjCnKAnU0vEYz3ZCQDUR5TMFJfopLruh4ZK85loedWehMcdlAFFUgRSVckIC2KynKFTr523VTUVgFaRZHo7KIUocRSjYUFQsl52Y8nae5jRdRZ+fi1Gd2eeNvJ6rkYfAwGzOX9MpV5eEiKhDCURluJgqz/0OljII/8s/VWtSBiwre/NjvixpYy3WWUyxWyFuL4pEaDGtaRIVsFCGsnUofVMAjVaJISOqcRS/eTBRhjYfeMX6JxFTjoqbrtUdoi8m3iKpZo1vNq5McVFqeQp7z+oeMiMJ8sq/OFUikqkUUrT9lvZ2oljXKVaQGPVJUTVfyorRh8iSsb34aUzR5BqRiV+Wme1CJCngXZdqpmsuMD6s8dXueoyZwVZ468WGsOZOIncoPa1EZO1i8+qXfw+cldmRNlpaOqJeqgtsy/zVRo7rejB72kvAKN4/cG297GTvhtznXFGm1j9VEgp47+XepBlwXPDoiRVMrN9uorrlNwqXMrpiL8rIkGY/a9SZIlD+SBbbmfkW6OdYQIdHyFHsfzFmXVv11qw65mvXUEhIXdUTC6ZUG7VQqPJ0yvRTSKdNJba9a0TiTcuiTm5j06PH8L916MdUOc9aeGi1vh+OJMxaZ4aWXT2qMW8L7Ilx6xA/jFtepo/XRBiX4FelPAYjbH04axNHtwSV0HC10h9G4qXuDGlkhLm6960ZNJaWEvel1wjsKGapkWQmLI1Xz7kumiZGoef4RiSwlYhe45orKP7hMczx85oG5qE6ko+yx15BiLpOGKi6IyqnZIazotPNzbzdN1KKPcdnTLvOHucDRY07vpYme8Lcm9O7CS7WLO6Ge6o622JB6R6H2LTzNgRbmdzN+wlGbYXS5jq6ytGTmF1Qf0SPNFdsCNaDovl8eeAlfAKKdivA7eKLaYBfjKzKk781aQsFFRXvLWOE3c5nZW8eKcN6BRXuZqJcQsSTd9ebMM4tLsAgsVqjmNjH+g0KYvF0L8TOdEHXdabX3krsQ5VpU/YLpaeFgAymSokxvbH5BIveCTG9sfkOhRJV7S1HMle9oV/Vz+kWUNY6YoEWUJUsGsegToqwZ6Zn2CIA15nPURFlT/W6aqM70/etP6TRRxu/0f0qjR8r8Qy2foQ9043f6PyXVUoI1hpiWGVn7HrZMPt267LiD9xciU5l/oOUbSG/huo8/HWRRjRHcEEJnm9YyDOJt8ODP19RWzTxJbU+KAgAAAAAAAAAAAAAAAAAAAP7JH7vEJ0cSDQ8ZAAAAAElFTkSuQmCC" alt="" className="w-9 mt-1.5 mb-1.5"/>
-
-          <a href="/Jobspage">Jobs</a>
-          <a href="">reviews</a>
-
-          <Link href="/Dashboard" className="flex justify-center items-center">
-            <button className="">Dashboard</button>
+    <header
+      className={`bg-background border-b border-border sticky top-0 z-50 transition-all ${isScrolled ? "shadow-md" : ""}`}
+    >
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-primary font-poppins" prefetch={false}>
+            IT-JobFinder
           </Link>
 
-          <Link href="/UploadPage" className="flex justify-center items-center">
-            <button className="">UploadCv</button>
-          </Link>
-        
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <NavLink href="/" prefetch={false}>
+              Home
+            </NavLink>
+            <NavLink href="/Jobspage" icon={<Search className="h-4 w-4" />}>
+              Find Jobs
+            </NavLink>
+            <NavLink href="/Dashboard" icon={<BarChart3 className="h-4 w-4" />}>
+              Track Applications
+            </NavLink>
+            <NavLink href="/ContactUsPage" icon={<Phone className="h-4 w-4" />}>
+              Contact
+            </NavLink>
+          </nav>
+
+          <div className="hidden md:flex items-center gap-4">
+            <Button asChild>
+              <Link href="/loginPage" prefetch={false}>
+                <Briefcase className="h-4 w-4 mr-2" />
+                SignUP
+              </Link>
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 rounded-md text-foreground hover:text-primary focus:outline-none"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden mt-4 pb-4 space-y-4">
+            <MobileNavLink href="/" onClick={() => setIsOpen(false)}>
+              Home
+            </MobileNavLink>
+            <MobileNavLink
+              href="/Jobspage"
+              onClick={() => setIsOpen(false)}
+              icon={<Search className="h-4 w-4" />}
+            >
+              Find Jobs
+            </MobileNavLink>
+            <MobileNavLink
+              href="/track-applications"
+              onClick={() => setIsOpen(false)}
+              icon={<BarChart3 className="h-4 w-4" />}
+            >
+              Track Applications
+            </MobileNavLink>
+            <MobileNavLink
+              href="/ContactUsPage"
+              onClick={() => setIsOpen(false)}
+              icon={<Phone className="h-4 w-4" />}
+            >
+              Contact
+            </MobileNavLink>
+
+            <button className="w-full border rounded-md px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors" onClick={() => setIsOpen(false)}>
+              <Link href="/find-jobs">
+                <Briefcase className="h-4 w-4 mr-2" />
+                Get Started
+              </Link>
+            </button>
+          </div>
+        )}
       </div>
-    </nav>
+    </header>
+  );
+}
+
+// Reusable NavLink component
+function NavLink({
+  href,
+  children,
+  icon,
+  prefetch = true,
+}: {
+  href: string;
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  prefetch?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className="text-foreground hover:text-primary transition-colors flex items-center gap-2"
+      prefetch={prefetch}
+    >
+      {icon}
+      {children}
+    </Link>
+  );
+}
+
+// Reusable MobileNavLink component
+function MobileNavLink({
+  href,
+  children,
+  icon,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      className=" px-4 py-2 text-foreground hover:text-primary hover:bg-accent rounded-md transition-colors flex items-center gap-2"
+      onClick={onClick}
+      prefetch={false}
+    >
+      {icon}
+      {children}
+    </Link>
   );
 }
