@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Navbar() {
   return (
     <nav  >
@@ -8,6 +9,14 @@ export default function Navbar() {
 
           <a href="/Jobspage">Jobs</a>
           <a href="">reviews</a>
+
+          <Link href="/Dashboard" className="flex justify-center items-center">
+            <button className="">Dashboard</button>
+          </Link>
+
+          <Link href="/UploadPage" className="flex justify-center items-center">
+            <button className="">UploadCv</button>
+          </Link>
         
       </div>
     </nav>

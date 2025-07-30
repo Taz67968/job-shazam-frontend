@@ -38,9 +38,7 @@ export default function Home() {
           <Link href="/ContactUsPage" className="flex justify-center items-center">
             <button className="">About Us</button>
           </Link>
-          <Link href="/Dashboard" className="flex justify-center items-center">
-            <button className="">About Us</button>
-          </Link>
+         
         </div>
        </div>
       </header>
