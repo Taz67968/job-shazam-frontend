@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import '../app/globals.css';
-// import { Header } from '@/components/Header';
-// import { Footer } from '@/components/Footer';
-import { ApplicationBoard } from '@/components/ApplicationBoard';
+import Navbar  from '../components/navbar';
+import Footer from '../components/Footer';
+import { ApplicationBoard } from '../components/ApplicationBoard';
 const TrackApplications = () => {
   return (
     <main className="min-h-screen bg-background">
-      {/* <Header /> */}
+      <Navbar />
       
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-12">
@@ -25,7 +25,7 @@ const TrackApplications = () => {
       <div className="container mx-auto px-4 py-8">
         <ApplicationBoard />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };

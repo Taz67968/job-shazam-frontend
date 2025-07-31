@@ -1,5 +1,5 @@
 'use client';
-import '../app/globals.css';
+// import '../app/globals.css';
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -42,6 +42,7 @@ useEffect(() => {
     try {
       const res = await fetch('/api/tracked');
       const data = await res.json();
+      
 
       const withStatus = (data as any[]).map((job: any) => ({
         ...job,
@@ -117,7 +118,7 @@ useEffect(() => {
             key={column.id}
             className={`rounded-lg p-4 text-center ${column.color} border`}
           >
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold text-black">
               {getJobsByStatus(column.id as TrackedJob['status']).length}
             </div>
             <div className="text-sm text-gray-600">{column.title}</div>
@@ -133,7 +134,7 @@ useEffect(() => {
               <div
                 className={`p-4 rounded-lg border-2 border-dashed ${column.color}`}
               >
-                <h3 className="font-semibold text-center">
+                <h3 className="font-semibold text-center text-black">
                   {column.title} (
                   {getJobsByStatus(column.id as TrackedJob['status']).length})
                 </h3>
@@ -166,7 +167,7 @@ useEffect(() => {
                               }`}
                             >
                               <div className="flex justify-between items-start mb-2">
-                                <h4 className="font-semibold text-sm truncate">
+                                <h4 className="font-semibold text-sm truncate text-black">
                                   {job.title}
                                 </h4>
                                 <button

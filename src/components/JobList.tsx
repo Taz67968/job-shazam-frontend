@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import JobCard from './JobCard';
-import '../app/globals.css';
-import { Waveform } from '@uiball/loaders';
+import React, { useEffect, useState } from "react";
+import JobCard from "./JobCard";
+import "../app/globals.css";
+import { Waveform } from "@uiball/loaders";
+import HeroSearch from "./HeroSearch";
 
 interface Job {
   id: number;
@@ -18,12 +19,13 @@ const JobPage: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
+  const [titleSearch, setTitleSearch] = useState("");
+  const [locationSearch, setLocationSearch] = useState("");
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('/api/jobs');
+        const response = await fetch("/api/jobs");
         if (!response.ok) {
           const errorDetail = await response.text();
           setError(`Error: ${errorDetail}`);
@@ -36,10 +38,11 @@ const JobPage: React.FC = () => {
         } else if (data && Array.isArray(data.jobs)) {
           setJobs(data.jobs);
         } else {
-          setError('Fetched data does not contain job listings');
+          setError("Fetched data does not contain job listings");
         }
       } catch (err) {
-        setError('Failed to load jobs');
+        setError("Failed to load jobs");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -47,6 +50,13 @@ const JobPage: React.FC = () => {
 
     fetchJobs();
   }, []);
+
+  const filteredJobs = jobs.filter((job) => {
+    return (
+      job.title.toLowerCase().includes(titleSearch.toLowerCase()) &&
+      job.location.toLowerCase().includes(locationSearch.toLowerCase())
+    );
+  });
 
   const handleTrack = async (job: Job) => {
     try {
@@ -68,28 +78,23 @@ const JobPage: React.FC = () => {
     }
   };
 
-  const filteredJobs = jobs.filter((job) => {
-    const searchLower = search.toLowerCase();
-    return (
-      job.title.toLowerCase().includes(searchLower) ||
-      job.type.toLowerCase().includes(searchLower) ||
-      job.location.toLowerCase().includes(searchLower)
-    );
-  });
 
   return (
-    <div className="job-list-container">
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search by title, type (e.g. remote/full-time), or location..."
-        className="w-full p-3 border border-gray-300 rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+      <div className="job-list-container">
+      {/* Hero section */}
+      <HeroSearch
+        titleSearch={titleSearch}
+        locationSearch={locationSearch}
+        setTitleSearch={setTitleSearch}
+        setLocationSearch={setLocationSearch} setCurrentPage={function (page: number): void {
+          throw new Error("Function not implemented.");
+        } }      />
+      {/* End of hero section */}
 
+      <h1 className="job-listing-title">Job Listings</h1>
       {loading ? (
-        <div className='flex justify-center text-center mt-4 mb-4'>
-          <Waveform color='#22C55E' />
+        <div className="flex justify-center text-center mt-4 mb-4">
+          <Waveform color="#22C55E" />
         </div>
       ) : error ? (
         <div className="text-red-500">{error}</div>

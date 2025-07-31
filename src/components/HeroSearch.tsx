@@ -31,7 +31,7 @@ const HeroSearch: React.FC<HeroSearchProps> = ({
         <div className="bg-[#252836] text-white rounded-xl shadow-md p-4 flex flex-col md:flex-row justify-between items-center gap-4 max-w-4xl mx-auto">
           
           
-          <div className="relative w-full md:w-1/3">
+          <div className="relative w-full md:w-1/3 bg-white">
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
@@ -43,14 +43,14 @@ const HeroSearch: React.FC<HeroSearchProps> = ({
           </div>
 
           
-          <div className="relative w-full md:w-1/3">
+          <div className="relative w-full md:w-1/3 bg-white">
             <FaMapMarkerAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               value={locationSearch}
               onChange={(e) => setLocationSearch(e.target.value)}
               placeholder="Location"
-              className="w-full p-3 pl-10  rounded text-black focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 pl-10  rounded text-black focus:outline-none focus:ring-2 focus:ring-green-400 "
             />
           </div>
 
