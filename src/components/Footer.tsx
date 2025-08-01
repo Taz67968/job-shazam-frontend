@@ -2,9 +2,52 @@
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Briefcase, Facebook, Twitter, Linkedin, Instagram} from "lucide-react";
+import {useState} from "react";
+import toast from "react-hot-toast";
 import Link from "next/link";
 
 export const Footer = () => {
+  const [value, setValue] = useState("");
+
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const trimmedEmail = value.trim();
+
+    if (!trimmedEmail) {
+      toast.error("Please provide an email");
+      return;
+    }
+
+    if (!isValidEmail(trimmedEmail)) {
+      toast.error("Invalid email format");
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:8080/mail/sendMail?to=${trimmedEmail}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || `HTTP error ${res.status}`);
+      }
+
+      const result = await res.json();
+      toast.success(result.message);
+      setValue("");
+    } catch (err) {
+      console.error("Error in fetch:", err);
+      toast.error("Something went wrong while subscribing.");
+    }
+  };
+
   return (
     <footer className="bg-background border-t border-border">
       <div className="container mx-auto px-4 py-16">
@@ -129,11 +172,13 @@ export const Footer = () => {
             <p className="text-muted-foreground mb-4">
               Subscribe to get updates on new job opportunities.
             </p>
-            <form className="flex gap-2">
+            <form className="flex gap-2" onSubmit={handleSubmit}>
               <Input
                 type="email"
                 placeholder="Enter your email"
                 className="bg-card border-border"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
                 required
               />
               <Button type="submit" className="bg-primary hover:bg-primary/90">
@@ -146,47 +191,6 @@ export const Footer = () => {
         <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Job Shazam. All rights reserved.</p>
         </div>
-      <div className="flex flex-col mb-5">
-        <h5 className="mb-3 text-2xl font-bold">Quick Links</h5>
-      <div className="text-2xl text-left">
-        <Link href="/">Home</Link>
-        <Link href="/">Find Jobs</Link>
-        <Link href="/">Contact Us</Link>
-      </div>
-        
-      </div>
-
-      <div className="flex flex-col">
-        <h5 className="mb-3 text-2xl font-bold">Contact</h5>
-        <p className="mb-4 text-gray-400">
-         <span className="text-white font-semibold"> Email </span> info@jobShazam.com<br />
-         <span className="text-white font-semibold">Phone</span> 681716672 <br/>
-         <span className="text-white font-semibold">Address</span> Hotel Jouvence<br />
-          Yaounde Cameroon
-        </p>
-      </div>
-
-      <div className="mb-5">
-        <h5 className="mb-7 text-2xl font-bold">Newsletter</h5>
-        <p className="text-gray-400 mb-2">subcribe to get update on new job <br /> opportunities </p>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Enter Your Email"
-            className="mb-4 border-2 border-white p-2 rounded-md text-white "
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <br />
-          <button
-            type="submit"
-            className="text-white  bg-green-700 font-bold text-xl px-4 py-2 rounded-md"
-          >
-            Subscribe
-          </button>
-        </form>
       </div>
     </footer>
   );
