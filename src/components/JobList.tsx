@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import JobCard from "./JobCard";
 import "../app/globals.css";
-import { Waveform } from "@uiball/loaders";
+import {Waveform} from "@uiball/loaders";
 import HeroSearch from "./HeroSearch";
 
 interface Job {
@@ -25,7 +25,7 @@ const JobPage: React.FC = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("/api/jobs");
+        const response = await fetch(`http://localhost:8080/jobs`);
         if (!response.ok) {
           const errorDetail = await response.text();
           setError(`Error: ${errorDetail}`);
@@ -60,35 +60,36 @@ const JobPage: React.FC = () => {
 
   const handleTrack = async (job: Job) => {
     try {
-      const response = await fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/track", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           ...job,
           appliedDate: new Date().toISOString(),
-          status: 'applied',
+          status: "applied",
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to track job');
+        throw new Error("Failed to track job");
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-
   return (
-      <div className="job-list-container">
+    <div className="job-list-container">
       {/* Hero section */}
       <HeroSearch
         titleSearch={titleSearch}
         locationSearch={locationSearch}
         setTitleSearch={setTitleSearch}
-        setLocationSearch={setLocationSearch} setCurrentPage={function (page: number): void {
+        setLocationSearch={setLocationSearch}
+        setCurrentPage={function (): void {
           throw new Error("Function not implemented.");
-        } }      />
+        }}
+      />
       {/* End of hero section */}
 
       <h1 className="job-listing-title">Job Listings</h1>

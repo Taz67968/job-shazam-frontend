@@ -1,45 +1,52 @@
 import React from "react";
 import Link from "next/link";
+import {MapPin, Building2, Landmark, Layers} from "lucide-react";
 
 interface Job {
   id: number;
   title: string;
   company: string;
   location: string;
-  type: string;
+  salary: string;
   url: string;
+  tags: string[];
 }
 
 interface JobCardProps {
   job: Job;
-   onTrack?: (id: Job) => void;
+  onTrack?: (id: Job) => void;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job, onTrack }) => {
+const JobCard: React.FC<JobCardProps> = ({job}) => {
+  const spacetags = job.tags.join(" ");
   return (
     <div className="job-card">
       <div className="flex justify-between items-center">
-      <h3 className="job-title">{job.title}</h3>
+        <h3 className="job-title">{job.title}</h3>
 
-      <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
-        Apply Now
-      </a>
+        <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
+          Apply Now
+        </a>
       </div>
-      <p className="job-company">{job.company}</p>
-      <p className="job-location">{job.location}</p>
-      <p className="job-type">{job.type}</p>
+      <div className="job-company  flex gap-1">
+        <Building2 className="h-7  mr-2 w-7 text-primary" />
+        {job.company}
+      </div>
+      <div className="job-location flex gap-1">
+        <MapPin className="h-7 w-7 mr-2  text-primary" />
+        {job.location}
+      </div>
+      <div className="job-type  flex gap-1">
+        <Landmark className="h-7 w-7  mr-2 text-primary" />
+        {job.salary}
+      </div>
+      <div className="flex gap-1">
+        <Layers className="h-7 w-7 text-primary mr-2" />
+        {spacetags}
+      </div>
       <Link href={`/jobsDetailspage/${job.id}`} className="view-job-link">
         View Details
       </Link>
-        {onTrack && (
-          <button
-            onClick={() => onTrack(job)}
-            className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
-          >
-            Track Job
-          </button>
-        )}
-      
     </div>
   );
 };

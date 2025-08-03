@@ -1,5 +1,5 @@
 import UploadCV from "../components/UploadCv";
-import "../app/globals.css"
+import "../app/globals.css";
 
 export default function UploadPage() {
   return (

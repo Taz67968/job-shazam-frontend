@@ -1,20 +1,26 @@
-'use client';
+"use client";
 
-import React from 'react';
-import "../app/globals.css"
-import Link from 'next/link';
-import "../app/globals.css"
+import React from "react";
+import "../app/globals.css";
+import Link from "next/link";
+import "../app/globals.css";
+import {ChevronsLeft} from "lucide-react";
+import {useRouter} from "next/router";
 
 export default function LoginPage() {
+  const router = useRouter();
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">
       <div className="bg-[#14263e] rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-5xl h-[90vh] overflow-hidden">
-        
         {/* Left Section - Form */}
+        <p className="flex" onClick={() => router.back()}>
+          <ChevronsLeft className="mt-5 ml-5" />
+          <span className="mt-5">Back</span>
+        </p>
         <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
           <h2 className="text-2xl md:text-3xl font-bold text-green-500 mb-4">Welcome Back!</h2>
           <p className="text-gray-300 mb-6 text-sm">Login to continue your job search journey.</p>
-          
+
           <form className="space-y-4">
             <div>
               <label className="block text-sm mb-1">Email</label>
@@ -34,7 +40,7 @@ export default function LoginPage() {
 
           {/* Register Link */}
           <p className="mt-4 text-gray-400 text-sm flex justify-center">
-            Don’t have an account:{' '}
+            Don’t have an account:{" "}
             <Link href="/registerPage" className="text-green-400 hover:underline">
               Register here
             </Link>
@@ -50,7 +56,9 @@ export default function LoginPage() {
             className="w-full h-full object-cover rounded-tr-2xl rounded-br-2xl"
           />
           <div className="absolute z-20 bottom-6 left-6 right-6 text-white text-sm">
-            <h3 className="text-lg font-semibold leading-tight">Find the career that matches your passion.</h3>
+            <h3 className="text-lg font-semibold leading-tight">
+              Find the career that matches your passion.
+            </h3>
             <p className="mt-1 text-gray-300">Join thousands of professionals growing with us.</p>
           </div>
         </div>

@@ -1,70 +1,68 @@
 .jobs-container {
-    background-color: #1f2936;
-    
-    color: #F8F9FA;
-    padding: 0px;
-  }
-  
- 
-  
-  .job-listing-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 20px 0;
-    padding-left: 10px;
-  }
+  background-color: #1f2936;
 
-  .view-job-link {
-    /* margin-left: 10px; */
-    display: flex;
-    justify-content: end;
-    color: #22C55E;
-    }
+  color: #f8f9fa;
+  padding: 0px;
+}
 
+.job-listing-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 20px 0;
+  padding-left: 10px;
+}
+
+.view-job-link {
+  /* margin-left: 10px; */
+  display: flex;
+  justify-content: end;
+  color: #22c55e;
+}
 
 .job-card {
-  background-color: #252836; 
+  background-color: #252836;
   border-radius: 8px;
   padding: 20px;
   margin: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transition: transform 0.2s; 
-    border-left: 4px solid #22C55E;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  border-left: 4px solid #22c55e;
 }
 
 .job-card:hover {
-  transform: translateY(-5px); 
+  transform: translateY(-5px);
 }
 
 .job-title {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #F8F9FA;
-  margin-bottom: 10px; 
+  color: #f8f9fa;
+  margin-bottom: 10px;
 }
 
 .job-company {
-  color: #9CA3AF; 
-  margin-bottom: 5px; 
+  color: #9ca3af;
+  margin-bottom: 5px;
 }
 
 .job-location,
-.job-type {
-  color: #F8F9FA;
-  margin: 2px 0; 
+.job-type,
+.tags {
+  color: #f8f9fa;
+  margin: 2px 0;
 }
 
 .apply-button {
-  display: inline-block; 
-  margin-top: 10px; 
-  padding: 10px 15px; 
-  background-color: #22C55E;
-  color: #FFFFFF; 
-  border-radius: 5px; 
-  text-decoration: none; 
-  transition: background-color 0.3s; 
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #22c55e;
+  color: #ffffff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
 }
 
 .apply-button:hover {
-  background-color: #1DA44D;
+  background-color: #1da44d;
 }

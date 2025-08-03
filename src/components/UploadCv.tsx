@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import {useState} from "react";
 
 export default function UploadCV() {
   const [file, setFile] = useState<File | null>(null);
@@ -26,7 +26,10 @@ export default function UploadCV() {
         onChange={(e) => setFile(e.target.files?.[0] || null)}
         className="mb-4 text-green-400 cursor-pointer"
       />
-      <button onClick={handleUpload} className="bg-green-400 text-white px-4 py-2 rounded cursor-pointer">
+      <button
+        onClick={handleUpload}
+        className="bg-green-400 text-white px-4 py-2 rounded cursor-pointer"
+      >
         Upload CV & Get Recommendations
       </button>
 

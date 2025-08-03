@@ -1,18 +1,18 @@
 // pages/api/track.ts
 
-import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../utils/prisma';
+import {NextApiRequest, NextApiResponse} from "next";
+import prisma from "../../utils/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).json({message: "Method Not Allowed"});
   }
 
   const sanitize = (input: any) =>
-    typeof input === 'string' ? input.replace(/\u0000/g, '').trim() : input;
+    typeof input === "string" ? input.replace(/\u0000/g, "").trim() : input;
 
   try {
-    let { title, company, location, type, url, appliedDate, status } = req.body;
+    let {title, company, location, type, url, appliedDate, status} = req.body;
 
     title = sanitize(title);
     company = sanitize(company);
@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     appliedDate = sanitize(appliedDate);
 
     if (!title || !company || !location || !type || !url || !appliedDate || !status) {
-      return res.status(400).json({ message: 'Missing required fields' });
+      return res.status(400).json({message: "Missing required fields"});
     }
 
     // ✅ Prevent duplicates
@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (existingJob) {
-      return res.status(200).json({ message: 'Job already tracked', job: existingJob });
+      return res.status(200).json({message: "Job already tracked", job: existingJob});
     }
 
     const job = await prisma.trackedJob.create({
@@ -54,9 +54,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(job);
   } catch (error: any) {
-    console.error('TRACK API ERROR:', error);
+    console.error("TRACK API ERROR:", error);
     return res.status(500).json({
-      message: 'Something went wrong',
+      message: "Something went wrong",
       error: error.message ?? error,
     });
   }

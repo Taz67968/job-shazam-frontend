@@ -1,18 +1,26 @@
-'use client';
-
-import React from 'react';
-import Link from 'next/link';
-import '../app/globals.css'
+"use client";
+import {useRouter} from "next/router";
+import React from "react";
+import Link from "next/link";
+import "../app/globals.css";
+import {ChevronsLeft} from "lucide-react";
 export default function RegisterPage() {
+  const route = useRouter();
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">
       <div className="bg-[#14263e] rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-5xl h-[90vh] overflow-hidden">
-        
         {/* Left Section - Form */}
+        <p onClick={() => route.back()} className="flex w-max h-max rounded mt-5 ml-5">
+          {" "}
+          <ChevronsLeft className="w-6 h-6 " />
+          <span>Back</span>
+        </p>
         <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-green-500 mb-4">Create Your Account</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-green-500 mb-4">
+            Create Your Account
+          </h2>
           <p className="text-gray-300 mb-6 text-sm">Register to start finding your dream job.</p>
-          
+
           <form className="space-y-4">
             <div>
               <label className="block text-sm mb-1">Username</label>
@@ -40,9 +48,10 @@ export default function RegisterPage() {
 
           {/* Back to Login Link */}
           <p className="mt-4 text-gray-400 text-sm flex justify-center">
-            Already have an account:{'  '}
+            Already have an account:{"  "}
             <Link href="/loginPage" className="text-green-400 hover:underline">
-              {" "}Login here
+              {" "}
+              Login here
             </Link>
           </p>
         </div>

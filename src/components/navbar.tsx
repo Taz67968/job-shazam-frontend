@@ -33,7 +33,11 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary text-[#16A249] font-poppins" prefetch={false}>
+          <Link
+            href="/"
+            className="text-2xl font-bold text-primary text-[#16A249] font-poppins"
+            prefetch={false}
+          >
             IT-JobFinder
           </Link>
 
@@ -100,10 +104,13 @@ export default function Navbar() {
               Contact
             </MobileNavLink>
 
-            <button className="w-full border rounded-md px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors" onClick={() => setIsOpen(false)}>
-              <Link href="/find-jobs">
-                <Briefcase className="h-4 w-4 mr-2" />
-                Get Started
+            <button
+              className="w-max border rounded-md px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+            <Link href="/loginPage" prefetch={false} className="flex">
+                <Briefcase className="h-4 w-4 mr-2 mt-1" />
+              SignUp
               </Link>
             </button>
           </div>

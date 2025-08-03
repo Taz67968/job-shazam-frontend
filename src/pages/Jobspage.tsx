@@ -2,7 +2,7 @@ import React from "react";
 import JobList from "../components/JobList";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/navbar";
-import '../app/jobs.css'
+import "../app/jobs.css";
 
 const Jobs: React.FC = () => {
   return (
