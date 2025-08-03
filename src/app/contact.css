@@ -28,7 +28,6 @@ body {
 
 .contact-container {
   max-width: 1200px;
-  margin: 0 auto;
   padding: 2rem 1rem;
 }
 
@@ -59,6 +58,7 @@ body {
   flex-wrap: wrap;
   gap: 2rem;
   margin-bottom: 3rem;
+  margin-left: 7rem;
 }
 
 .contact-info {
@@ -328,69 +328,7 @@ textarea:focus {
   transform: translateY(-3px);
 }
 
-.contact-footer {
-  margin-top: 4rem;
-  border-top: 1px solid var(--border);
-  padding-top: 3rem;
-}
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 2rem;
-}
-
-.footer-column h4 {
-  font-size: 1.1rem;
-  margin-bottom: 1.2rem;
-  color: var(--primary-green);
-}
-
-.footer-column ul {
-  list-style: none;
-}
-
-.footer-column li {
-  margin-bottom: 0.7rem;
-}
-
-.footer-column a {
-  color: var(--muted-text);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer-column a:hover {
-  color: var(--primary-green);
-}
-
-.footer-bottom {
-  margin-top: 3rem;
-  text-align: center;
-  padding: 1.5rem 0;
-  color: var(--muted-text);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.footer-links a {
-  color: var(--muted-text);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: var(--primary-green);
-}
 
 @media (max-width: 768px) {
   .contact-header h1 {
@@ -499,10 +437,7 @@ textarea:focus {
     justify-content: center;
   }
 
-  .footer-links {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
+
 
   .submit-btn {
     padding: 0.9rem;

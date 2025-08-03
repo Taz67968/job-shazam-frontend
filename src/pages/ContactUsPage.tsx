@@ -1,6 +1,8 @@
 import "../app/contact.css";
 import {useState, ChangeEvent, FormEvent} from "react";
+import "../app/globals.css"
 import Head from "next/head";
+import Navbar from "@/components/navbar";
 import {
   HiOutlineMail,
   HiOutlinePhone,
@@ -10,6 +12,7 @@ import {
   HiOutlineShare,
 } from "react-icons/hi";
 import {FaFacebook, FaTwitter, FaLinkedin, FaInstagram} from "react-icons/fa";
+import Footer from "@/components/Footer";
 
 interface FormData {
   firstName: string;
@@ -66,6 +69,7 @@ export default function ContactPage() {
   };
 
   return (
+    <> <Navbar/>
     <div className="contact-container">
       <Head>
         <title>Contact Us | Solarced</title>
@@ -74,7 +78,7 @@ export default function ContactPage() {
 
       <header className="contact-header">
         <h1>Get In Touch</h1>
-        <p>We're here to help you with any questions or feedback you may have. Reach out today!</p>
+        <p>We`re here to help you with any questions or feedback you may have. Reach out today!</p>
       </header>
 
       <div className="contact-content">
@@ -289,17 +293,8 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-
-      <footer className="contact-footer">
-        <div className="footer-bottom">
-          <p>© 2025 Solarced. All rights reserved.</p>
-          <div className="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
     </div>
+    </>
   );
 }
