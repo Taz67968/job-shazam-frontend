@@ -18,7 +18,7 @@ export default function Navbar() {
 
   // Prefetch routes
   useEffect(() => {
-    const prefetchRoutes = ["/Jobspage", "/Dashboard", "/ContactUsPage", "/find-jobs", "lohinPage"];
+    const prefetchRoutes = ["/Jobspage", "/Dashboard","/UploadPage", "/ContactUsPage", "/find-jobs", "lohinPage"];
     prefetchRoutes.forEach((route) => {
       const link = document.createElement("link");
       link.rel = "prefetch";
@@ -47,6 +47,9 @@ export default function Navbar() {
             </NavLink>
             <NavLink href="/Dashboard" icon={<BarChart3 className="h-4 w-4" />}>
               Track Applications
+            </NavLink>
+            <NavLink href="/UploadPage" icon={<BarChart3 className="h-4 w-4" />}>
+              UploadCv
             </NavLink>
             <NavLink href="/ContactUsPage" icon={<Phone className="h-4 w-4" />}>
               Contact
@@ -86,12 +89,21 @@ export default function Navbar() {
               Find Jobs
             </MobileNavLink>
             <MobileNavLink
-              href="/track-applications"
+              href="/Dashboard"
               onClick={() => setIsOpen(false)}
               icon={<BarChart3 className="h-4 w-4" />}
             >
               Track Applications
             </MobileNavLink>
+
+           <MobileNavLink
+              href="/UploadPage"
+              onClick={() => setIsOpen(false)}
+              icon={<BarChart3 className="h-4 w-4" />}
+            >
+              UploadCv
+            </MobileNavLink>
+
             <MobileNavLink
               href="/ContactUsPage"
               onClick={() => setIsOpen(false)}

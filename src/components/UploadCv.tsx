@@ -19,19 +19,19 @@ export default function UploadCV() {
     setRecommendations(data.recommendations);
   };
   return (
-    <div className="p-6 border rounded shadow-md bg-white max-w-xl mx-auto mt-8">
+    <div className="p-6 border rounded shadow-md bg-white max-w-xl mx-auto mt-8 mb-60">
       <input
         type="file"
         accept=".pdf,.doc,.docx"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
-        className="mb-4 text-green-400 cursor-pointer"
+        className="mb-4 text-primary cursor-pointer bg-[#1f334d]"
       />
-      <button onClick={handleUpload} className="bg-green-400 text-white px-4 py-2 rounded cursor-pointer">
+      <button onClick={handleUpload} className="bg-primary text-white px-4 py-2 rounded cursor-pointer">
         Upload CV & Get Recommendations
       </button>
 
       {recommendations && (
-        <div className="mt-6 bg-gray-100 p-4 rounded">
+        <div className="mt-6 bg-gray-100 p-4 rounded flex justify-between items-center">
           <h2 className="font-bold mb-2">AI Job Recommendations:</h2>
           <pre className="whitespace-pre-wrap">{recommendations}</pre>
         </div>

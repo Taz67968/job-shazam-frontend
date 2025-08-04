@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import '../../app/jobs.css';
+import Link from 'next/link';
 import '../../app/globals.css';
 
 interface Job {
@@ -50,6 +51,9 @@ useEffect(() => {
 
   return (
     <div className="job-card">
+      <Link href="/Jobspage" className="font-bold text-primary text-[#16A249] font-poppins mb-6" prefetch={false}>
+            return
+          </Link>
       <h3 className="job-title">{job.title}</h3>
       <p className="job-company">{job.company}</p>
       <p className="job-location">{job.location}</p>
