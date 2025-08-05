@@ -1,6 +1,7 @@
 "use client";
 import {useState, useEffect} from "react";
 import Link from "next/link";
+import "../app/globals.css";
 import {Button} from "@/components/ui/button";
 import {Search, Briefcase, Phone, BarChart3, Menu, X} from "lucide-react";
 
@@ -29,34 +30,34 @@ export default function Navbar() {
 
   return (
     <header
-      className={`bg-background border-b border-border sticky top-0 z-50 transition-all ${isScrolled ? "shadow-md" : ""}`}
+      className={`bg-[#1f2936] border-b border-border sticky top-0 z-50 transition-all ${isScrolled ? "shadow-md" : ""}`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary text-[#16A249] font-poppins" prefetch={false}>
+          <Link href="/" className="!text-primary text-2xl font-bold  !text-[#16A249] font-poppins" prefetch={false}>
             IT-JobFinder
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <NavLink href="/" prefetch={false}>
+          <nav className="hidden md:flex items-center space-x-8 text-white">
+            <NavLink href="/"  prefetch={false}>
               Home
             </NavLink>
-            <NavLink href="/Jobspage" icon={<Search className="h-4 w-4" />}>
+            <NavLink href="/Jobspage" icon={<Search className="h-4 w-4 text-white" />}>
               Find Jobs
             </NavLink>
-            <NavLink href="/Dashboard" icon={<BarChart3 className="h-4 w-4" />}>
+            <NavLink href="/Dashboard" icon={<BarChart3 className="h-4 w-4 text-white" />}>
               Track Applications
             </NavLink>
-            <NavLink href="/UploadPage" icon={<BarChart3 className="h-4 w-4" />}>
+            <NavLink href="/UploadPage" icon={<BarChart3 className="h-4 w-4 text-white" />}>
               UploadCv
             </NavLink>
-            <NavLink href="/ContactUsPage" icon={<Phone className="h-4 w-4" />}>
+            <NavLink href="/ContactUsPage" icon={<Phone className="h-4 w-4 text-white" />}>
               Contact
             </NavLink>
           </nav>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className=" text-[#16A249] hidden md:flex items-center gap-4 ">
             <Button asChild>
               <Link href="/loginPage" prefetch={false}>
                 <Briefcase className="h-4 w-4 mr-2" />

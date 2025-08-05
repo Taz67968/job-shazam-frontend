@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="bg-background border-t border-border">
+    <footer className="bg-[#1f2936] border-t border-border">
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
@@ -25,7 +25,7 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
               >
                 <Link href="https://facebook.com" aria-label="Facebook">
                   <Facebook className="h-4 w-4" />
@@ -35,17 +35,17 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
               >
                 <Link href="https://twitter.com" aria-label="Twitter">
-                  <Twitter className="h-4 w-4" />
+                  <Twitter className="h-4 w-4 " />
                 </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
               >
                 <Link href="https://linkedin.com" aria-label="LinkedIn">
                   <Linkedin className="h-4 w-4" />
@@ -55,7 +55,7 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
               >
                 <Link href="https://instagram.com" aria-label="Instagram">
                   <Instagram className="h-4 w-4" />

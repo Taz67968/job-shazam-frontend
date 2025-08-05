@@ -1,5 +1,5 @@
-import React from "react";
-import Link from "next/link";
+import React, { useState } from 'react'
+import JobDetailsModal from './jobDetails'
 
 interface Job {
   id: number;
@@ -16,6 +16,18 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job, onTrack }) => {
+    const [selectedJobId, setSelectedJobId] = useState<number | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const openModal = (jobId: number) => {
+    setSelectedJobId(jobId)
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalOpen(false)
+    setSelectedJobId(null)
+  }
   return (
     <div className="job-card">
       <div className="flex justify-between items-center">
@@ -28,18 +40,22 @@ const JobCard: React.FC<JobCardProps> = ({ job, onTrack }) => {
       <p className="job-company">{job.company}</p>
       <p className="job-location">{job.location}</p>
       <p className="job-type">{job.type}</p>
-      <Link href={`/jobsDetailspage/${job.id}`} className="view-job-link">
-        View Details
-      </Link>
+      
+      
+      
+     <div className="flex justify-between">
         {onTrack && (
           <button
-            onClick={() => onTrack(job)}
-            className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+          onClick={() => onTrack(job)}
+          className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
           >
             Track Job
           </button>
+          
         )}
-      
+        <button onClick={() => openModal(1)} >View Details</button>
+     </div>
+       <JobDetailsModal jobId={selectedJobId} isOpen={modalOpen} onClose={closeModal} />
     </div>
   );
 };
