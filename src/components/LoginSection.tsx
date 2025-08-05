@@ -26,7 +26,6 @@ export default function LoginPage() {
     setMessage(data.message);
 
     if (data.success) {
-      // Save to localStorage or session if needed
       router.back() 
     }
   };

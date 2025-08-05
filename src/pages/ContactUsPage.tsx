@@ -13,6 +13,7 @@ import {
 } from "react-icons/hi";
 import {FaFacebook, FaTwitter, FaLinkedin, FaInstagram} from "react-icons/fa";
 import Footer from "@/components/Footer";
+import toast from "react-hot-toast";
 
 interface FormData {
   firstName: string;
@@ -54,10 +55,21 @@ export default function ContactPage() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
     alert("Thank you for your message! We will get back to you soon.");
-    setFormData({
+    const res = await fetch(`http://localhost:8080/mail/getMail`,{
+      method: 'POST',
+      headers: {'Content-Type': 'aplication/json'},
+      body: JSON.stringify({from:formData.email, text:formData.message})
+    })
+
+    const data = res.json();
+    if(res.ok){
+      toast.success("Thank you for your message! We will get back to you soon.")
+      console.log(data)
+      setFormData({
       firstName: "",
       lastName: "",
       email: "",
@@ -66,6 +78,14 @@ export default function ContactPage() {
       message: "",
       helpOptions: [],
     });
+    } else {
+      throw new Error('Error while sending message')
+    }
+    } catch (error) {
+      console.error(error)
+      toast.error('Error while sending message')
+      alert('Error while sending message')
+    }
   };
 
   return (
@@ -241,22 +261,6 @@ export default function ContactPage() {
               </button>
             </form>
           </div>
-
-          <div className="newsletter-card">
-            <div className="newsletter-content">
-              <div>
-                <h3>Join Our Newsletter</h3>
-                <p className="muted">
-                  Stay updated with the latest job opportunities and company news
-                </p>
-              </div>
-              <div className="newsletter-form">
-                <input type="email" placeholder="Your email" />
-                <button type="button">Subscribe</button>
-              </div>
-            </div>
-          </div>
-
           <div className="support-cards">
             <div className="support-card">
               <div className="support-icon">

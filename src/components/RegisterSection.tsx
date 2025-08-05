@@ -8,7 +8,8 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 export default function RegisterPage() {
   const route = useRouter();
-   const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');
+  const [techStack, setTechStack]=useState('')
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
  
@@ -18,7 +19,7 @@ export default function RegisterPage() {
     const res = await fetch('http://localhost:8080/auth/login-link', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email }),
+      body: JSON.stringify({ email:email, name:username, techstack:[techStack] }),
     });
 
     const data = await res.json();
@@ -30,6 +31,7 @@ export default function RegisterPage() {
     }
     setEmail('')
     setUsername('')
+    setTechStack('')
   };
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">
@@ -55,6 +57,17 @@ export default function RegisterPage() {
                 className="w-full p-3 rounded-md bg-[#1f334d] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
                 value={username}
                 onChange={(e)=>setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1">Tech-stack</label>
+              <input
+                type="text"
+                placeholder="e.g. Js, NodeJs, Python"
+                className="w-full p-3 rounded-md bg-[#1f334d] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
+                value={techStack}
+                onChange={(e)=>setTechStack(e.target.value)}
                 required
               />
             </div>
