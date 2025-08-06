@@ -33,6 +33,9 @@ export default function RegisterPage() {
     setUsername('')
     setTechStack('')
   };
+
+  
+
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">
       <div className="bg-[#14263e] rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-5xl h-[90vh] overflow-hidden">

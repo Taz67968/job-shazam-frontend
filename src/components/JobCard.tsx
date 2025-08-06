@@ -8,7 +8,7 @@ interface Job {
   company: string;
   location: string;
   salary: string;
-  url: string;
+  applyUrl: string;
   tags: string[];
 }
 
@@ -19,12 +19,13 @@ interface JobCardProps {
 
 const JobCard: React.FC<JobCardProps> = ({job}) => {
   const spacetags = job.tags.join(" ");
+  console.log(job.applyUrl)
   return (
     <div className="job-card">
       <div className="flex justify-between items-center">
         <h3 className="job-title">{job.title}</h3>
 
-        <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
+        <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
           Apply Now
         </a>
       </div>

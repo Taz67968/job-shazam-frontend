@@ -2,16 +2,14 @@
 
 import React, {useEffect, useState} from "react";
 import {DragDropContext, Droppable, Draggable, DropResult} from "react-beautiful-dnd";
-import {MapPin, Calendar, Building2, ExternalLink, Trash2} from "lucide-react";
+import {MapPin,Building2,Trash2} from "lucide-react";
 
 interface TrackedJob {
   id: string;
   title: string;
   company: string;
   location: string;
-  appliedDate: string;
   status: "applied" | "interview" | "rejected" | "accepted" | "saved";
-  url: string;
 }
 
 const columns = [
@@ -24,16 +22,13 @@ const columns = [
 
 export const ApplicationBoard = () => {
   const [jobs, setJobs] = useState<TrackedJob[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true)
+  const [token,setToken]=useState<string | null>(null)
 
-useEffect(() => {
-  if (typeof window !== 'undefined') {
-    const storedToken = localStorage.getItem('token');
+  useEffect(()=>{
+    const storedToken = typeof window !== 'undefined' ? localStorage.getItem('token'): null;
     setToken(storedToken);
-  }
-}, []);
-
+  },[])
 
   useEffect(() => {
     const fetchTrackedJobs = async () => {
@@ -41,7 +36,7 @@ useEffect(() => {
         const res = await fetch("http://localhost:8080/saved-jobs",{
           method: "Get",
           headers: {
-            'Content-Type': 'aplication/json',
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           }
         });
@@ -53,6 +48,8 @@ useEffect(() => {
           status: job.status || "saved",
         }));
 
+        console.log("jobs:",jobs)
+
         setJobs(withStatus);
         console.log('this is setJobs:',setJobs)
       } catch (err) {
@@ -63,7 +60,7 @@ useEffect(() => {
     };
 
     fetchTrackedJobs();
-  }, [token]);
+  }, [jobs, token]);
 
   const handleDragEnd = async (result: DropResult) => {
     if (!result.destination) return;
@@ -195,10 +192,10 @@ useEffect(() => {
                                 <MapPin className="w-3 h-3" />
                                 <span>{job.location}</span>
                               </div>
-                              <div className="flex items-center gap-1">
+                              {/* <div className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
                                 <span>Applied {job.appliedDate}</span>
-                              </div>
+                              </div> */}
                               <div
                                 className={`inline-block px-2 py-1 rounded text-xs font-medium ${getStatusBadgeColor(
                                   job.status,
@@ -206,16 +203,6 @@ useEffect(() => {
                               >
                                 {job.status}
                               </div>
-
-                              {job.url && (
-                                <button
-                                  onClick={() => window.open(job.url, "_blank")}
-                                  className="flex items-center justify-center mt-2 w-full text-xs text-blue-600 hover:underline"
-                                >
-                                  <ExternalLink className="w-3 h-3 mr-1" />
-                                  View Application
-                                </button>
-                              )}
                             </div>
                           </div>
                         )}

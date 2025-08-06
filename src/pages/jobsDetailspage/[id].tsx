@@ -13,7 +13,7 @@ interface Job {
   company: string;
   location: string;
   type: string;
-  url: string;
+  applyUrl: string;
   description?: string;
 }
 
@@ -35,9 +35,6 @@ const JobDetailPage: React.FC = () => {
   }
 
   const handleSaved = async () => {
-    
-    localStorage.setItem('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiMmU0MzNlNS0yZmZhLTRiNDAtOGE2MS0wYjNiYWMxNjIzM2MiLCJlbWFpbCI6ImtpbmlkMTQ1ODFAaG9zdGJ5dC5jb20iLCJpYXQiOjE3NTQxNzMyMTksImV4cCI6MTc1NDIxNjQxOX0.YzoQj7ZAuMsWflmgaL4mbM_dpCV6EA8ox-6Owzg4d0o');
-    console.log("i have been clicked");
     const token = localStorage.getItem('token')
     if (!token) {
       toast.error("User not authenticated");
@@ -111,7 +108,7 @@ const JobDetailPage: React.FC = () => {
       <p className="job-location">{job.location}</p>
       <p className="job-type">{job.type}</p>
       <p className="job-type mb-10">{cleanText(job.description)}</p>
-      <a href={job.url} target="_blank" rel="noopener noreferrer" className="apply-button">
+      <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
         Apply Now
       </a>
     </div>
