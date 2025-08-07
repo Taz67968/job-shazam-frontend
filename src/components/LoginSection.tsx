@@ -1,48 +1,54 @@
 "use client";
 
-
 import "../app/globals.css";
 import Link from "next/link";
-import "../app/globals.css";
 import { useState } from "react";
-import {ChevronsLeft} from "lucide-react";
-import {useRouter} from "next/router";
+import { ChevronsLeft } from "lucide-react";
+import { useRouter } from "next/router";
 import Image from "next/image";
-
-
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-
+  const [loading, setLoading] = useState(false); // loader state
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const res = await fetch('http://localhost:8080/auth/login-link', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email,}),
-    });
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
 
-    if (res.ok) {
-      router.push('/verifyPage') 
+    try {
+      const res = await fetch('http://localhost:8080/auth/login-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        router.push('/verifyPage');
+      } else {
+        setMessage(data.message || "Something went wrong.");
+      }
+    } catch (err) {
+      setMessage("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+      setEmail('');
     }
-
-    const data = await res.json();
-    setMessage(data.message);
-
-    setEmail('')
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">
       <div className="bg-[#14263e] rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-5xl h-[90vh] overflow-hidden">
-        {/* Left Section - Form */}
+        {/* Back Button */}
         <p className="flex" onClick={() => router.back()}>
           <ChevronsLeft className="mt-5 ml-5" />
           <span className="mt-5">Back</span>
         </p>
+
+        {/* Left - Form */}
         <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
           <h2 className="text-2xl md:text-3xl font-bold text-green-500 mb-4">Welcome Back!</h2>
           <p className="text-gray-300 mb-6 text-sm">Login to continue your job search journey.</p>
@@ -59,27 +65,32 @@ export default function LoginPage() {
                 required
               />
             </div>
+
             <button
               type="submit"
-              className="w-full py-3 bg-green-500 hover:bg-green-600 rounded-md font-semibold text-white transition text-sm"
+              disabled={loading}
+              className="w-full py-3 bg-green-500 hover:bg-green-600 rounded-md font-semibold text-white transition text-sm flex justify-center items-center"
             >
-              Login
+              {loading ? (
+                <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span>
+              ) : null}
+              {loading ? 'Sending...' : 'Login'}
             </button>
           </form>
-           {message && (
-          <p className="mt-4 text-center text-sm text-gray-600">{message}</p>
-        )}
 
-          {/* Register Link */}
+          {message && (
+            <p className="mt-4 text-center text-sm text-gray-400">{message}</p>
+          )}
+
           <p className="mt-4 text-gray-400 text-sm flex justify-center">
             Don’t have an account:{" "}
-            <Link href="/registerPage" className="text-green-400 hover:underline">
+            <Link href="/registerPage" className="text-green-400 hover:underline ml-1">
               Register here
             </Link>
           </p>
         </div>
 
-        {/* Right Section - Image with overlay and slogan */}
+        {/* Right - Image */}
         <div className="relative hidden md:block md:w-1/2">
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70 z-10 rounded-tr-2xl rounded-br-2xl" />
           <Image
