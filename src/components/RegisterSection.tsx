@@ -5,7 +5,6 @@ import Link from "next/link";
 import "../app/globals.css";
 import {ChevronsLeft} from "lucide-react";
 import Image from "next/image";
-import toast from "react-hot-toast";
 export default function RegisterPage() {
   const route = useRouter();
   const [username, setUsername] = useState('');
@@ -22,13 +21,13 @@ export default function RegisterPage() {
       body: JSON.stringify({ email:email, name:username, techstack:[techStack] }),
     });
 
+   if (res.ok) {
+      route.push('/verifyPage');
+    }
     const data = await res.json();
     setMessage(data.message);
 
-    if (data.success) {
-      toast.success(`Welcome on board ${username}`)
-      route.back();
-    }
+    
     setEmail('')
     setUsername('')
     setTechStack('')

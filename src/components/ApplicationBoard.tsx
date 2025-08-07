@@ -48,7 +48,7 @@ export const ApplicationBoard = () => {
           status: job.status || "saved",
         }));
 
-        console.log("jobs:",jobs)
+        console.log("jobs:",withStatus)
 
         setJobs(withStatus);
         console.log('this is setJobs:',setJobs)

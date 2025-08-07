@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+
 import "../app/globals.css";
 import Link from "next/link";
 import "../app/globals.css";
@@ -9,26 +9,32 @@ import {ChevronsLeft} from "lucide-react";
 import {useRouter} from "next/router";
 import Image from "next/image";
 
+
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
 
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     const res = await fetch('http://localhost:8080/auth/login-link', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email,}),
     });
+
+    if (res.ok) {
+      router.push('/verifyPage') 
+    }
 
     const data = await res.json();
     setMessage(data.message);
 
-    if (data.success) {
-      router.back() 
-    }
+    setEmail('')
   };
+
   return (
     <div className="h-screen flex items-center justify-center bg-[#0f1d2e] text-white px-2">
       <div className="bg-[#14263e] rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-5xl h-[90vh] overflow-hidden">
