@@ -12,12 +12,12 @@ export const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="bg-primary p-2 rounded-lg">
-                <Briefcase className="h-6 w-6 text-primary-foreground" />
+              <div className="bg-[#16A249] p-2 rounded-lg">
+                <Briefcase className="h-6 w-6 text-primary-foreground " />
               </div>
-              <h3 className="text-2xl font-bold text-foreground font-poppins">Job Shazam</h3>
+              <h3 className="text-2xl font-bold text-[#f8fafc] font-poppins">Job Shazam</h3>
             </div>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-[#94a3b8] leading-relaxed">
               Empowering careers and connecting talent with opportunities worldwide.
             </p>
             <div className="flex space-x-4">
@@ -25,7 +25,7 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936] text-[#f8fafc]"
               >
                 <Link href="https://facebook.com" aria-label="Facebook">
                   <Facebook className="h-4 w-4" />
@@ -35,7 +35,7 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936] text-[#f8fafc]"
               >
                 <Link href="https://twitter.com" aria-label="Twitter">
                   <Twitter className="h-4 w-4 " />
@@ -45,7 +45,7 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936] text-[#f8fafc]"
               >
                 <Link href="https://linkedin.com" aria-label="LinkedIn">
                   <Linkedin className="h-4 w-4" />
@@ -55,7 +55,7 @@ export const Footer = () => {
                 asChild
                 variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936]"
+                className="hover:bg-primary hover:text-primary-foreground bg-[#1f2936] text-[#f8fafc]"
               >
                 <Link href="https://instagram.com" aria-label="Instagram">
                   <Instagram className="h-4 w-4" />
@@ -66,12 +66,12 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
+            <h4 className="font-semibold text-[#f8fafc] mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/jobs"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-[#94a3b8] hover:text-primary transition-colors"
                 >
                   Job Listing
                 </Link>
@@ -79,7 +79,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/about"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-[#94a3b8] hover:text-primary transition-colors"
                 >
                   About Us
                 </Link>
@@ -87,7 +87,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/contact"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-[#94a3b8] hover:text-primary transition-colors"
                 >
                   Contact Us
                 </Link>
@@ -95,7 +95,7 @@ export const Footer = () => {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-[#94a3b8] hover:text-primary transition-colors"
                 >
                   Privacy Policy
                 </Link>
@@ -105,8 +105,8 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
-            <address className="space-y-2 text-muted-foreground not-italic">
+            <h4 className="font-semibold text-[#f8fafc] mb-4">Contact</h4>
+            <address className="space-y-2 text-[#94a3b8] not-italic">
               <p>
                 Email:{" "}
                 <Link href="mailto:info@jobshazam" className="hover:text-primary">
@@ -125,8 +125,8 @@ export const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Newsletter</h4>
-            <p className="text-muted-foreground mb-4">
+            <h4 className="font-semibold text-[#f8fafc] mb-4">Newsletter</h4>
+            <p className="text-[#94a3b8] mb-4">
               Subscribe to get updates on new job opportunities.
             </p>
             <form className="flex gap-2">
@@ -136,14 +136,14 @@ export const Footer = () => {
                 className="bg-card border-border"
                 required
               />
-              <Button type="submit" className="bg-primary hover:bg-primary/90">
+              <Button type="submit" className="bg-[#16A249] hover:bg-primary/90">
                 Subscribe
               </Button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+        <div className="border-t border-border mt-12 pt-8 text-center text-[#94a3b8]">
           <p>&copy; {new Date().getFullYear()} Job Shazam. All rights reserved.</p>
         </div>
       </div>

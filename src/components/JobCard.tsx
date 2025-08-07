@@ -53,7 +53,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, onTrack }) => {
           </button>
           
         )}
-        <button onClick={() => openModal(1)} >View Details</button>
+        <button onClick={() => openModal(1)} className='text-green-500' >View Details</button>
      </div>
        <JobDetailsModal jobId={selectedJobId} isOpen={modalOpen} onClose={closeModal} />
     </div>

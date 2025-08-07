@@ -1,6 +1,6 @@
 "use client";
 import {useRouter} from "next/navigation";
-import "./globals.css";
+// import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import {ModernHeroSection} from "@/components/ModernHeroSection";

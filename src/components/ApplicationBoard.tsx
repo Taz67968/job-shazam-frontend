@@ -43,6 +43,7 @@ useEffect(() => {
       const res = await fetch('/api/tracked');
       const data = await res.json();
       
+      // console.log('jobs saved:',data)
 
       const withStatus = (data as any[]).map((job: any) => ({
         ...job,

@@ -34,12 +34,12 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="!text-primary text-2xl font-bold  !text-[#16A249] font-poppins" prefetch={false}>
+          <Link href="/" className="text-2xl font-bold  text-[#16A249] font-poppins" prefetch={false}>
             IT-JobFinder
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8 text-white">
+          <nav className="text-white hidden md:flex items-center space-x-8 ">
             <NavLink href="/"  prefetch={false}>
               Home
             </NavLink>
@@ -57,7 +57,7 @@ export default function Navbar() {
             </NavLink>
           </nav>
 
-          <div className=" text-[#16A249] hidden md:flex items-center gap-4 ">
+          <div className="bg-[#16A249] text-white hidden md:flex items-center gap-4 ">
             <Button asChild>
               <Link href="/loginPage" prefetch={false}>
                 <Briefcase className="h-4 w-4 mr-2" />
@@ -113,7 +113,7 @@ export default function Navbar() {
               Contact
             </MobileNavLink>
 
-            <button className="w-full border rounded-md px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors" onClick={() => setIsOpen(false)}>
+            <button className="bg-[#16A249] w-full border rounded-md px-4 py-2 flex items-center gap-2 hover:bg-accent transition-colors" onClick={() => setIsOpen(false)}>
               <Link href="/find-jobs">
                 <Briefcase className="h-4 w-4 mr-2" />
                 Get Started
@@ -141,7 +141,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="text-foreground hover:text-primary transition-colors flex items-center gap-2"
+      className="text-white hover:text-primary transition-colors flex items-center gap-2"
       prefetch={prefetch}
     >
       {icon}
@@ -165,7 +165,7 @@ function MobileNavLink({
   return (
     <Link
       href={href}
-      className=" px-4 py-2 text-foreground hover:text-primary hover:bg-accent rounded-md transition-colors flex items-center gap-2"
+      className=" px-4 py-2 text-white hover:text-primary hover:bg-accent rounded-md transition-colors flex items-center gap-2"
       onClick={onClick}
       prefetch={false}
     >
