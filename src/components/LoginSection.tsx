@@ -8,6 +8,7 @@ import { useState } from "react";
 import {ChevronsLeft} from "lucide-react";
 import {useRouter} from "next/router";
 import Image from "next/image";
+import toast, {Toaster} from "react-hot-toast";
 
 
 
@@ -15,6 +16,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,7 +28,12 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      router.push('/verifyPage') 
+      toast.success(`login link to ${email}`)
+      setInterval(()=>{
+        router.push('/verifyPage')
+      },4000) 
+    } else {
+      toast.error("error while send login link")
     }
 
     const data = await res.json();
@@ -97,6 +104,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      <Toaster toastOptions={{duration:4000}}/>
     </div>
   );
 }

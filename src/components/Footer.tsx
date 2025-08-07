@@ -49,7 +49,6 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-background border-t border-border">
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
@@ -192,7 +191,7 @@ export const Footer = () => {
           <p>&copy; {new Date().getFullYear()} Job Shazam. All rights reserved.</p>
         </div>
       </div>
-    </footer>
+    
   );
 };
 

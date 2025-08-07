@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {Save, ChevronsLeft} from "lucide-react";
 import "../../app/jobs.css";
 import "../../app/globals.css";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface Job {
   id: string;
@@ -52,17 +52,13 @@ const JobDetailPage: React.FC = () => {
       });
 
       const data = await res.json();
-
       if (!res.ok) {
-        toast.error(data.message || "Job has not been saved");
-        console.error(data.message || "Job has not been saved");
+      toast.error( data.message || "Job has not been saved");
       } else {
         toast.success(data.message || "Job has been saved");
-        console.log(data.message || "Job has been saved");
       }
     } catch (error) {
       console.error("Error saving Job:", error);
-      toast.error("Something went wrong");
     }
   };
 
@@ -71,7 +67,6 @@ const JobDetailPage: React.FC = () => {
 
     const fetchJob = async () => {
       try {
-        console.log(`Fetching job /api/jobs/${id}`);
         const res = await fetch(`http://localhost:8080/jobs/${id}`);
         if (!res.ok) {
           throw new Error(`Failed to fetch job`);
@@ -111,6 +106,7 @@ const JobDetailPage: React.FC = () => {
       <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
         Apply Now
       </a>
+      <Toaster/>
     </div>
   );
 };

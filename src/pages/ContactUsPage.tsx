@@ -13,7 +13,7 @@ import {
 } from "react-icons/hi";
 import {FaFacebook, FaTwitter, FaLinkedin, FaInstagram} from "react-icons/fa";
 import Footer from "@/components/Footer";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface FormData {
   firstName: string;
@@ -54,21 +54,19 @@ export default function ContactPage() {
       setFormData((prev) => ({...prev, [name]: value}));
     }
   };
-
+console.log(formData.email)
+console.log(formData.message)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-    alert("Thank you for your message! We will get back to you soon.");
     const res = await fetch(`http://localhost:8080/mail/getMail`,{
       method: 'POST',
-      headers: {'Content-Type': 'aplication/json'},
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({from:formData.email, text:formData.message})
     })
-
-    const data = res.json();
+    const data = await res.json();
     if(res.ok){
       toast.success("Thank you for your message! We will get back to you soon.")
-      console.log(data)
       setFormData({
       firstName: "",
       lastName: "",
@@ -79,12 +77,11 @@ export default function ContactPage() {
       helpOptions: [],
     });
     } else {
-      throw new Error('Error while sending message')
+      throw new Error(data.message || 'Error while sending message')
     }
     } catch (error) {
       console.error(error)
       toast.error('Error while sending message')
-      alert('Error while sending message')
     }
   };
 
@@ -298,6 +295,7 @@ export default function ContactPage() {
         </div>
       </div>
       <Footer/>
+      <Toaster toastOptions={{duration:4000}}/>
     </div>
     </>
   );

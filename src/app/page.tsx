@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import {ModernHeroSection} from "@/components/ModernHeroSection";
 import {FAQSection} from "@/components/FAQSection";
 import {FeaturesSection} from "@/components/FeaturesSection";
+import { Toaster } from "react-hot-toast";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function Home() {
       <FeaturesSection />
       <FAQSection />
       <Footer />
+      <Toaster toastOptions={{duration:5000}}/>
     </>
   );
 }
