@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {Save, ChevronsLeft} from "lucide-react";
+import {ResumeMatcher} from "@/components/ResumerMatcher";
 import "../../app/jobs.css";
 import "../../app/globals.css";
 import toast from "react-hot-toast";
@@ -35,7 +36,7 @@ const JobDetailPage: React.FC = () => {
   }
 
   const handleSaved = async () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     if (!token) {
       toast.error("User not authenticated");
       console.error("User not authenticated");
@@ -111,6 +112,7 @@ const JobDetailPage: React.FC = () => {
       <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
         Apply Now
       </a>
+      <ResumeMatcher jobDescription={cleanText(job.description)} />
     </div>
   );
 };
