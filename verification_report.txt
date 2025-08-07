@@ -1,0 +1,23 @@
+Route Verification Report
+Generated: Thu 07 Aug 2025 02:05:24 PM +01
+=========================
+App Router Structure:
+  - src/app/contact/page.tsx
+  - src/app/jobs-details/[id]/page.tsx
+  - src/app/jobs/page.tsx
+  - src/app/login/page.tsx
+  - src/app/page.tsx
+  - src/app/register/page.tsx
+  - src/app/track-applications/page.tsx
+
+Missing 'use client' Directives:
+  - src/app/contact/page.tsx
+  - src/app/login/page.tsx
+  - src/app/register/page.tsx
+  - src/app/page.tsx
+  - src/app/track-applications/page.tsx
+  - src/app/jobs/page.tsx
+  - src/app/jobs-details/[id]/page.tsx
+
+Configuration Issues:
+  - Missing next.config.js

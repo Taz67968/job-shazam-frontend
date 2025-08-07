@@ -1,6 +1,7 @@
+"use client";
 import "../app/contact.css";
 import {useState, ChangeEvent, FormEvent} from "react";
-import Footer from "../components/Footer";
+import Footer from "@/components/Footer";
 import Head from "next/head";
 import {
   HiOutlineMail,
@@ -12,8 +13,7 @@ import {
 } from "react-icons/hi";
 import {FaFacebook, FaTwitter, FaLinkedin, FaInstagram} from "react-icons/fa";
 import toast from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
-
+import {Toaster} from "react-hot-toast";
 
 interface FormData {
   firstName: string;
@@ -57,34 +57,33 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   try {
+    try {
+      const {from, text} = formData;
 
-    const {from,text} = formData
+      const res = await fetch(`http://localhost:8080/mail/getMail`, {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({from, text}),
+      });
 
-    const res = await fetch(`http://localhost:8080/mail/getMail`,{
-      method:"Post",
-      headers: {
-        'Content-Type': "application/json",
-      },
-      body: JSON.stringify({from,text})
-    });
-
-    if(res.ok){
-      toast.success("Thank you for your message! We will get back to you soon.")
-    }  
-    setFormData({
-      firstName: "",
-      lastName: "",
-      from: "",
-      phone: "",
-      topic: "",
-      text: "",
-      helpOptions: [],
-    });
-   } catch (error) {
-    console.log(error)
-    toast.error("message not send. An error occurred")
-   }
+      if (res.ok) {
+        toast.success("Thank you for your message! We will get back to you soon.");
+      }
+      setFormData({
+        firstName: "",
+        lastName: "",
+        from: "",
+        phone: "",
+        topic: "",
+        text: "",
+        helpOptions: [],
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("message not send. An error occurred");
+    }
   };
 
   return (
@@ -325,7 +324,7 @@ export default function ContactPage() {
           </div>
         </div>
       </footer>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 }

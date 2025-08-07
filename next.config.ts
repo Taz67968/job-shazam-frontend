@@ -1,7 +1,6 @@
 import type {NextConfig} from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -10,6 +9,25 @@ const nextConfig: NextConfig = {
         pathname: "/photo-**",
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/contact-us",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/jobsDetailspage/:id",
+        destination: "/jobs-details/:id",
+        permanent: true,
+      },
+      {
+        source: "/find-jobs",
+        destination: "/jobs",
+        permanent: true,
+      },
+    ];
   },
 };
 

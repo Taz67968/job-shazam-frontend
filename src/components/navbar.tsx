@@ -18,7 +18,13 @@ export default function Navbar() {
 
   // Prefetch routes
   useEffect(() => {
-    const prefetchRoutes = ["/Jobspage", "/track-applications", "/ContactUsPage", "/find-jobs", "lohinPage"];
+    const prefetchRoutes = [
+      "/Jobspage",
+      "/track-applications",
+      "/ContactUsPage",
+      "/find-jobs",
+      "lohinPage",
+    ];
     prefetchRoutes.forEach((route) => {
       const link = document.createElement("link");
       link.rel = "prefetch";
@@ -34,7 +40,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-primary font-poppins" prefetch={false}>
-            IT-JobFinder
+            Job-Shazam
           </Link>
 
           {/* Desktop Navigation */}

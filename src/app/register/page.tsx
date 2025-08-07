@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import RegisterPage from "@/components/RegisterSection";
-const loginPage = () => {
+const RegistePage = () => {
   return <RegisterPage />;
 };
 
-export default RegisterPage;
+export default RegistePage;

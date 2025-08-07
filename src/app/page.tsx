@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push("/Jobspage"); // replace with your target route
+    router.push("/Jobspage");
   };
 
   return (
