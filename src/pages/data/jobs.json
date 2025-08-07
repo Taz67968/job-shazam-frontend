@@ -1,0 +1,95 @@
+
+{
+    "jobs": [
+        {
+            "id": 1,
+            "title": "Software Engineer",
+            "company": "Tech Solutions Inc.",
+            "location": "New York, NY",
+            "type": "Full-time",
+            "url": "https://example.com/job1",
+            "description": "Join our dynamic team to develop innovative software solutions that drive business success."
+        },
+        {
+            "id": 2,
+            "title": "Product Manager",
+            "company": "Innovatech",
+            "location": "San Francisco, CA",
+            "type": "Full-time",
+            "url": "https://example.com/job2",
+            "description": "Lead product development from conception to launch and ensure alignment with market needs."
+        },
+        {
+            "id": 3,
+            "title": "UX Designer",
+            "company": "Creative Agency",
+            "location": "Remote",
+            "type": "Part-time",
+            "url": "https://example.com/job3",
+            "description": "Design user-friendly interfaces and enhance user experiences for our web and mobile applications."
+        },
+        {
+            "id": 4,
+            "title": "Data Analyst",
+            "company": "Data Insights LLC",
+            "location": "Austin, TX",
+            "type": "Contract",
+            "url": "https://example.com/job4",
+            "description": "Analyze complex datasets to provide actionable insights and support business decisions."
+        },
+        {
+            "id": 5,
+            "title": "DevOps Engineer",
+            "company": "Cloud Services Corp.",
+            "location": "Chicago, IL",
+            "type": "Full-time",
+            "url": "https://example.com/job5",
+            "description": "Implement and manage CI/CD pipelines and ensure system reliability and performance."
+        },
+        {
+            "id": 6,
+            "title": "Marketing Specialist",
+            "company": "Brand Boosters",
+            "location": "Boston, MA",
+            "type": "Internship",
+            "url": "https://example.com/job6",
+            "description": "Assist in the development and execution of marketing campaigns to enhance brand visibility."
+        },
+        {
+            "id": 7,
+            "title": "Frontend Developer",
+            "company": "Web Innovations",
+            "location": "Remote",
+            "type": "Full-time",
+            "url": "https://example.com/job7",
+            "description": "Build responsive and interactive web applications to improve user engagement."
+        },
+        {
+            "id": 8,
+            "title": "Backend Developer",
+            "company": "Server Solutions",
+            "location": "Seattle, WA",
+            "type": "Part-time",
+            "url": "https://example.com/job8",
+            "description": "Develop server-side logic and maintain the core database to ensure high performance."
+        },
+        {
+            "id": 9,
+            "title": "Systems Administrator",
+            "company": "IT Services Group",
+            "location": "Denver, CO",
+            "type": "Full-time",
+            "url": "https://example.com/job9",
+            "description": "Manage and maintain IT systems, ensuring optimal performance and security."
+        },
+        {
+            "id": 10,
+            "title": "Content Writer",
+            "company": "Content Creators",
+            "location": "Remote",
+            "type": "Freelance",
+            "url": "https://example.com/job10",
+            "description": "Create engaging and informative content for various platforms, enhancing brand storytelling."
+        }
+    ]
+}
