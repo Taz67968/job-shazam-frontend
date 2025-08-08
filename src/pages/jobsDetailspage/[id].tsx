@@ -3,10 +3,10 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {Save, ChevronsLeft} from "lucide-react";
-import {ResumeMatcher} from "@/components/ResumerMatcher";
+import toast from "react-hot-toast";
+import {ResumeUploadModal} from "@/components/ResumeUploadModal";
 import "../../app/jobs.css";
 import "../../app/globals.css";
-import toast from "react-hot-toast";
 
 interface Job {
   id: string;
@@ -24,6 +24,8 @@ const JobDetailPage: React.FC = () => {
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [compareResult, setCompareResult] = useState<any>(null);
 
   function cleanText(input?: string): string {
     if (!input) return "";
@@ -39,7 +41,6 @@ const JobDetailPage: React.FC = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("User not authenticated");
-      console.error("User not authenticated");
       return;
     }
     try {
@@ -56,13 +57,10 @@ const JobDetailPage: React.FC = () => {
 
       if (!res.ok) {
         toast.error(data.message || "Job has not been saved");
-        console.error(data.message || "Job has not been saved");
       } else {
         toast.success(data.message || "Job has been saved");
-        console.log(data.message || "Job has been saved");
       }
     } catch (error) {
-      console.error("Error saving Job:", error);
       toast.error("Something went wrong");
     }
   };
@@ -72,7 +70,6 @@ const JobDetailPage: React.FC = () => {
 
     const fetchJob = async () => {
       try {
-        console.log(`Fetching job /api/jobs/${id}`);
         const res = await fetch(`http://localhost:8080/jobs/${id}`);
         if (!res.ok) {
           throw new Error(`Failed to fetch job`);
@@ -80,7 +77,6 @@ const JobDetailPage: React.FC = () => {
         const data = await res.json();
         setJob(data);
       } catch (err: any) {
-        console.error("Fetch error:", err.message);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -112,7 +108,51 @@ const JobDetailPage: React.FC = () => {
       <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
         Apply Now
       </a>
-      <ResumeMatcher jobDescription={cleanText(job.description)} />
+
+      {/* New Compare Button */}
+      <button
+        onClick={() => {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            router.push("/loginPage");
+          } else {
+            setIsModalOpen(true);
+          }
+        }}
+        className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+      >
+        Compare & Apply
+      </button>
+
+      {/* Modal */}
+      {isModalOpen && job && (
+        <ResumeUploadModal
+          jobDescription={cleanText(job.description)}
+          onClose={() => setIsModalOpen(false)}
+          onCompareComplete={(result) => setCompareResult(result)}
+        />
+      )}
+
+      {/* Show match results if any */}
+      {compareResult && (
+        <div className="mt-6 p-4 border rounded bg-green-50">
+          <p className="font-bold">Match Score: {compareResult.match}%</p>
+          <div>
+            <p className="font-semibold">Strengths...:</p>
+            <ul className="list-disc ml-6">
+              {compareResult.strengths.map((s: string, i: number) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+            <p className="font-semibold mt-2">Improvements...:</p>
+            <ul className="list-disc ml-6">
+              {compareResult.improvements.map((i: string, idx: number) => (
+                <li key={idx}>{i}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
