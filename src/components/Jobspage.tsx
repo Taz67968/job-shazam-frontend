@@ -3,7 +3,7 @@
 import React, {useState} from "react";
 import Navbar from "@/components/navbar";
 import {Footer} from "@/components/Footer";
-import JobListings from "@/components/JobListings";
+import {JobListings} from "./JobListings";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {

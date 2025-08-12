@@ -1,19 +1,19 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import Navbar from "@/components/navbar";
 import {Footer} from "@/components/Footer";
 import {ApplicationBoard} from "@/components/ApplicationBoard";
 import {useAuth} from "@/contexts/AuthContext";
 
-const TrackApplications = () => {
+const TrackApplications: React.FC = () => {
   const {user, loading} = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/auth");
+      router.push("/login"); // changed from "/auth" to "/login"
     }
   }, [user, loading, router]);
 
@@ -29,7 +29,11 @@ const TrackApplications = () => {
   }
 
   if (!user) {
-    return null;
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted-foreground">Redirecting to login...</p>
+      </div>
+    );
   }
 
   return (
