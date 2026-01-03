@@ -1,12 +1,11 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
-import {JobCard} from "./JobCard";
-import {JobDetailModal} from "@/components/JobDetailModal";
-import {Skeleton} from "@/components/ui/skeleton";
-import {Loader2} from "lucide-react";
-import {Job, JobsResponse} from "@/types/job";
-import mockJobs from "@/data/mockJobs";
+import React, { useState, useEffect } from "react";
+import { JobCard } from "./JobCard";
+import { JobDetailModal } from "@/components/JobDetailModal";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Loader2 } from "lucide-react";
+import { Job, JobsResponse } from "@/types/job";
 
 interface JobListingsProps {
   searchQuery: string;
@@ -40,50 +39,30 @@ export const JobListings = ({
         if (jobTypeFilter && jobTypeFilter !== "all") params.append("type", jobTypeFilter);
         if (levelFilter && levelFilter !== "all") params.append("level", levelFilter);
 
-        // Use local backend by default
-        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/jobs";
+        // Use local backend (Server log confirmed port 8080)
+        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/jobs";
 
         const res = await fetch(`${backendUrl}?${params.toString()}`);
 
         if (!res.ok) throw new Error("Backend not available");
 
-        const data: JobsResponse = await res.json();
-        setJobs(data.jobs || []);
-        setTotalJobs(data.total || 0);
+        const data = await res.json();
+
+        // Handle array response from backend
+        if (Array.isArray(data)) {
+          setJobs(data);
+          setTotalJobs(data.length);
+        } else {
+          // Fallback if backend wraps it
+          const response = data as JobsResponse;
+          setJobs(response.jobs || []);
+          setTotalJobs(response.total || 0);
+        }
       } catch (err) {
-        console.warn("Backend not available, using mock data");
-        setError("Backend not available");
-
-        // Filter mock jobs as a fallback
-        const filteredMockJobs = mockJobs.filter((job) => {
-          const matchesSearch =
-            !searchQuery ||
-            job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            job.company.toLowerCase().includes(searchQuery.toLowerCase());
-
-          const matchesLocation =
-            !locationFilter ||
-            job.location.toLowerCase().includes(locationFilter.toLowerCase()) ||
-            (locationFilter.toLowerCase().includes("remote") &&
-              job.location.toLowerCase().includes("remote"));
-
-          const matchesType =
-            !jobTypeFilter ||
-            jobTypeFilter === "all" ||
-            job.type.toLowerCase().includes(jobTypeFilter.toLowerCase()) ||
-            (jobTypeFilter === "remote" && job.location.toLowerCase().includes("remote"));
-
-          const matchesLevel =
-            !levelFilter ||
-            levelFilter === "all" ||
-            job.title.toLowerCase().includes(levelFilter.toLowerCase()) ||
-            job.description.toLowerCase().includes(levelFilter.toLowerCase());
-
-          return matchesSearch && matchesLocation && matchesType && matchesLevel;
-        });
-
-        setJobs(filteredMockJobs);
-        setTotalJobs(filteredMockJobs.length);
+        console.error("Failed to fetch jobs:", err);
+        setError("Could not connect to backend server. Please ensure it is running on port 3000.");
+        setJobs([]);
+        setTotalJobs(0);
       } finally {
         setLoading(false);
       }

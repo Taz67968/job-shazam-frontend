@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
-import {Badge} from "@/components/ui/badge";
-import {Progress} from "./ui/progress";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {CheckCircle, AlertCircle, TrendingUp, Target} from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "./ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, AlertCircle, TrendingUp, Target } from "lucide-react";
 
 interface ComparisonResult {
   matchPercentage: number;
@@ -139,6 +140,22 @@ export const ComparisonResultModal = ({
               </CardContent>
             </Card>
           )}
+
+          <div className="flex justify-end pt-4">
+            <Button
+              onClick={() => {
+                const element = document.createElement("a");
+                const file = new Blob([JSON.stringify(result, null, 2)], { type: 'text/plain' });
+                element.href = URL.createObjectURL(file);
+                element.download = "tailored_cv_analysis.json";
+                document.body.appendChild(element); // Required for this to work in FireFox
+                element.click();
+              }}
+              className="bg-primary hover:bg-primary/90"
+            >
+              Download Analysis
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

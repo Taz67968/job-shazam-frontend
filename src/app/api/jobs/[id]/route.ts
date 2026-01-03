@@ -1,15 +1,18 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import jobs from "../../../data/jobs.json";
+import { NextResponse } from "next/server";
+import mockJobs from "../../../../data/mockJobs";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const {id} = req.query;
-  const jobId = parseInt(id as string);
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
 
-  const job = jobs.jobs.find((job) => job.id === jobId);
+  const job = mockJobs.find((job) => job.id === id);
 
   if (job) {
-    res.status(200).json(job);
+    return NextResponse.json(job);
   } else {
-    res.status(404).json({error: "Job not found"});
+    // Fallback try converting number/string if weak comparison needed, but string is standard
+    return NextResponse.json({ error: "Job not found" }, { status: 404 });
   }
 }

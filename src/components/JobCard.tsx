@@ -1,9 +1,9 @@
 "use client";
 
-import React, {useState} from "react";
-import {Card, CardContent} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
-import {Button} from "@/components/ui/button";
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   MapPin,
   Clock,
@@ -13,46 +13,50 @@ import {
   Bookmark,
   BarChart3,
 } from "lucide-react";
-import {useToast} from "@/hooks/use-toast";
-import {useAuth} from "@/contexts/AuthContext";
-import {useRouter} from "next/navigation";
-import {ResumeModal} from "./ResumeModal";
-import {ComparisonResultModal} from "./ComparisonResultModal";
-import {Job} from "@/types/job";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { ResumeModal } from "./ResumeModal";
+import { ComparisonResultModal } from "./ComparisonResultModal";
+import { Job } from "@/types/job";
 
 interface JobCardProps {
   job: Job;
   onClick: () => void;
 }
 
-export const JobCard = ({job, onClick}: JobCardProps) => {
-  const {toast} = useToast();
-  const {user} = useAuth();
+export const JobCard = ({ job, onClick }: JobCardProps) => {
+  const { toast } = useToast();
+  const { user } = useAuth();
   const router = useRouter();
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [comparisonResult, setComparisonResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
 
   const handleApplyClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     window.open(job.applyUrl, "_blank");
   };
 
+  const [isTracked, setIsTracked] = useState(false);
+
   const handleTrackClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (!user) {
-      router.push("/auth");
+      router.push("/login");
       return;
     }
 
     try {
       const res = await fetch(`${API_URL}/api/job_applications`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_id: user.id,
           job_id: job.id,
@@ -67,14 +71,16 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
 
       if (!res.ok) throw new Error("Failed to track job");
 
+      setIsTracked(true);
       toast({
         title: "Job Tracked!",
         description: `${job.title} at ${job.company} has been added to your tracked applications.`,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
       toast({
         title: "Error",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -83,7 +89,7 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
   const handleCompareClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!user) {
-      router.push("/auth");
+      router.push("/login");
       return;
     }
     setShowResumeModal(true);
@@ -92,32 +98,35 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
   const handleResumeSelect = async (resumeContent: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/compare-resume`, {
+      // BACKEND EXPECTS 'cv' and 'description' at /match
+      const res = await fetch(`${API_URL}/match`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          jobDescription: job.description,
-          jobTitle: job.title,
-          company: job.company,
-          resumeContent,
-          userId: user?.id,
+          description: job.description,
+          cv: resumeContent, // Mapping resumeContent to cv
         }),
       });
 
       const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to compare resume");
+
+      // If the backend returns the object directly (no wrapping 'success' property typically in NestJS unless intercepted)
+      // Check if keys exist
+      if (!res.ok) {
+        throw new Error("Failed to compare resume");
       }
 
-      setComparisonResult(data.analysis);
+      // The backend returns: { matchPercentage, strengths, missingSkills, suggestions }
+      // The ComparisonResultModal expects 'result' which matches this structure directly.
+      setComparisonResult(data);
       setShowComparisonModal(true);
 
       // Save the comparison result
       await fetch(`${API_URL}/api/job_applications`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user_id: user.id,
+          user_id: user?.id,
           job_id: job.id,
           job_title: job.title,
           company: job.company,
@@ -125,14 +134,17 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
           description: job.description,
           apply_url: job.applyUrl,
           status: "tracked",
-          match_percentage: data.analysis.matchPercentage,
-          improvement_suggestions: data.analysis.suggestions,
+          match_percentage: data.matchPercentage,
+          improvement_suggestions: data.suggestions,
         }),
       });
-    } catch (error: any) {
+      setIsTracked(true);
+
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
       toast({
         title: "Comparison Failed",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -142,9 +154,10 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
 
   return (
     <Card
-      className="hover:shadow-lg transition-shadow cursor-pointer border-l-4 border-l-primary bg-card"
+      className="glass-card hover:-translate-y-1 group relative overflow-hidden"
       onClick={onClick}
     >
+      <div className="absolute top-0 left-0 w-1 h-full bg-primary/80 group-hover:bg-primary transition-all" />
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
@@ -179,13 +192,14 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
               {loading ? "Comparing..." : "Compare"}
             </Button>
             <Button
-              variant="outline"
+              variant={isTracked ? "default" : "outline"}
               size="sm"
               onClick={handleTrackClick}
-              className="text-muted-foreground hover:text-primary"
+              disabled={isTracked}
+              className={`${isTracked ? "bg-green-500/20 text-green-500 border-green-500 hover:bg-green-500/30 glow-green" : "text-muted-foreground hover:text-primary"}`}
             >
-              <Bookmark className="h-4 w-4 mr-1" />
-              Track
+              <Bookmark className={`h-4 w-4 mr-1 ${isTracked ? "fill-current" : ""}`} />
+              {isTracked ? "Tracked" : "Track"}
             </Button>
             <Button
               onClick={handleApplyClick}

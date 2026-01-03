@@ -11,6 +11,7 @@ export interface Job {
   postedDate: string;
   applyUrl: string;
   source: string;
+  scrapedAt?: string; // Optional as not all jobs might have it
 }
 
 export interface JobsResponse {

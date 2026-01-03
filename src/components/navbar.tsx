@@ -1,12 +1,15 @@
 "use client";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import {Search, Briefcase, Phone, BarChart3, Menu, X} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Search, Briefcase, Phone, BarChart3, Menu, X } from "lucide-react";
+
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +26,7 @@ export default function Navbar() {
       "/track-applications",
       "/ContactUsPage",
       "/find-jobs",
-      "lohinPage",
+      "/loginPage",
     ];
     prefetchRoutes.forEach((route) => {
       const link = document.createElement("link");
@@ -35,7 +38,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`bg-background border-b border-border sticky top-0 z-50 transition-all ${isScrolled ? "shadow-md" : ""}`}
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/70 backdrop-blur-lg border-b border-white/5 shadow-lg" : "bg-transparent border-transparent"}`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
@@ -60,12 +63,19 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="outline" asChild>
-              <Link href="/loginPage" prefetch={false}>
+            {user ? (
+              <Button variant="outline" onClick={signOut}>
                 <Briefcase className="h-4 w-4 mr-2" />
-                SignUP
-              </Link>
-            </Button>
+                Sign Out
+              </Button>
+            ) : (
+              <Button variant="outline" asChild>
+                <Link href="/login" prefetch={false}>
+                  <Briefcase className="h-4 w-4 mr-2" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -106,12 +116,19 @@ export default function Navbar() {
               Contact
             </MobileNavLink>
 
-            <Button variant="outline" className="w-full" asChild>
-              <Link href="/find-jobs" onClick={() => setIsOpen(false)}>
+            {user ? (
+              <Button variant="outline" className="w-full" onClick={() => { signOut(); setIsOpen(false); }}>
                 <Briefcase className="h-4 w-4 mr-2" />
-                Get Started
-              </Link>
-            </Button>
+                Sign Out
+              </Button>
+            ) : (
+              <Button variant="outline" className="w-full" asChild>
+                <Link href="/login" onClick={() => setIsOpen(false)}>
+                  <Briefcase className="h-4 w-4 mr-2" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
           </div>
         )}
       </div>

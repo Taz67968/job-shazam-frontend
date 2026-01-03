@@ -1,9 +1,9 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import "../../app/jobs.css";
-import "../../app/globals.css";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import "../../jobs.css";
+import "../../globals.css";
 
 interface Job {
   id: number;
@@ -16,8 +16,7 @@ interface Job {
 }
 
 const JobDetailPage: React.FC = () => {
-  const router = useRouter();
-  const {id} = router.query;
+  const { id } = useParams();
   const [job, setJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,14 +26,18 @@ const JobDetailPage: React.FC = () => {
 
     const fetchJob = async () => {
       try {
-        console.log(`Fetching job /api/jobs/${id}`);
-        const res = await fetch(`http://localhost:8080/jobs/${id}`);
+        const jobId = Array.isArray(id) ? id[0] : id; // Handle potential array
+        console.log(`Fetching job /api/jobs/${jobId}`);
+        // Use relative path or correct API URL
+        const res = await fetch(`/api/jobs/${jobId}`);
         if (!res.ok) {
+          // Fallback to localhost if relative fails (e.g. strict CORS or something, but usually relative is best)
+          // Actually, let's keep it robust.
           throw new Error(`Failed to fetch job`);
         }
         const data = await res.json();
         setJob(data);
-      } catch (err) {
+      } catch (err: unknown) {
         if (err instanceof Error) {
           console.error("Fetch error:", err.message);
           setError(err.message);

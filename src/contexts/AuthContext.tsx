@@ -1,6 +1,6 @@
 "use client";
-import {createContext, useContext, useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -12,7 +12,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string) => Promise<void>;
-  verifyToken: (token: string) => Promise<void>;
+  verifyOtp: (email: string, otp: string) => Promise<void>;
   signOut: () => void;
 }
 
@@ -26,7 +26,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({children}: {children: React.ReactNode}) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -42,8 +42,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }, []);
 
   const validateToken = async (token: string) => {
+    const envUrl = process.env.NEXT_PUBLIC_API_URL;
+    const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/validate`, {
+      const response = await fetch(`${backendUrl}/auth/validate`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,7 +57,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       } else {
         throw new Error("Invalid token");
       }
-    } catch (error) {
+    } catch {
       localStorage.removeItem("authToken");
     } finally {
       setLoading(false);
@@ -64,14 +66,16 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const login = async (email: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/magic-link`, {
+      const envUrl = process.env.NEXT_PUBLIC_API_URL;
+      const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
+      const response = await fetch(`${backendUrl}/auth/login-otp`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({email}),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send magic link");
+        throw new Error("Failed to send OTP");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -79,25 +83,27 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     }
   };
 
-  const verifyToken = async (token: string) => {
+  const verifyOtp = async (email: string, otp: string) => {
+    const envUrl = process.env.NEXT_PUBLIC_API_URL;
+    const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify`, {
+      const response = await fetch(`${backendUrl}/auth/verify-otp`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({token}),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, token: otp }),
       });
 
       if (response.ok) {
-        const {accessToken, user} = await response.json();
+        const { accessToken, user } = await response.json();
         localStorage.setItem("authToken", accessToken);
         setUser(user);
-        router.push("/dashboard");
+        router.push("/jobs");
       } else {
-        throw new Error("Invalid token");
+        throw new Error("Invalid OTP");
       }
     } catch (error) {
-      console.error("Token verification failed:", error);
-      router.push("/login");
+      console.error("OTP verification failed:", error);
+      throw error;
     }
   };
 
@@ -108,7 +114,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   return (
-    <AuthContext.Provider value={{user, loading, login, verifyToken, signOut}}>
+    <AuthContext.Provider value={{ user, loading, login, verifyOtp, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
-import {Button} from "@/components/ui/button";
-import {Badge} from "@/components/ui/badge";
-import {Separator} from "@/components/ui/separator";
-import {MapPin, Clock, DollarSign, Building2, ExternalLink, CheckCircle} from "lucide-react";
-import {Job} from "@/types/job";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { MapPin, Clock, DollarSign, Building2, ExternalLink, CheckCircle } from "lucide-react";
+import { Job } from "@/types/job";
 
 interface JobDetailModalProps {
   job: Job | null;
@@ -14,7 +14,7 @@ interface JobDetailModalProps {
   onClose: () => void;
 }
 
-export const JobDetailModal: React.FC<JobDetailModalProps> = ({job, isOpen, onClose}) => {
+export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job, isOpen, onClose }) => {
   if (!job) return null;
 
   const handleApplyClick = () => {
@@ -43,10 +43,10 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({job, isOpen, onCl
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-lg">
-                <Building2 className="h-5 w-5 text-blue-600" />
-                <span className="font-semibold">{job.company}</span>
+                <Building2 className="h-5 w-5 text-primary" />
+                <span className="font-semibold text-foreground">{job.company}</span>
               </div>
-              <div className="flex items-center gap-4 text-gray-600">
+              <div className="flex items-center gap-4 text-muted-foreground">
                 {job.location && (
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
@@ -62,7 +62,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({job, isOpen, onCl
 
             <Button
               onClick={handleApplyClick}
-              className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
+              className="bg-primary hover:bg-primary/90 w-full sm:w-auto text-white shadow-lg shadow-primary/20"
               size="lg"
             >
               <ExternalLink className="h-4 w-4 mr-2" />
@@ -73,75 +73,78 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({job, isOpen, onCl
           {/* Badges */}
           <div className="flex flex-wrap gap-2">
             {job.type && (
-              <Badge variant="secondary" className="text-sm">
+              <Badge variant="secondary" className="glass bg-white/10 text-white border-white/20">
                 {job.type}
               </Badge>
             )}
             {job.location?.toLowerCase().includes("remote") && (
-              <Badge className="bg-green-100 text-green-800">Remote</Badge>
+              <Badge className="bg-green-500/20 text-green-300 border border-green-500/30">Remote</Badge>
             )}
             {job.salary && (
-              <Badge variant="outline" className="flex items-center gap-1">
+              <Badge variant="outline" className="flex items-center gap-1 text-white border-white/20">
                 <DollarSign className="h-3 w-3" />
                 {job.salary}
               </Badge>
             )}
           </div>
 
-          <Separator />
+          <Separator className="bg-white/10" />
 
           {/* Job Description */}
           {job.description && (
             <div>
-              <h3 className="text-lg font-semibold mb-3">Job Description</h3>
-              <p className="text-gray-700 leading-relaxed">{job.description}</p>
+              <h3 className="text-xl font-bold mb-3 text-white">Job Description</h3>
+              <div
+                className="text-gray-300 leading-relaxed space-y-4 prose prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: job.description.replace(/\n/g, '<br/>') }}
+              />
             </div>
           )}
 
-          <Separator />
+          <Separator className="bg-white/10" />
 
           {/* Requirements */}
           {requirements.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-3">Requirements</h3>
-              <ul className="space-y-2">
+              <h3 className="text-xl font-bold mb-4 text-white">Requirements</h3>
+              <ul className="space-y-3">
                 {requirements.map((req, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                    <span className="text-gray-700">{req}</span>
+                  <li key={idx} className="flex items-start gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-200">{req}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          <Separator />
+          <Separator className="bg-white/10" />
 
           {/* Benefits */}
           {benefits.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-3">Benefits</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <h3 className="text-xl font-bold mb-4 text-white">Benefits</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {benefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-600 flex-shrink-0" />
-                    <span className="text-gray-700">{benefit}</span>
+                  <div key={idx} className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
+                    <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
+                    <span className="text-gray-200">{benefit}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          <Separator />
+          <Separator className="bg-white/10" />
 
           {/* Apply Footer */}
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="flex justify-between items-center">
+          <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div>
-                <h4 className="font-semibold text-gray-900">Ready to Apply?</h4>
-                <p className="text-sm text-gray-600">Source: {job.source || "Job Portal"}</p>
+                <h4 className="text-lg font-bold text-white mb-1">Ready to start your journey?</h4>
+                <p className="text-sm text-gray-400">Source: <span className="text-primary">{job.source || "Job Portal"}</span></p>
               </div>
-              <Button onClick={handleApplyClick} className="bg-green-600 hover:bg-green-700">
+              <Button onClick={handleApplyClick} className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Apply on Company Site
               </Button>
