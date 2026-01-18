@@ -48,9 +48,6 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
   const handleTrackClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     const token = localStorage.getItem("authToken");
-    console.log("active token",token);
-    console.log("job id",job.id)
-
     if (!user) {
       router.push("/login");
       return;
