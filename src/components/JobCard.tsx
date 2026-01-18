@@ -57,7 +57,7 @@ export const JobCard = ({job, onClick}: JobCardProps) => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/saved-jobs`, {
+      const res = await fetch(`${API_URL}/saved-jobs`, {
         method: "POST",
         headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
         body: JSON.stringify({

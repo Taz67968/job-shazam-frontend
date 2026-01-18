@@ -34,36 +34,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     // Check for existing token on mount
     const token = localStorage.getItem("authToken");
-    if (!token) {
-      // validateToken(token);
-      router.push("/login");
+    if (token) {
+      validateToken(token);
     } else {
       setLoading(false);
     }
   }, []);
 
-  // const validateToken = async (token: string) => {
-  //   const envUrl = process.env.NEXT_PUBLIC_API_URL;
-  //   const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
-  //   try {
-  //     const response = await fetch(`${backendUrl}/auth/validate`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
+  const validateToken = async (token: string) => {
+    const envUrl = process.env.NEXT_PUBLIC_API_URL;
+    const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
+    try {
+      const response = await fetch(`${backendUrl}/auth/validate`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  //     if (response.ok) {
-  //       const userData = await response.json();
-  //       setUser(userData);
-  //     } else if (response.status === 401){
-  //       throw new Error("Invalid token");
-  //     }
-  //   } catch {
-  //     localStorage.removeItem("authToken");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData);
+      } else {
+        throw new Error("Invalid token");
+      }
+    } catch {
+      localStorage.removeItem("authToken");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const login = async (email: string) => {
     try {
