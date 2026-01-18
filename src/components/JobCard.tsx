@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import React, {useState} from "react";
+import {Card, CardContent} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
+import {Button} from "@/components/ui/button";
 import {
   MapPin,
   Clock,
@@ -13,21 +13,21 @@ import {
   Bookmark,
   BarChart3,
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
-import { ResumeModal } from "./ResumeModal";
-import { ComparisonResultModal } from "./ComparisonResultModal";
-import { Job } from "@/types/job";
+import {useToast} from "@/hooks/use-toast";
+import {useAuth} from "@/contexts/AuthContext";
+import {useRouter} from "next/navigation";
+import {ResumeModal} from "./ResumeModal";
+import {ComparisonResultModal} from "./ComparisonResultModal";
+import {Job} from "@/types/job";
 
 interface JobCardProps {
   job: Job;
   onClick: () => void;
 }
 
-export const JobCard = ({ job, onClick }: JobCardProps) => {
-  const { toast } = useToast();
-  const { user } = useAuth();
+export const JobCard = ({job, onClick}: JobCardProps) => {
+  const {toast} = useToast();
+  const {user} = useAuth();
   const router = useRouter();
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
@@ -36,7 +36,7 @@ export const JobCard = ({ job, onClick }: JobCardProps) => {
   const [loading, setLoading] = useState(false);
 
   const envUrl = process.env.NEXT_PUBLIC_API_URL;
-  const API_URL = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
+  const API_URL = envUrl && envUrl.trim() !== "" ? envUrl : "http://localhost:8080";
 
   const handleApplyClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -47,6 +47,9 @@ export const JobCard = ({ job, onClick }: JobCardProps) => {
 
   const handleTrackClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
+    const token = localStorage.getItem("authToken");
+    console.log("active token",token);
+    console.log("job id",job.id)
 
     if (!user) {
       router.push("/login");
@@ -54,18 +57,12 @@ export const JobCard = ({ job, onClick }: JobCardProps) => {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/job_applications`, {
+      const res = await fetch(`http://localhost:8080/saved-jobs`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
         body: JSON.stringify({
-          user_id: user.id,
-          job_id: job.id,
-          job_title: job.title,
-          company: job.company,
-          location: job.location,
-          description: job.description,
-          apply_url: job.applyUrl,
-          status: "tracked",
+          jobId: `${job.id}`,
+          status: "saved",
         }),
       });
 
@@ -101,7 +98,7 @@ export const JobCard = ({ job, onClick }: JobCardProps) => {
       // BACKEND EXPECTS 'cv' and 'description' at /match
       const res = await fetch(`${API_URL}/match`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           description: job.description,
           cv: resumeContent, // Mapping resumeContent to cv
@@ -124,7 +121,7 @@ export const JobCard = ({ job, onClick }: JobCardProps) => {
       // Save the comparison result
       await fetch(`${API_URL}/api/job_applications`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           user_id: user?.id,
           job_id: job.id,
@@ -139,7 +136,6 @@ export const JobCard = ({ job, onClick }: JobCardProps) => {
         }),
       });
       setIsTracked(true);
-
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
       toast({
