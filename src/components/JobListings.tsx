@@ -12,6 +12,7 @@ interface JobListingsProps {
   locationFilter: string;
   jobTypeFilter: string;
   levelFilter: string;
+  trackedJobIds?: Set<string>;
 }
 
 export const JobListings = ({
@@ -19,6 +20,7 @@ export const JobListings = ({
   locationFilter,
   jobTypeFilter,
   levelFilter,
+  trackedJobIds,
 }: JobListingsProps) => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -39,8 +41,9 @@ export const JobListings = ({
         if (jobTypeFilter && jobTypeFilter !== "all") params.append("type", jobTypeFilter);
         if (levelFilter && levelFilter !== "all") params.append("level", levelFilter);
 
-        // Use local backend (Server log confirmed port 8080)
-        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/jobs";
+        // Use API endpoint from environment variables
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const backendUrl = `${baseUrl}/jobs`;
 
         const res = await fetch(`${backendUrl}?${params.toString()}`);
 
@@ -103,7 +106,12 @@ export const JobListings = ({
 
       <div className="grid gap-6">
         {jobs.map((job) => (
-          <JobCard key={job.id} job={job} onClick={() => setSelectedJob(job)} />
+          <JobCard
+            key={job.id}
+            job={job}
+            onClick={() => setSelectedJob(job)}
+            initialIsTracked={trackedJobIds?.has(job.id)}
+          />
         ))}
       </div>
 

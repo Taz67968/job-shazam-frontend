@@ -1,17 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Search, Briefcase, Phone, BarChart3, Menu, X } from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Search, Briefcase, Phone, BarChart3, Menu, X} from "lucide-react";
 
-import { useAuth } from "@/contexts/AuthContext";
+import {useAuth} from "@/contexts/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { user, signOut } = useAuth();
+  const [isHydrated, setIsHydrated] = useState(false);
+  const {user, signOut} = useAuth();
 
   useEffect(() => {
+    setIsHydrated(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
@@ -47,36 +49,40 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <NavLink href="/" prefetch={false}>
-              Home
-            </NavLink>
-            <NavLink href="/Jobspage" icon={<Search className="h-4 w-4" />}>
-              Find Jobs
-            </NavLink>
-            <NavLink href="/track-applications" icon={<BarChart3 className="h-4 w-4" />}>
-              Track Applications
-            </NavLink>
-            <NavLink href="/ContactUsPage" icon={<Phone className="h-4 w-4" />}>
-              Contact
-            </NavLink>
-          </nav>
+          {isHydrated && (
+            <nav className="hidden md:flex items-center space-x-8">
+              <NavLink href="/" prefetch={false}>
+                Home
+              </NavLink>
+              <NavLink href="/Jobspage" icon={<Search className="h-4 w-4" />}>
+                Find Jobs
+              </NavLink>
+              <NavLink href="/track-applications" icon={<BarChart3 className="h-4 w-4" />}>
+                Track Applications
+              </NavLink>
+              <NavLink href="/ContactUsPage" icon={<Phone className="h-4 w-4" />}>
+                Contact
+              </NavLink>
+            </nav>
+          )}
 
-          <div className="hidden md:flex items-center gap-4">
-            {user ? (
-              <Button variant="outline" onClick={signOut}>
-                <Briefcase className="h-4 w-4 mr-2" />
-                Sign Out
-              </Button>
-            ) : (
-              <Button variant="outline" asChild>
-                <Link href="/login" prefetch={false}>
+          {isHydrated && (
+            <div className="hidden md:flex items-center gap-4">
+              {user ? (
+                <Button variant="outline" onClick={signOut}>
                   <Briefcase className="h-4 w-4 mr-2" />
-                  Sign In
-                </Link>
-              </Button>
-            )}
-          </div>
+                  Sign Out
+                </Button>
+              ) : (
+                <Button variant="outline" asChild>
+                  <Link href="/login" prefetch={false}>
+                    <Briefcase className="h-4 w-4 mr-2" />
+                    Sign In
+                  </Link>
+                </Button>
+              )}
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
           <button
@@ -117,7 +123,14 @@ export default function Navbar() {
             </MobileNavLink>
 
             {user ? (
-              <Button variant="outline" className="w-full" onClick={() => { signOut(); setIsOpen(false); }}>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  signOut();
+                  setIsOpen(false);
+                }}
+              >
                 <Briefcase className="h-4 w-4 mr-2" />
                 Sign Out
               </Button>

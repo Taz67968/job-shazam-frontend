@@ -27,7 +27,9 @@ export const Footer = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8080/mail/sendMail?to=${trimmedEmail}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+      const mailEndpoint = process.env.NEXT_PUBLIC_MAIL_SENDMAIL_ENDPOINT || "/mail/sendMail";
+      const res = await fetch(`${apiUrl}${mailEndpoint}?to=${trimmedEmail}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -152,17 +154,23 @@ export const Footer = () => {
             <address className="space-y-2 text-muted-foreground not-italic">
               <p>
                 Email:{" "}
-                <Link href="mailto:info@jobshazam" className="hover:text-primary">
-                  info@jobshazam
+                <Link
+                  href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}
+                  className="hover:text-primary"
+                >
+                  {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
                 </Link>
               </p>
               <p>
                 Phone:{" "}
-                <Link href="tel:+237678239294" className="hover:text-primary">
-                  +237 678-239-294
+                <Link
+                  href={`tel:${process.env.NEXT_PUBLIC_CONTACT_PHONE?.replace(/\s/g, "")}`}
+                  className="hover:text-primary"
+                >
+                  {process.env.NEXT_PUBLIC_CONTACT_PHONE}
                 </Link>
               </p>
-              <p>Address: 237 Hotel Juvance </p>
+              <p>Address: {process.env.NEXT_PUBLIC_COMPANY_ADDRESS}</p>
             </address>
           </div>
 

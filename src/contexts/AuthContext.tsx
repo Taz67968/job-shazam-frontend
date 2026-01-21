@@ -1,6 +1,6 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import {createContext, useContext, useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 interface User {
   id: string;
@@ -26,7 +26,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -42,8 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const validateToken = async (token: string) => {
-    const envUrl = process.env.NEXT_PUBLIC_API_URL;
-    const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
     try {
       const response = await fetch(`${backendUrl}/auth/validate`, {
         headers: {
@@ -66,12 +65,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (email: string) => {
     try {
-      const envUrl = process.env.NEXT_PUBLIC_API_URL;
-      const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
       const response = await fetch(`${backendUrl}/auth/login-otp`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email}),
       });
 
       if (!response.ok) {
@@ -84,17 +82,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const verifyOtp = async (email: string, otp: string) => {
-    const envUrl = process.env.NEXT_PUBLIC_API_URL;
-    const backendUrl = (envUrl && envUrl.trim() !== "") ? envUrl : "http://localhost:8080";
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
     try {
       const response = await fetch(`${backendUrl}/auth/verify-otp`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, token: otp }),
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email, token: otp}),
       });
 
       if (response.ok) {
-        const { accessToken, user } = await response.json();
+        const {accessToken, user} = await response.json();
         localStorage.setItem("authToken", accessToken);
         setUser(user);
         router.push("/jobs");
@@ -114,7 +111,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, verifyOtp, signOut }}>
+    <AuthContext.Provider value={{user, loading, login, verifyOtp, signOut}}>
       {children}
     </AuthContext.Provider>
   );

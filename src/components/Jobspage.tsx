@@ -1,11 +1,11 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/navbar";
-import {Footer} from "@/components/Footer";
-import {JobListings} from "./JobListings";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import { Footer } from "@/components/Footer";
+import { JobListings } from "./JobListings";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -13,13 +13,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {Search, MapPin, Filter} from "lucide-react";
+import { Search, MapPin, Filter } from "lucide-react";
 
 export default function FindJobsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [jobTypeFilter, setJobTypeFilter] = useState("all");
   const [levelFilter, setLevelFilter] = useState("all");
+  const [trackedJobIds, setTrackedJobIds] = useState<Set<string>>(new Set());
+
+  // Fetch tracked jobs on mount
+  React.useEffect(() => {
+    const fetchTrackedJobs = async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      try {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const res = await fetch(`${API_URL}/saved-jobs`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          // Assuming data.data is array of SavedJob { job: { id: ... }, status: ... }
+          // Filter only those with 'tracked' status if needed, or all saved jobs?
+          // The Card logic considers anything valid in SavedJobs as "Tracked" if we map it so.
+          // But wait, the card toggle deletes it on untrack. So existence = tracked.
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const ids = new Set(data.data.map((item: any) => item.job.id));
+          setTrackedJobIds(ids as Set<string>);
+        }
+      } catch (error) {
+        console.error("Failed to fetch tracked jobs", error);
+      }
+    };
+
+    fetchTrackedJobs();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -118,6 +148,7 @@ export default function FindJobsPage() {
           locationFilter={locationFilter}
           jobTypeFilter={jobTypeFilter}
           levelFilter={levelFilter}
+          trackedJobIds={trackedJobIds}
         />
       </div>
 
