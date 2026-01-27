@@ -1,8 +1,8 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
-import {AlertCircle, Clock} from "lucide-react";
-import {Card, CardContent} from "@/components/ui/card";
+import React, { useState, useEffect } from "react";
+import { AlertCircle, Clock } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface RateLimitAlertProps {
   show: boolean;
@@ -10,7 +10,7 @@ interface RateLimitAlertProps {
   onRetryReady?: () => void;
 }
 
-export const RateLimitAlert = ({show, remainingSeconds, onRetryReady}: RateLimitAlertProps) => {
+export const RateLimitAlert = ({ show, remainingSeconds, onRetryReady }: RateLimitAlertProps) => {
   const [timeLeft, setTimeLeft] = useState(remainingSeconds);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const RateLimitAlert = ({show, remainingSeconds, onRetryReady}: RateLimit
           <div className="flex-1">
             <p className="font-semibold text-orange-900">Rate Limit Exceeded</p>
             <p className="text-sm text-orange-800 mt-1">
-              You've reached the maximum number of comparisons per minute. Please wait before trying
+              You&apos;ve reached the maximum number of comparisons per minute. Please wait before trying
               again.
             </p>
             <div className="flex items-center gap-2 mt-3">

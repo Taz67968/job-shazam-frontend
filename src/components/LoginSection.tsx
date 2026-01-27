@@ -148,7 +148,6 @@ export default function LoginSection() {
                       key={index}
                       type="text"
                       inputMode="numeric"
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       ref={(el: any) => (inputRefs.current[index] = el)}
                       value={digit}
                       onChange={(e) => handleOtpChange(index, e.target.value)}

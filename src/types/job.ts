@@ -1,3 +1,26 @@
+export interface Requirements {
+  mustHave?: string[];
+  niceToHave?: string[];
+}
+
+export interface Benefits {
+  health?: string[];
+  financial?: string[];
+  timeOff?: string[];
+  learning?: string[];
+  other?: string[];
+}
+
+export interface JobDescription {
+  aboutUs?: string;
+  roleOverview?: string;
+  responsibilities?: string[];
+  requirements?: Requirements;
+  whyJoinUs?: string[];
+  process?: string[];
+  benefits?: Benefits;
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -11,7 +34,8 @@ export interface Job {
   postedDate: string;
   applyUrl: string;
   source: string;
-  scrapedAt?: string; // Optional as not all jobs might have it
+  detailed?: JobDescription;
+  scrapedAt?: string;
 }
 
 export interface JobsResponse {

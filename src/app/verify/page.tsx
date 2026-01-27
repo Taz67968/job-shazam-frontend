@@ -27,7 +27,7 @@ function VerifyContent() {
         <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f1d2e] text-white">
             <Loader2 className="h-12 w-12 animate-spin text-green-500 mb-4" />
             <h2 className="text-2xl font-bold">Redirecting to Login...</h2>
-            <p className="text-gray-400 mt-2">We've updated our security.</p>
+            <p className="text-gray-400 mt-2">We&apos;ve updated our security.</p>
         </div>
     );
 }

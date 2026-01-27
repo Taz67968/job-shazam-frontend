@@ -1,14 +1,14 @@
 "use client";
 
-import {useState} from "react";
+import { useState } from "react";
 import Navbar from "@/components/navbar";
-import {Footer} from "@/components/Footer";
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {Mail, Phone, MapPin, Clock} from "lucide-react";
-import {useRouter} from "next/navigation";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Contact() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function Contact() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -75,7 +75,7 @@ export default function Contact() {
             Contact Us
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon
+            Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon
             as possible.
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function Contact() {
             <CardHeader>
               <CardTitle>Send us a message</CardTitle>
               <CardDescription>
-                Fill out the form below and we'll get back to you within 24 hours.
+                Fill out the form below and we&apos;ll get back to you within 24 hours.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

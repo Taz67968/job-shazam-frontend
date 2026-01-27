@@ -33,14 +33,13 @@ export const JobCard = ({ job, onClick, initialIsTracked = false }: JobCardProps
   const router = useRouter();
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [showComparisonModal, setShowComparisonModal] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [comparisonResult, setComparisonResult] = useState<any>(null);
   const [resumeId, setResumeId] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [rateLimited, setRateLimited] = useState(false);
   const [rateLimitRemaining, setRateLimitRemaining] = useState(0);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   const handleApplyClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -183,82 +182,90 @@ export const JobCard = ({ job, onClick, initialIsTracked = false }: JobCardProps
       />
 
       <Card
-        className="glass-card hover:-translate-y-1 group relative overflow-hidden"
+        className="glass-card hover:-translate-y-1 group relative overflow-hidden cursor-pointer"
         onClick={onClick}
       >
         <div className="absolute top-0 left-0 w-1 h-full bg-primary/80 group-hover:bg-primary transition-all" />
-        <CardContent className="p-6">
-          <div className="flex justify-between items-start mb-4">
-            <div className="flex-1">
-              <h3 className="text-xl font-semibold text-foreground mb-2 hover:text-primary transition-colors font-poppins">
+        <CardContent className="p-4 md:p-6">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-4 mb-4">
+            <div className="flex-1 w-full">
+              <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors font-poppins line-clamp-2">
                 {job.title}
               </h3>
-              <div className="flex items-center gap-4 text-muted-foreground mb-3">
-                <div className="flex items-center gap-1">
-                  <Building2 className="h-4 w-4" />
-                  <span className="font-medium">{job.company}</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-muted-foreground mb-3 text-sm">
+                <div className="flex items-center gap-1.5 min-w-fit">
+                  <Building2 className="h-4 w-4 text-primary" />
+                  <span className="font-semibold text-foreground/80">{job.company}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5 min-w-fit">
                   <MapPin className="h-4 w-4" />
                   <span>{job.location}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5 min-w-fit">
                   <Clock className="h-4 w-4" />
-                  <span>{job.postedDate || job.scrapedAt || "Recently posted"}</span>
+                  <span className="text-xs">{job.postedDate || job.scrapedAt || "Recently posted"}</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-2 ml-4">
+            <div className="flex flex-wrap lg:flex-nowrap gap-2 w-full lg:w-auto" onClick={(e) => e.stopPropagation()}>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleCompareClick}
                 disabled={loading}
-                className="text-muted-foreground hover:text-primary"
+                className="flex-1 lg:flex-none text-muted-foreground hover:text-primary border-white/10 glass"
               >
-                <BarChart3 className="h-4 w-4 mr-1" />
-                {loading ? "Comparing..." : "Compare"}
+                <BarChart3 className="h-4 w-4 mr-1.5" />
+                <span className="text-xs md:text-sm">{loading ? "..." : "Compare"}</span>
               </Button>
               <Button
                 variant={isTracked ? "default" : "outline"}
                 size="sm"
                 onClick={handleTrackClick}
-                className={`${isTracked ? "bg-green-500/20 text-green-500 border-green-500 hover:bg-green-500/30 glow-green" : "text-muted-foreground hover:text-primary"}`}
+                className={`flex-1 lg:flex-none border-white/10 glass ${isTracked ? "bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30" : "text-muted-foreground hover:text-primary"}`}
               >
-                <Bookmark className={`h-4 w-4 mr-1 ${isTracked ? "fill-current" : ""}`} />
-                {isTracked ? "Tracked" : "Track"}
+                <Bookmark className={`h-4 w-4 mr-1.5 ${isTracked ? "fill-current" : ""}`} />
+                <span className="text-xs md:text-sm">{isTracked ? "Tracked" : "Track"}</span>
               </Button>
               <Button
                 onClick={handleApplyClick}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="flex-1 lg:flex-none bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20"
+                size="sm"
               >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Apply Now
+                <ExternalLink className="h-4 w-4 mr-1.5" />
+                <span className="text-xs md:text-sm">Apply</span>
               </Button>
             </div>
           </div>
 
-          <p className="mb-4 line-clamp-3 text-muted-foreground">{job.description}</p>
+          <p className="mb-4 line-clamp-2 md:line-clamp-3 text-sm md:text-base text-muted-foreground/90 leading-relaxed">
+            {job.description}
+          </p>
 
           <div className="flex flex-wrap gap-2 mb-4">
-            <Badge variant="secondary" className="bg-secondary text-secondary-foreground">
-              {job.type}
-            </Badge>
-            {job.location.toLowerCase().includes("remote") && (
-              <Badge className="bg-primary/20 text-primary border-primary/30">Remote</Badge>
+            {job.type && (
+              <Badge variant="secondary" className="glass bg-white/5 text-foreground/80 border-white/10 text-[10px] md:text-xs">
+                {job.type}
+              </Badge>
             )}
-            {job.salary && (
-              <Badge variant="outline" className="flex items-center gap-1 border-border">
+            {job.location.toLowerCase().includes("remote") && (
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] md:text-xs">Remote</Badge>
+            )}
+            {job.salary && job.salary !== "Not specified" && (
+              <Badge variant="outline" className="flex items-center gap-1 border-white/10 text-foreground/70 text-[10px] md:text-xs">
                 <DollarSign className="h-3 w-3" />
                 {job.salary}
               </Badge>
             )}
           </div>
 
-          <div className="flex justify-between items-center text-sm text-muted-foreground">
-            <span>Source: {job.source || "Job Portal"}</span>
-            <span className="text-primary hover:underline">View Details →</span>
+          <div className="flex justify-between items-center text-[10px] md:text-xs font-medium text-muted-foreground pt-2 border-t border-white/5">
+            <span className="opacity-70">via {job.source || "Job Portal"}</span>
+            <span className="text-primary hover:underline flex items-center gap-1 group/link">
+              View Details
+              <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+            </span>
           </div>
         </CardContent>
 

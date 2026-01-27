@@ -29,7 +29,7 @@ export default function FindJobsPage() {
       if (!token) return;
 
       try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
         const res = await fetch(`${API_URL}/saved-jobs`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -39,7 +39,6 @@ export default function FindJobsPage() {
           // Filter only those with 'tracked' status if needed, or all saved jobs?
           // The Card logic considers anything valid in SavedJobs as "Tracked" if we map it so.
           // But wait, the card toggle deletes it on untrack. So existence = tracked.
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const ids = new Set(data.data.map((item: any) => item.job.id));
           setTrackedJobIds(ids as Set<string>);
         }

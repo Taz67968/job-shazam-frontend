@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -14,7 +14,36 @@ interface JobDetailModalProps {
   onClose: () => void;
 }
 
-export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job, isOpen, onClose }) => {
+export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job: initialJob, isOpen, onClose }) => {
+  const [job, setJob] = React.useState<Job | null>(initialJob);
+  const [isShazaming, setIsShazaming] = React.useState(false);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+  React.useEffect(() => {
+    setJob(initialJob);
+  }, [initialJob]);
+
+  React.useEffect(() => {
+    const triggerShazam = async () => {
+      if (isOpen && job && (!job.detailed || Object.keys(job.detailed).length < 3)) {
+        setIsShazaming(true);
+        try {
+          const res = await fetch(`${API_URL}/jobs/${job.id}/structure`, {
+            method: "POST",
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setJob(data);
+          }
+        } finally {
+          setIsShazaming(false);
+        }
+      }
+    };
+
+    triggerShazam();
+  }, [isOpen, initialJob, API_URL]);
+
   if (!job) return null;
 
   const handleApplyClick = () => {
@@ -33,9 +62,23 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job, isOpen, onC
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto border-white/10 glass">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{job.title}</DialogTitle>
+          <div className="flex justify-between items-center mb-2">
+            <Badge variant="outline" className="text-primary border-primary/30">AI Enhanced</Badge>
+            {isShazaming && (
+              <div className="flex items-center gap-2 text-primary animate-pulse">
+                <div className="w-2 h-2 rounded-full bg-primary animate-bounce"></div>
+                <span className="text-xs font-bold tracking-widest uppercase">Shazaming...</span>
+              </div>
+            )}
+          </div>
+          <DialogTitle className="text-2xl md:text-3xl font-bold gradient-text">{job.title}</DialogTitle>
+          <div className="sr-only">
+            <DialogDescription>
+              Detailed information about the job listing at {job.company}.
+            </DialogDescription>
+          </div>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -78,7 +121,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job, isOpen, onC
               </Badge>
             )}
             {job.location?.toLowerCase().includes("remote") && (
-              <Badge className="bg-green-500/20 text-green-300 border border-green-500/30">Remote</Badge>
+              <Badge className="bg-green-500/20 text-green-400 border border-green-500/30">Remote</Badge>
             )}
             {job.salary && (
               <Badge variant="outline" className="flex items-center gap-1 text-white border-white/20">
@@ -88,65 +131,104 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job, isOpen, onC
             )}
           </div>
 
-          <Separator className="bg-white/10" />
+          <Separator className="bg-white/5" />
 
-          {/* Job Description */}
-          {job.description && (
-            <div>
-              <h3 className="text-xl font-bold mb-3 text-white">Job Description</h3>
-              <div
-                className="text-gray-300 leading-relaxed space-y-4 prose prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: job.description.replace(/\n/g, '<br/>') }}
-              />
+          {/* About Us (if structured) */}
+          {job.detailed?.aboutUs && (
+            <div className="bg-primary/5 p-5 rounded-xl border border-primary/10">
+              <h3 className="text-sm font-bold mb-3 uppercase tracking-wider text-primary">About the Company</h3>
+              <p className="text-foreground/90 leading-relaxed italic text-sm md:text-base">{job.detailed.aboutUs}</p>
             </div>
           )}
 
-          <Separator className="bg-white/10" />
+          {/* Job Description / Overview */}
+          <div className="space-y-4">
+            <h3 className="text-lg md:text-xl font-bold text-foreground flex items-center gap-2">
+              <Building2 className="h-5 w-5 text-primary" />
+              Role Overview
+            </h3>
+            <div
+              className={`text-foreground/85 leading-relaxed space-y-4 prose prose-invert max-w-none transition-opacity duration-500 text-sm md:text-base ${isShazaming ? 'opacity-30' : 'opacity-100'}`}
+              dangerouslySetInnerHTML={{ __html: (job.detailed?.roleOverview || job.description || "").replace(/\n/g, '<br/>') }}
+            />
+          </div>
 
-          {/* Requirements */}
-          {requirements.length > 0 && (
-            <div>
-              <h3 className="text-xl font-bold mb-4 text-white">Requirements</h3>
-              <ul className="space-y-3">
-                {requirements.map((req, idx) => (
-                  <li key={idx} className="flex items-start gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-200">{req}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {!isShazaming && (
+            <>
+              {/* Responsibilities (Structured) */}
+              {job.detailed?.responsibilities && job.detailed.responsibilities.length > 0 && (
+                <div className="space-y-4 pt-4">
+                  <h3 className="text-lg md:text-xl font-bold text-foreground flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-primary" />
+                    Responsibilities
+                  </h3>
+                  <ul className="grid grid-cols-1 gap-3">
+                    {job.detailed.responsibilities.map((resp, idx) => (
+                      <li key={idx} className="flex items-start gap-3 bg-card/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
+                        <span className="text-foreground/90 text-sm md:text-base">{resp}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-          <Separator className="bg-white/10" />
-
-          {/* Benefits */}
-          {benefits.length > 0 && (
-            <div>
-              <h3 className="text-xl font-bold mb-4 text-white">Benefits</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {benefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
-                    <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-gray-200">{benefit}</span>
+              {/* Requirements (Structured) */}
+              {(requirements.length > 0 || job.detailed?.requirements?.mustHave?.length) && (
+                <div className="space-y-4 pt-4">
+                  <h3 className="text-lg md:text-xl font-bold text-foreground flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-primary" />
+                    Key Requirements
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {(job.detailed?.requirements?.mustHave || requirements).map((req, idx) => (
+                      <div key={idx} className="flex items-start gap-3 bg-card/40 p-4 rounded-xl border border-white/5 hover:border-primary/20 transition-colors">
+                        <CheckCircle className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                        <span className="text-foreground/85 text-sm">{req}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              )}
+
+              {/* Benefits (Structured) */}
+              {(benefits.length > 0 || (job.detailed?.benefits && Object.values(job.detailed.benefits).some(arr => arr?.length))) && (
+                <div className="space-y-4 pt-4">
+                  <h3 className="text-lg md:text-xl font-bold text-foreground flex items-center gap-2">
+                    <DollarSign className="h-5 w-5 text-secondary" />
+                    Perks & Benefits
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {(() => {
+                      const allBenefits = job.detailed?.benefits
+                        ? Object.values(job.detailed.benefits).flat().filter(Boolean) as string[]
+                        : benefits;
+
+                      return allBenefits.map((benefit, idx) => (
+                        <div key={idx} className="flex items-center gap-2.5 bg-secondary/5 p-3 rounded-lg border border-secondary/10">
+                          <Badge variant="outline" className="h-2 w-2 rounded-full bg-secondary p-0 border-none" title="Benefit" />
+                          <span className="text-foreground/85 text-xs font-medium">{benefit}</span>
+                        </div>
+                      ));
+                    })()}
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
-          <Separator className="bg-white/10" />
+          <Separator className="bg-white/10 opacity-50" />
 
           {/* Apply Footer */}
-          <div className="bg-white/5 p-6 rounded-xl border border-white/10">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div>
-                <h4 className="text-lg font-bold text-white mb-1">Ready to start your journey?</h4>
-                <p className="text-sm text-gray-400">Source: <span className="text-primary">{job.source || "Job Portal"}</span></p>
+          <div className="bg-gradient-to-br from-primary/10 to-secondary/10 p-6 rounded-2xl border border-white/10 glass">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+              <div className="text-center md:text-left">
+                <h4 className="text-lg font-extrabold text-foreground mb-1">Passionate about this role?</h4>
+                <p className="text-sm text-muted-foreground">Original listing found on <span className="text-primary font-bold">{job.source || "Job Portal"}</span></p>
               </div>
-              <Button onClick={handleApplyClick} className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Apply on Company Site
+              <Button onClick={handleApplyClick} className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto px-10 h-12 rounded-xl text-base font-bold shadow-xl shadow-primary/30">
+                <ExternalLink className="h-5 w-5 mr-2" />
+                Apply Directly
               </Button>
             </div>
           </div>

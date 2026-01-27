@@ -1,16 +1,17 @@
 "use client";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import {Search, Briefcase, Phone, BarChart3, Menu, X} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Search, Briefcase, Phone, BarChart3, Menu, X } from "lucide-react";
 
-import {useAuth} from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
-  const {user, signOut} = useAuth();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     setIsHydrated(true);
@@ -68,6 +69,7 @@ export default function Navbar() {
 
           {isHydrated && (
             <div className="hidden md:flex items-center gap-4">
+              <ThemeToggle />
               {user ? (
                 <Button variant="outline" onClick={signOut}>
                   <Briefcase className="h-4 w-4 mr-2" />
@@ -85,13 +87,16 @@ export default function Navbar() {
           )}
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-md text-foreground hover:text-primary focus:outline-none"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
+            <button
+              className="p-2 rounded-md text-foreground hover:text-primary focus:outline-none"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

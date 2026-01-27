@@ -56,7 +56,6 @@ export const ApplicationBoard = () => {
       // Transform SavedJob from backend to TrackedJob
       // Backend returns: { data: [{ id, job: {...}, status, savedAt, ... }] }
       // Map 'tracked' status to 'applied' for initial board placement
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mappedJobs: TrackedJob[] = data.data.map((item: any) => ({
         id: item.id, // SavedJob ID
         jobId: item.job.id,
