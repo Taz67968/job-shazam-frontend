@@ -25,13 +25,16 @@ export default function LoginSection() {
     if (!email) return;
 
     try {
+      console.log("[Login] Sending OTP for:", email);
       await login(email);
+      console.log("[Login] Success! Transitioning to step 2");
       setStep(2);
       toast({
         title: "OTP Sent",
         description: "Check your email for the verification code.",
       });
-    } catch {
+    } catch (err) {
+      console.error("[Login] Failed to send OTP:", err);
       toast({
         title: "Login Failed",
         description: "Could not send OTP. Please try again.",
