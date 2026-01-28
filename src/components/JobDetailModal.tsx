@@ -65,7 +65,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({ job: initialJob,
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto border-white/10 glass">
         <DialogHeader>
           <div className="flex justify-between items-center mb-2">
-            <Badge variant="outline" className="text-primary border-primary/30">AI Enhanced</Badge>
+            <Badge variant="outline" className="text-primary border-primary/30">Enhanced</Badge>
             {isShazaming && (
               <div className="flex items-center gap-2 text-primary animate-pulse">
                 <div className="w-2 h-2 rounded-full bg-primary animate-bounce"></div>

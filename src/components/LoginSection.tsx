@@ -10,7 +10,8 @@ export default function LoginSection() {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [step, setStep] = useState(1); // 1 = Email, 2 = OTP
-  const { login, verifyOtp, loading } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login, verifyOtp, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -24,6 +25,7 @@ export default function LoginSection() {
     e.preventDefault();
     if (!email) return;
 
+    setIsSubmitting(true);
     try {
       console.log("[Login] Sending OTP for:", email);
       await login(email);
@@ -37,19 +39,20 @@ export default function LoginSection() {
       console.error("[Login] Failed to send OTP:", err);
       toast({
         title: "Login Failed",
-        description: "Could not send OTP. Please try again.",
+        description: "Could not send OTP. Please check backend logs or your email settings.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleOtpChange = (index: number, value: string) => {
-    if (isNaN(Number(value)) && value !== '') return; // Allow empty string or numbers
+    if (isNaN(Number(value)) && value !== '') return;
     const newOtp = [...otp];
-    newOtp[index] = value.slice(-1); // Take only the last character if multiple are typed
+    newOtp[index] = value.slice(-1);
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -79,6 +82,7 @@ export default function LoginSection() {
     const otpString = otp.join('');
     if (otpString.length !== 6) return;
 
+    setIsSubmitting(true);
     try {
       await verifyOtp(email, otpString);
       toast({
@@ -91,6 +95,8 @@ export default function LoginSection() {
         description: "Invalid code. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -122,16 +128,16 @@ export default function LoginSection() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/90 border-white/10 text-black placeholder:text-gray-500 focus:border-primary/50"
+                  className="bg-white border-white/10 text-black placeholder:text-gray-500 focus:border-primary/50"
                   required
                 />
               </div>
               <Button
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg shadow-lg shadow-primary/25 transition-all duration-300 hover:scale-[1.02]"
-                disabled={loading}
+                disabled={isSubmitting}
               >
-                {loading ? (
+                {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Sending OTP...
@@ -156,7 +162,7 @@ export default function LoginSection() {
                       onChange={(e) => handleOtpChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
                       maxLength={1}
-                      className="w-12 h-14 bg-white/90 border-white/10 text-black placeholder:text-gray-500 focus:border-primary/50 text-center text-2xl font-mono"
+                      className="w-12 h-14 bg-white border-white/10 text-black placeholder:text-gray-500 focus:border-primary/50 text-center text-2xl font-mono"
                       required
                     />
                   ))}
@@ -165,9 +171,9 @@ export default function LoginSection() {
               <Button
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-lg shadow-lg shadow-primary/25 transition-all duration-300 hover:scale-[1.02]"
-                disabled={loading}
+                disabled={isSubmitting}
               >
-                {loading ? (
+                {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Verifying...
