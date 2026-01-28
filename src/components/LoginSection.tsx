@@ -122,7 +122,7 @@ export default function LoginSection() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-black/20 border-white/10 text-white placeholder:text-gray-500 focus:border-primary/50"
+                  className="bg-white/90 border-white/10 text-black placeholder:text-gray-500 focus:border-primary/50"
                   required
                 />
               </div>
@@ -156,7 +156,7 @@ export default function LoginSection() {
                       onChange={(e) => handleOtpChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
                       maxLength={1}
-                      className="w-12 h-14 bg-black/20 border-white/10 text-white placeholder:text-gray-500 focus:border-primary/50 text-center text-2xl font-mono"
+                      className="w-12 h-14 bg-white/90 border-white/10 text-black placeholder:text-gray-500 focus:border-primary/50 text-center text-2xl font-mono"
                       required
                     />
                   ))}

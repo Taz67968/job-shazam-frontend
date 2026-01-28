@@ -99,7 +99,7 @@ export default function RegisterSection() {
                     required
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-white/10 text-black placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                     placeholder="johndoe"
                   />
                 </div>
@@ -113,7 +113,7 @@ export default function RegisterSection() {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-white border border-white/10 text-black placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -126,7 +126,7 @@ export default function RegisterSection() {
                   required
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-white border border-white/10 text-black placeholder-gray-500 focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                   placeholder="••••••••"
                 />
               </div>
